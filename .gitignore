@@ -1,0 +1,48 @@
+# Secrets
+.env
+.env.*
+!.env.example
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+build/
+dist/
+
+# Tooling caches
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+coverage.xml
+htmlcov/
+
+# Data: downloaded or derived, never committed (see data/manifest.json and scripts/)
+Data/drug-event-*/
+data/raw/
+data/processed/
+data/index/
+*.parquet
+*.duckdb
+
+# Logs
+*.log
+
+# OS / editor
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Superseded code kept locally for salvage during the rebuild
+legacy/
+pytest-results.xml
+emissions.csv
+.codecarbon-tracker.pid
+
+# Private working notes, build log, learning docs and dated experiment runs (kept locally)
+notes/
+tests/evaluation/results/

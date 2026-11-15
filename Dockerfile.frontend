@@ -1,0 +1,23 @@
+# syntax=docker/dockerfile:1
+# =============================================================================
+# RegIntel UI — Streamlit (Paper & Ember). Talks to the API only (REGINTEL_API_URL).
+# The UI modules import nothing from the backend, so the image carries just Streamlit,
+# Altair, pandas and httpx plus the frontend package.
+# =============================================================================
+FROM python:3.13-slim
+COPY --from=ghcr.io/astral-sh/uv:0.7.2 /uv /bin/uv
+RUN groupadd -r regintel && useradd -r -g regintel -d /app -s /sbin/nologin regintel
+WORKDIR /app
+RUN --mount=type=secret,id=ca_cert,required=false \
+    if [ -f /run/secrets/ca_cert ]; then export SSL_CERT_FILE=/run/secrets/ca_cert; fi && \
+    uv pip install --system --no-cache "streamlit>=1.67.0" "httpx>=0.28.0"
+COPY src/regintel/frontend/ ./regintel/frontend/
+COPY .streamlit/ ./.streamlit/
+RUN touch ./regintel/__init__.py
+ENV PYTHONUNBUFFERED=1 PYTHONPATH=/app REGINTEL_API_URL=http://api:8000
+USER regintel
+EXPOSE 8501
+HEALTHCHECK --interval=30s --timeout=5s --start-period=20s --retries=3 \
+    CMD python -c "import urllib.request; urllib.request.urlopen('http://localhost:8501/_stcore/health')"
+CMD ["streamlit", "run", "regintel/frontend/app.py", "--server.port", "8501", "--server.address", "0.0.0.0", \
+     "--server.headless", "true", "--browser.gatherUsageStats", "false"]

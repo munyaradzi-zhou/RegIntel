@@ -1,0 +1,63 @@
+{
+  "description": "Calibration set for the answer reviewer. Each case is one answer: a question and statements, each with the verified quote(s) and source that support it, and the expected verdict (supported / overreach / unsupported). Quotes are real text from the corpus or from RegIntel's FAERS tool output. `addresses_question` is the expected question-level judgement. Case na-06 reproduces a real over-generalised answer from the Phase 4 agent run.",
+  "version": "2026-11-14",
+  "cases": [
+    {"id": "rv-01", "question": "How quickly must fatal or life-threatening unexpected ADRs be reported under ICH E2A?", "addresses_question": true,
+     "statements": [
+       {"text": "Under ICH E2A, fatal or life-threatening unexpected ADRs must be reported to regulators no later than 7 calendar days after the sponsor first learns the case qualifies.", "source": "ICH E2A · §III.B.1", "quotes": ["Regulatory agencies should be notified (e.g., by telephone, facsimile transmission, or in writing) as soon as possible but no later than 7 calendar days after first knowledge by the sponsor that a case qualifies"], "expected": "supported"},
+       {"text": "A follow-up report that is as complete as possible is due within 8 additional calendar days.", "source": "ICH E2A · §III.B.1", "quotes": ["followed by as complete a report as possible within 8 additional calendar days"], "expected": "supported"}
+     ]},
+    {"id": "rv-02", "question": "What acceptance interval applies to the 90% confidence interval in an EU bioequivalence study?", "addresses_question": true,
+     "statements": [
+       {"text": "In the EU, the 90% confidence interval for the test/reference ratio should lie within 80.00-125.00%.", "source": "EMA Guideline on the Investigation of Bioequivalence · §4.1.8", "quotes": ["the 90% confidence interval for the ratio of the test and reference products should be contained within the acceptance interval of 80.00- 125.00%"], "expected": "supported"},
+       {"text": "The FDA requires the same 80.00-125.00% interval for all bioequivalence studies.", "source": "EMA Guideline on the Investigation of Bioequivalence · §4.1.8", "quotes": ["the 90% confidence interval for the ratio of the test and reference products should be contained within the acceptance interval of 80.00- 125.00%"], "expected": "overreach"}
+     ]},
+    {"id": "rv-03", "question": "What is the minimum number of evaluable subjects in an EU bioequivalence study?", "addresses_question": true,
+     "statements": [
+       {"text": "An EU bioequivalence study should include at least 12 evaluable subjects.", "source": "EMA Guideline on the Investigation of Bioequivalence · §4.1.3", "quotes": ["The number of evaluable subjects in a bioequivalence study should not be less than 12."], "expected": "supported"}
+     ]},
+    {"id": "rv-04", "question": "Is there a conjunctivitis signal for dupilumab in FAERS?", "addresses_question": true,
+     "statements": [
+       {"text": "In the FAERS 2025 Q1 extract, the reporting odds ratio for conjunctivitis with dupilumab is 13.97 (95% CI 7.98 to 24.47).", "source": "openFDA FAERS extract, 2025 Q1 · computed", "quotes": ["Reports with DUPILUMAB as a suspect drug and the reaction 'Conjunctivitis': 22", "Reporting odds ratio 13.97 (95% CI 7.98 to 24.47)."], "expected": "supported"},
+       {"text": "Dupilumab causes conjunctivitis, as shown by a reporting odds ratio of 13.97.", "source": "openFDA FAERS extract, 2025 Q1 · computed", "quotes": ["Reporting odds ratio 13.97 (95% CI 7.98 to 24.47). Disproportionality is a signal-screening statistic; it does not show that the drug causes the reaction."], "expected": "overreach"}
+     ]},
+    {"id": "rv-05", "question": "How should the first dose of each cohort be given in an EU first-in-human trial?", "addresses_question": true,
+     "statements": [
+       {"text": "EMA considers it appropriate for a single subject to receive the first dose in each cohort (sentinel dosing).", "source": "EMA FIH guideline · §8.2.6", "quotes": ["It is considered appropriate to design the administration of the first dose in any cohort so that a single subject receives a single dose of the active IMP (often known as sentinel dosing)."], "expected": "supported"},
+       {"text": "All clinical trials must use sentinel dosing for every cohort.", "source": "EMA FIH guideline · §8.2.6", "quotes": ["It is considered appropriate to design the administration of the first dose in any cohort so that a single subject receives a single dose of the active IMP (often known as sentinel dosing)."], "expected": "overreach"}
+     ]},
+    {"id": "rv-06", "question": "What does the EMA say about stratification factors in the primary analysis?", "addresses_question": true,
+     "statements": [
+       {"text": "Stratification variables should usually be included as covariates in the primary analysis, regardless of their prognostic value.", "source": "EMA baseline covariates guideline · §5.2", "quotes": ["stratification variables, if not solely used for administrative reasons, should usually be included as covariates or stratification variables in the primary analysis regardless of their prognostic value"], "expected": "supported"},
+       {"text": "Sponsors must always include every stratification variable as a covariate, without exception.", "source": "EMA baseline covariates guideline · §5.2", "quotes": ["stratification variables, if not solely used for administrative reasons, should usually be included as covariates or stratification variables in the primary analysis regardless of their prognostic value"], "expected": "overreach"}
+     ]},
+    {"id": "rv-07", "question": "Can the EU acceptance range for Cmax be widened for highly variable products?", "addresses_question": true,
+     "statements": [
+       {"text": "For highly variable products the Cmax acceptance range can be widened to at most 69.84-143.19%.", "source": "EMA Guideline on the Investigation of Bioequivalence · §4.1.10", "quotes": ["the acceptance criteria for C max can be widened to a maximum of 69.84 – 143.19%"], "expected": "supported"},
+       {"text": "Any product with variable Cmax may use the widened 69.84-143.19% range without further justification.", "source": "EMA Guideline on the Investigation of Bioequivalence · §4.1.10", "quotes": ["Those HVDP for which a wider difference in C max is considered clinically irrelevant based on a sound clinical justification can be assessed with a widened acceptance range.", "the acceptance criteria for C max can be widened to a maximum of 69.84 – 143.19%"], "expected": "overreach"}
+     ]},
+    {"id": "rv-08", "question": "Does FDA require computer-generated audit trails under Part 11?", "addresses_question": true,
+     "statements": [
+       {"text": "FDA intends to exercise enforcement discretion on the Part 11 requirements for computer-generated, time-stamped audit trails.", "source": "FDA Part 11 scope guidance · §III.C.2", "quotes": ["The Agency intends to exercise enforcement discretion regarding specific part 11 requirements related to computer- generated, time-stamped audit trails"], "expected": "supported"},
+       {"text": "Part 11 strictly requires computer-generated audit trails for every electronic system.", "source": "FDA Part 11 scope guidance · §III.C.2", "quotes": ["The Agency intends to exercise enforcement discretion regarding specific part 11 requirements related to computer- generated, time-stamped audit trails"], "expected": "unsupported"}
+     ]},
+    {"id": "na-06", "question": "Which validation requirements does EU GMP Annex 11 set for machine learning models?", "addresses_question": false,
+     "statements": [
+       {"text": "Annex 11 applies to machine learning models because it applies to all forms of computerised systems used in GMP-regulated activities.", "source": "EU GMP Annex 11 · Principle", "quotes": ["applies to all forms of computerised systems used as part of a GMP regulated activities"], "expected": "overreach"},
+       {"text": "Under Annex 11, the application should be validated and IT infrastructure should be qualified.", "source": "EU GMP Annex 11 · Principle", "quotes": ["The application should be validated; IT infrastructure should be qualified."], "expected": "supported"}
+     ]},
+    {"id": "rv-10", "question": "What does ICH E6(R3) say about home visits by trial staff in decentralised trials?", "addresses_question": false,
+     "statements": [
+       {"text": "ICH E6(R3) says the consent process should consider using technology to inform participants and obtain consent.", "source": "ICH E6(R3) · §2.8", "quotes": ["the potential use of technology to inform participants (or their legally acceptable representatives) and obtain informed consent"], "expected": "supported"}
+     ]},
+    {"id": "rv-11", "question": "Which CDISC codelist holds adverse event severity values?", "addresses_question": true,
+     "statements": [
+       {"text": "Severity values are in the CDISC codelist Severity/Intensity Scale for Adverse Events (C66769, submission value AESEV), with terms MILD, MODERATE and SEVERE.", "source": "CDISC Controlled Terminology · SDTM", "quotes": ["Codelist Severity/Intensity Scale for Adverse Events (C66769), submission value AESEV. It has 3 terms: MILD (C41338), MODERATE (C41339), SEVERE (C41340)."], "expected": "supported"}
+     ]},
+    {"id": "rv-12", "question": "When are secondary endpoints a basis for additional claims according to the EMA?", "addresses_question": true,
+     "statements": [
+       {"text": "Secondary variables can support an additional claim only after the primary objective has been achieved and if they were part of the confirmatory strategy.", "source": "EMA multiplicity points to consider · §3.2", "quotes": ["Significant effects in these variables can be considered for an additional claim only after the primary objective of the clinical trial has been achieved, and if they were part of the confirmatory strategy"], "expected": "supported"},
+       {"text": "Secondary endpoints never need any multiplicity adjustment once the primary endpoint succeeds.", "source": "EMA multiplicity points to consider · §3.2", "quotes": ["Significant effects in these variables can be considered for an additional claim only after the primary objective of the clinical trial has been achieved, and if they were part of the confirmatory strategy"], "expected": "unsupported"}
+     ]}
+  ]
+}

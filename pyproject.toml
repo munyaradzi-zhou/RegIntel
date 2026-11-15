@@ -1,0 +1,134 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "regintel"
+version = "0.1.0"
+description = "Regulatory Q&A for biopharma: cited answers from FDA, ICH and EMA guidance, CDISC terminology and FAERS safety data, with Claude"
+readme = "README.md"
+license = { file = "LICENSE" }
+requires-python = ">=3.11"
+authors = [{ name = "Munyaradzi Zhou" }]
+
+dependencies = [
+    # Agents: Microsoft Agent Framework (OpenAI connector for development)
+    "agent-framework-core>=1.26.0",
+    "agent-framework-openai>=1.18.2",  # OpenAI / Azure OpenAI chat client for the agent
+    # LLM: gpt-4o-mini for development; Claude (first-party or Microsoft Foundry) for release
+    "openai>=2.0.0",
+    "anthropic>=2.8.0",
+
+    # Ingestion and retrieval
+    "pypdf>=7.1.0",
+    "rank-bm25>=0.2.2",
+    "numpy>=1.26.0",
+
+    # Structured safety data (openFDA FAERS)
+    "duckdb>=2.0.0",
+    "ijson>=3.3.0",  # streams openFDA's ~900 MB JSON partitions
+
+    # API
+    "fastapi>=0.162.0",
+    "uvicorn[standard]>=0.54.0",
+    "sse-starlette>=3.7.0",
+
+    # Config, logging, HTTP
+    "pydantic>=2.14.0",
+    "pydantic-settings>=2.16.0",
+    "structlog>=26.1.0",
+    "httpx>=0.28.0",
+    "tenacity>=9.0.0",
+]
+
+[project.optional-dependencies]
+# Local embeddings (CPU); Azure uses Azure OpenAI embeddings instead
+local = ["fastembed>=0.9.0"]
+azure = [
+    "azure-identity>=1.27.0",
+    "azure-search-documents>=12.1.0",  # knows the 2026-08-01-preview knowledge base API
+    "azure-cosmos>=4.17.0",
+    "azure-storage-blob>=12.31.0",
+    "azure-monitor-opentelemetry>=1.8.0",
+    "agent-framework-azure-ai>=1.0.0rc6",  # Foundry Agent Service
+    "azure-ai-evaluation>=1.18.0",
+]
+# What the API container needs (a subset of `azure`, without the evaluation and Foundry SDKs)
+serve = [
+    "azure-identity>=1.27.0",
+    "azure-search-documents>=12.1.0",
+    "azure-cosmos>=4.17.0",
+    "azure-monitor-opentelemetry>=1.8.0",
+]
+claude = ["agent-framework-anthropic>=1.0.0b261112"]
+mcp = ["mcp>=2.3.0"]
+frontend = ["streamlit>=1.67.0"]
+dev = [
+    "pytest>=9.2.0",
+    "pytest-asyncio>=1.5.0",
+    "pytest-cov>=6.0.0",
+    "ruff>=0.17.0",
+    "mypy>=2.4.0",
+    "bandit>=1.9.0",
+    "pip-audit>=2.10.0",
+    "pre-commit>=4.0.0",
+    "truststore>=0.9.0",  # evaluations and corpus fetch: use the OS certificate store
+    "playwright>=1.65.0",  # scripts/screenshot_ui.py (drives the installed Chrome)
+]
+
+[project.scripts]
+regintel = "regintel.main:start"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/regintel"]
+
+[tool.ruff]
+target-version = "py311"
+line-length = 120
+src = ["src"]
+
+[tool.ruff.lint]
+select = ["E", "W", "F", "I", "N", "UP", "B", "S", "T20", "SIM", "TC", "RUF"]
+ignore = ["S101"]
+
+[tool.ruff.lint.per-file-ignores]
+"tests/**" = ["S", "T20"]
+"scripts/**" = ["T20"]
+
+[tool.ruff.lint.isort]
+known-first-party = ["regintel"]
+
+[tool.mypy]
+python_version = "3.11"
+strict = true
+warn_unused_configs = true
+
+[[tool.mypy.overrides]]
+module = ["rank_bm25.*", "fastembed.*", "ijson.*", "pandas.*", "altair.*"]
+ignore_missing_imports = true
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+asyncio_mode = "auto"
+asyncio_default_fixture_loop_scope = "function"
+markers = [
+    "integration: needs live services (Anthropic API or Azure)",
+    "evaluation: AI evaluation runs that cost money",
+]
+addopts = "-m 'not integration and not evaluation'"
+
+[tool.coverage.run]
+source = ["regintel"]
+omit = [
+    # Exercised by live runs, not unit tests: entry points, the Streamlit page script (checked by
+    # scripts/screenshot_ui.py) and the factory that connects to Azure (needs credentials).
+    "src/regintel/main.py",
+    "src/regintel/frontend/app.py",
+    "src/regintel/agent/factory.py",
+]
+
+[tool.coverage.report]
+fail_under = 85
+show_missing = true
+skip_covered = true
+exclude_also = ['if TYPE_CHECKING:', 'if __name__ == .__main__.:', 'def main() -> None:']

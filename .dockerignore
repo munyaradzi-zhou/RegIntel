@@ -1,0 +1,24 @@
+# Keep the build context small and secret-free. The API image needs only the package, the
+# metadata pyproject.toml references, and the runtime data (chunk store, manifest, CDISC
+# terminology, FAERS Parquet: about 24 MB). The raw FAERS JSON alone is 2.7 GB.
+.git
+.venv
+.env
+.env.*
+!.env.example
+**/__pycache__
+**/*.pyc
+.mypy_cache
+.ruff_cache
+.pytest_cache
+.coverage
+coverage.xml
+legacy
+notes
+tests
+docs
+emissions.csv
+.codecarbon-tracker.pid
+data/raw/faers
+data/raw/guidance
+data/index

@@ -1,0 +1,22 @@
+{
+  "description": "Two-turn conversations. The second message depends on the first (except fu-05, a topic switch that must NOT inherit the first topic). `resolves_to` lists words the rewritten standalone question must contain; `facts` must appear in the second answer (FAERS facts are computed at run time via `faers`).",
+  "version": "2026-11-14",
+  "conversations": [
+    {"id": "fu-01", "first": "What acceptance range applies to the 90% confidence interval in an EU bioequivalence study?", "second": "And for narrow therapeutic index drugs?",
+     "is_followup": true, "resolves_to": ["narrow therapeutic index", "bioequivalence"], "facts": ["90.00", "111.11"]},
+    {"id": "fu-02", "first": "How quickly must fatal or life-threatening unexpected ADRs be reported under ICH E2A?", "second": "What about the ones that are not fatal or life-threatening?",
+     "is_followup": true, "resolves_to": ["E2A", "not fatal"], "facts": ["15 calendar days"]},
+    {"id": "fu-03", "first": "What does the EMA say about sentinel dosing in first-in-human trials?", "second": "And how should the starting dose be chosen?",
+     "is_followup": true, "resolves_to": ["starting dose", "first-in-human"], "facts": ["MABEL"]},
+    {"id": "fu-04", "first": "What does the FDA Part 11 scope guidance say about computer-generated audit trails?", "second": "Does EU GMP Annex 11 say the same?",
+     "is_followup": true, "resolves_to": ["Annex 11", "audit trail"], "facts": ["risk assessment"]},
+    {"id": "fu-05", "first": "What is the minimum number of evaluable subjects in an EU bioequivalence study?", "second": "Separate question: what is the reporting odds ratio for nausea with semaglutide in FAERS?",
+     "is_followup": false, "resolves_to": ["semaglutide", "nausea"], "faers": {"ror": ["semaglutide", "Nausea"]}, "facts": []},
+    {"id": "fu-06", "first": "Which strategies for intercurrent events does ICH E9(R1) describe?", "second": "Which of them treats the event as part of the outcome variable?",
+     "is_followup": true, "resolves_to": ["intercurrent", "E9"], "facts": ["composite"]},
+    {"id": "fu-07", "first": "Which CDISC codelist holds adverse event severity values?", "second": "What is its NCI code?",
+     "is_followup": true, "resolves_to": ["severity"], "facts": ["C66769"]},
+    {"id": "fu-08", "first": "What is the FDA deadline for an IND safety report on a serious unexpected suspected adverse reaction?", "second": "And what does EU GVP Module VI require for serious ICSRs?",
+     "is_followup": true, "resolves_to": ["GVP", "ICSR"], "facts": ["15"]}
+  ]
+}

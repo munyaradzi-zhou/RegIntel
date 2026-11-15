@@ -1,0 +1,74 @@
+# =============================================================================
+# RegIntel — continuous deployment to Azure Container Apps
+# Runs after CI passes on main (or by hand). Signs in to Azure through GitHub's OIDC token as the
+# CD identity from infra/modules/cd-identity.bicep: no Azure secret is stored in GitHub. That
+# identity can push images, update the two apps and read the smoke-test key, nothing else;
+# infrastructure changes go through scripts/azure/deploy.sh.
+#
+# Repository variables (not secrets): AZURE_CLIENT_ID, AZURE_TENANT_ID, AZURE_SUBSCRIPTION_ID,
+# REGINTEL_RESOURCE_GROUP, REGINTEL_REGISTRY, REGINTEL_KEY_VAULT, REGINTEL_DATA_TAG.
+# All are printed by `CD_REPOSITORY=owner/repo scripts/azure/deploy.sh`.
+# =============================================================================
+name: Deploy
+
+on:
+  workflow_run:
+    workflows: [CI]
+    types: [completed]
+    branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: deploy
+  cancel-in-progress: false  # never stop a rollout half way
+
+permissions:
+  contents: read
+  id-token: write  # the OIDC token azure/login exchanges for an Azure access token
+
+jobs:
+  deploy:
+    if: github.event_name == 'workflow_dispatch' || github.event.workflow_run.conclusion == 'success'
+    runs-on: ubuntu-latest
+    # no `environment:` here: it would change the OIDC subject the federated credential matches
+    env:
+      RG: ${{ vars.REGINTEL_RESOURCE_GROUP }}
+      REGISTRY: ${{ vars.REGINTEL_REGISTRY }}
+      VAULT: ${{ vars.REGINTEL_KEY_VAULT }}
+      DATA_TAG: ${{ vars.REGINTEL_DATA_TAG }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.workflow_run.head_sha || github.sha }}
+
+      - name: Azure sign-in (OIDC, no stored secret)
+        uses: azure/login@v2
+        with:
+          client-id: ${{ vars.AZURE_CLIENT_ID }}
+          tenant-id: ${{ vars.AZURE_TENANT_ID }}
+          subscription-id: ${{ vars.AZURE_SUBSCRIPTION_ID }}
+
+      - name: Build and push the images
+        run: |
+          TAG=$(git rev-parse --short HEAD)
+          SERVER=$(az acr show -n "$REGISTRY" --query loginServer -o tsv)
+          az acr login -n "$REGISTRY"
+          # the runtime data is not in git: it comes from the data image deploy.sh pushed
+          docker build --build-arg DATA_SOURCE="${SERVER}/regintel-data:${DATA_TAG}" \
+            -t "${SERVER}/regintel-api:${TAG}" -f Dockerfile .
+          docker build -t "${SERVER}/regintel-ui:${TAG}" -f Dockerfile.frontend .
+          docker push "${SERVER}/regintel-api:${TAG}"
+          docker push "${SERVER}/regintel-ui:${TAG}"
+          echo "SERVER=${SERVER}" >> "$GITHUB_ENV"
+          echo "TAG=${TAG}" >> "$GITHUB_ENV"
+
+      - name: Roll out a new revision of each app
+        run: |
+          az containerapp update -g "$RG" -n ca-regintel-dev-api --image "${SERVER}/regintel-api:${TAG}" -o none
+          az containerapp update -g "$RG" -n ca-regintel-dev-ui --image "${SERVER}/regintel-ui:${TAG}" -o none
+
+      - name: Smoke test
+        run: |
+          API="https://$(az containerapp show -g "$RG" -n ca-regintel-dev-api --query properties.configuration.ingress.fqdn -o tsv)"
+          scripts/azure/smoke_test.sh "$API" "$VAULT"
+          echo "### Deployed ${TAG}: ${API}/docs" >> "$GITHUB_STEP_SUMMARY"

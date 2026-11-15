@@ -1,0 +1,28 @@
+{
+  "description": "Questions that need the agent's structured-data tools. `tools` must all be called. FAERS ground truth is not stored: `faers` names the computation, and the evaluator computes the expected numbers from the Parquet tables at run time, so the check cannot drift from the data. `facts` are fixed strings (CDISC codes from the NCI EVS file recorded in data/raw/cdisc/LOCK.json; guidance facts verified against the chunks). `guidance` lists expected guidance sources for mixed questions. `no_guidance_search` marks questions the guidance corpus cannot answer, where a guidance search is a wasted call.",
+  "version": "2026-11-14",
+  "questions": [
+    {"id": "fa-01", "question": "How many reports in the loaded FAERS data list semaglutide as a suspect drug, and how many of those were serious?",
+     "tools": ["faers_drug_summary"], "faers": {"summary": "semaglutide", "fields": ["reports", "serious"]}, "facts": [], "no_guidance_search": true},
+    {"id": "fa-02", "question": "What are the three most frequently reported reactions for pembrolizumab in the FAERS extract?",
+     "tools": ["faers_drug_summary"], "faers": {"summary": "pembrolizumab", "fields": ["top3"]}, "facts": [], "no_guidance_search": true},
+    {"id": "fa-03", "question": "Is nausea reported disproportionately often with semaglutide in FAERS? Give the reporting odds ratio and its 95% confidence interval.",
+     "tools": ["faers_disproportionality"], "faers": {"ror": ["semaglutide", "Nausea"]}, "facts": [], "no_guidance_search": true},
+    {"id": "fa-04", "question": "Compute the reporting odds ratio for pneumonitis with pembrolizumab in the FAERS data.",
+     "tools": ["faers_disproportionality"], "faers": {"ror": ["pembrolizumab", "Pneumonitis"]}, "facts": [], "no_guidance_search": true},
+    {"id": "fa-05", "question": "In the FAERS extract, how many reports with fentanyl as a suspect drug record a death?",
+     "tools": ["faers_drug_summary"], "faers": {"summary": "fentanyl", "fields": ["deaths"]}, "facts": [], "no_guidance_search": true},
+    {"id": "cd-01", "question": "What is the NCI code of the CDISC SDTM codelist for the outcome of an adverse event, submission value OUT?",
+     "tools": ["lookup_cdisc_term"], "facts": ["C66768"], "no_guidance_search": true},
+    {"id": "cd-02", "question": "What is the code of the CDISC codelist 'Action Taken with Study Treatment', and what is its submission value?",
+     "tools": ["lookup_cdisc_term"], "facts": ["C66767", "ACN"], "no_guidance_search": true},
+    {"id": "cd-03", "question": "Which CDISC SDTM codelist (give its code) holds the values for a subject's sex?",
+     "tools": ["lookup_cdisc_term"], "facts": ["C66731"], "no_guidance_search": true},
+    {"id": "mx-01", "question": "How quickly must an unexpected fatal suspected adverse reaction be reported to FDA, and how many FAERS reports with apixaban as a suspect drug record a death?",
+     "tools": ["search_guidance", "faers_drug_summary"], "faers": {"summary": "apixaban", "fields": ["deaths"]}, "facts": ["7 calendar days"],
+     "guidance": [{"doc_id": "fda-sponsor-safety-reporting", "sections": ["IV", "VIII.E"]}], "no_guidance_search": false},
+    {"id": "mx-02", "question": "Which CDISC codelist holds adverse event severity values, and how does ICH E2A distinguish 'severe' from 'serious'?",
+     "tools": ["lookup_cdisc_term", "search_guidance"], "facts": ["C66769", "intensity"],
+     "guidance": [{"doc_id": "ich-e2a", "sections": ["II.B"]}], "no_guidance_search": false}
+  ]
+}

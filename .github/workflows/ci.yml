@@ -1,0 +1,154 @@
+# =============================================================================
+# RegIntel — CI
+# Quality gates on every push and pull request. Nothing here calls a model or Azure: the unit
+# tests use fakes, and the evaluations (which cost money) run on demand, not in CI.
+# =============================================================================
+name: CI
+
+on:
+  push:
+    branches: [main]
+    paths-ignore: ["docs/**", "notes/**", "*.md"]
+  pull_request:
+    branches: [main]
+    paths-ignore: ["docs/**", "notes/**", "*.md"]
+  workflow_dispatch:
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+env:
+  PYTHON_VERSION: "3.13"
+
+jobs:
+  quality:
+    name: Lint, types, tests (coverage gate 85%)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+          cache: pip
+          cache-dependency-path: pyproject.toml
+
+      - name: Install
+        run: pip install -e ".[dev,serve,mcp,frontend]"
+
+      - name: Ruff (lint)
+        run: ruff check src tests scripts --output-format=github
+
+      - name: Ruff (format)
+        run: ruff format --check src tests scripts
+
+      - name: Mypy (strict)
+        run: mypy src/regintel
+
+      - name: Unit tests with coverage
+        run: pytest tests/unit --cov --cov-report=term --cov-report=xml --junitxml=pytest-results.xml
+
+      - name: Upload test and coverage reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-reports
+          path: |
+            pytest-results.xml
+            coverage.xml
+          retention-days: 14
+
+  security:
+    name: Security scans
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # the secret scan reads the whole history
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+
+      - name: Bandit (fails on medium severity and above)
+        run: |
+          pip install bandit
+          bandit -r src/regintel --severity-level medium --confidence-level medium
+
+      - name: Dependency audit
+        run: |
+          pip install -e ".[serve,mcp,frontend]" pip-audit
+          pip-audit --progress-spinner off --skip-editable
+
+      - name: Secret scan (gitleaks, full history)
+        uses: gitleaks/gitleaks-action@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  containers:
+    name: Container builds
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: docker/setup-buildx-action@v3
+
+      - name: Build API image
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          file: Dockerfile
+          push: false
+          load: true
+          tags: regintel-api:ci
+          cache-from: type=gha,scope=api
+          cache-to: type=gha,mode=max,scope=api
+
+      - name: Start the API image without data or credentials; it must stay up and say why it is not ready
+        run: |
+          docker run -d --name api -p 8000:8000 regintel-api:ci
+          for _ in $(seq 1 30); do
+            if curl -sf http://localhost:8000/healthz; then
+              code=$(curl -s -o /dev/null -w "%{http_code}" http://localhost:8000/readyz)
+              echo "readyz: $code"; curl -s http://localhost:8000/readyz; echo
+              test "$code" = "503" && exit 0
+            fi
+            sleep 2
+          done
+          docker logs api
+          exit 1
+
+      - name: Build UI image
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          file: Dockerfile.frontend
+          push: false
+          cache-from: type=gha,scope=ui
+          cache-to: type=gha,mode=max,scope=ui
+
+  infrastructure:
+    name: Bicep build and lint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Compile and lint the templates and parameter files
+        run: |
+          az bicep install
+          az bicep build --file infra/main.bicep --stdout > /dev/null
+          az bicep lint --file infra/main.bicep
+          for params in infra/parameters/*.bicepparam; do
+            az bicep build-params --file "$params" --stdout > /dev/null
+          done
+
+  scripts:
+    name: Shellcheck
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Shellcheck scripts/
+        run: shellcheck scripts/azure/*.sh

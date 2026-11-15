@@ -1,0 +1,384 @@
+{
+  "description": "Public regulatory sources for RegIntel. Downloaded by scripts/fetch_corpus.py; never committed.",
+  "verified": "2026-11-13",
+  "guidance": [
+    {
+      "id": "ich-e6-r3",
+      "issuer": "ICH",
+      "jurisdiction": "ICH",
+      "title": "Guideline for Good Clinical Practice E6(R3)",
+      "reference": "E6(R3)",
+      "date": "2025-01-06",
+      "status": "final",
+      "topics": [
+        "gcp"
+      ],
+      "url": "https://database.ich.org/sites/default/files/ICH_E6%28R3%29_Step4_FinalGuideline_2025_0106.pdf",
+      "sha256": "e6ce19e36ce7d2e294f89ee89492b9e035178c3cca48984392bbd92eec9b002c",
+      "pages": 86
+    },
+    {
+      "id": "ich-e2a",
+      "issuer": "ICH",
+      "jurisdiction": "ICH",
+      "title": "Clinical Safety Data Management: Definitions and Standards for Expedited Reporting E2A",
+      "reference": "E2A",
+      "date": "1994-10-27",
+      "status": "final",
+      "topics": [
+        "safety-reporting"
+      ],
+      "url": "https://database.ich.org/sites/default/files/E2A_Guideline.pdf",
+      "sha256": "1c095d80419287187bf5b2db5eba83864adccebf07b9c593bf5925b4ab6f7cf7",
+      "pages": 12
+    },
+    {
+      "id": "ich-e3",
+      "issuer": "ICH",
+      "jurisdiction": "ICH",
+      "title": "Structure and Content of Clinical Study Reports E3",
+      "reference": "E3",
+      "date": "1995-11-30",
+      "status": "final",
+      "topics": [
+        "study-reports"
+      ],
+      "url": "https://database.ich.org/sites/default/files/E3_Guideline.pdf",
+      "sha256": "032d53bb6d693151b64bdc87aa4cf42b90e096db6e52dad73c2093cd62ffa24d",
+      "pages": 49
+    },
+    {
+      "id": "ich-e8-r1",
+      "issuer": "ICH",
+      "jurisdiction": "ICH",
+      "title": "General Considerations for Clinical Studies E8(R1)",
+      "reference": "E8(R1)",
+      "date": "2021-10-06",
+      "status": "final",
+      "topics": [
+        "trial-design"
+      ],
+      "url": "https://database.ich.org/sites/default/files/ICH_E8-R1_Guideline_Step4_2021_1006.pdf",
+      "sha256": "6a5bb9cfa6d0f8b56f6832dadae9bb7931302fe0e8892969ac922cb67ae19a20",
+      "pages": 29
+    },
+    {
+      "id": "ich-e9",
+      "issuer": "ICH",
+      "jurisdiction": "ICH",
+      "title": "Statistical Principles for Clinical Trials E9",
+      "reference": "E9",
+      "date": "1998-02-05",
+      "status": "final",
+      "topics": [
+        "statistics",
+        "trial-design"
+      ],
+      "url": "https://database.ich.org/sites/default/files/E9_Guideline.pdf",
+      "sha256": "0c0ddc93cb427a70265dbcb0e7c25bfc9a3f7b52e178212b3630ea2408ad9c7e",
+      "pages": 39
+    },
+    {
+      "id": "ich-e9-r1",
+      "issuer": "ICH",
+      "jurisdiction": "ICH",
+      "title": "Addendum on Estimands and Sensitivity Analysis in Clinical Trials E9(R1)",
+      "reference": "E9(R1)",
+      "date": "2019-11-20",
+      "status": "final",
+      "topics": [
+        "statistics",
+        "estimands"
+      ],
+      "url": "https://database.ich.org/sites/default/files/E9-R1_Step4_Guideline_2019_1203.pdf",
+      "sha256": "f7471f411f1c87ee76783d5b2b9faaeca31d01d530213f71b50d136b39e3b0d9",
+      "pages": 22
+    },
+    {
+      "id": "ich-e17",
+      "issuer": "ICH",
+      "jurisdiction": "ICH",
+      "title": "General Principles for Planning and Design of Multi-Regional Clinical Trials E17",
+      "reference": "E17",
+      "date": "2017-11-16",
+      "status": "final",
+      "topics": [
+        "trial-design"
+      ],
+      "url": "https://database.ich.org/sites/default/files/E17EWG_Step4_2017_1116.pdf",
+      "sha256": "e67211a8358fa94236ef0a0dd0a76538271584ab93a71b9f9bf841d94d3f5371",
+      "pages": 29
+    },
+    {
+      "id": "ich-q9-r1",
+      "issuer": "ICH",
+      "jurisdiction": "ICH",
+      "title": "Quality Risk Management Q9(R1)",
+      "reference": "Q9(R1)",
+      "date": "2023-01-18",
+      "status": "final",
+      "topics": [
+        "quality",
+        "risk-management"
+      ],
+      "url": "https://database.ich.org/sites/default/files/ICH_Q9%28R1%29_Guideline_Step4_2022_1219.pdf",
+      "sha256": "3bbc860385b2630372c81eebb82ba74ae643ef383ce94b5e01d26bbd0b9883fb",
+      "pages": 29
+    },
+    {
+      "id": "fda-part11-scope",
+      "issuer": "FDA",
+      "jurisdiction": "US",
+      "title": "Part 11, Electronic Records; Electronic Signatures — Scope and Application",
+      "reference": "Guidance for Industry",
+      "date": "2003-08",
+      "status": "final",
+      "topics": [
+        "electronic-records"
+      ],
+      "url": "https://www.fda.gov/media/75414/download",
+      "sha256": "306013031df65004566799023444b3fd66d17dca72eea4c7eb5bacfd4a697ac5",
+      "pages": 12
+    },
+    {
+      "id": "fda-ecs-clinical-qa",
+      "issuer": "FDA",
+      "jurisdiction": "US",
+      "title": "Electronic Systems, Electronic Records, and Electronic Signatures in Clinical Investigations: Questions and Answers",
+      "reference": "Guidance for Industry",
+      "date": "2024-10",
+      "status": "final",
+      "topics": [
+        "electronic-records",
+        "gcp"
+      ],
+      "url": "https://www.fda.gov/media/166215/download",
+      "sha256": "f74ce1b061edfa634aaf0a0b07a472995a6d215f310a562e17ae46c0b67b47a6",
+      "pages": 28
+    },
+    {
+      "id": "fda-be-anda",
+      "issuer": "FDA",
+      "jurisdiction": "US",
+      "title": "Bioequivalence Studies With Pharmacokinetic Endpoints for Drugs Submitted Under an ANDA",
+      "reference": "Guidance for Industry",
+      "date": "2026-05",
+      "status": "final",
+      "topics": [
+        "bioequivalence"
+      ],
+      "url": "https://www.fda.gov/media/192774/download",
+      "sha256": "ace62549a81cf0d307185a3a496806860101a1468da3208a1809b50c8c6a3cf6",
+      "pages": 35
+    },
+    {
+      "id": "fda-be-statistical",
+      "issuer": "FDA",
+      "jurisdiction": "US",
+      "title": "Statistical Approaches to Establishing Bioequivalence",
+      "reference": "Guidance for Industry",
+      "date": "2026-05",
+      "status": "final",
+      "topics": [
+        "bioequivalence",
+        "statistics"
+      ],
+      "url": "https://www.fda.gov/media/163638/download",
+      "sha256": "e9aee00c85191dc49fa48eb1a6623c5a61d418ce1a57ce15c09ddf16b4dd06c8",
+      "pages": 54
+    },
+    {
+      "id": "fda-sponsor-safety-reporting",
+      "issuer": "FDA",
+      "jurisdiction": "US",
+      "title": "Sponsor Responsibilities — Safety Reporting Requirements and Safety Assessment for IND and BA/BE Studies",
+      "reference": "Guidance for Industry",
+      "date": "2025-12",
+      "status": "final",
+      "topics": [
+        "safety-reporting"
+      ],
+      "url": "https://www.fda.gov/media/150356/download",
+      "sha256": "7124849af0417893a1c5d93fa6ccf2c4b4c67d5945e09060ae3977f6e0646bac",
+      "pages": 43
+    },
+    {
+      "id": "fda-adaptive-designs",
+      "issuer": "FDA",
+      "jurisdiction": "US",
+      "title": "Adaptive Designs for Clinical Trials of Drugs and Biologics",
+      "reference": "Guidance for Industry",
+      "date": "2019-11",
+      "status": "final",
+      "topics": [
+        "trial-design",
+        "statistics"
+      ],
+      "url": "https://www.fda.gov/media/78495/download",
+      "sha256": "c8b48547036f69ad95b4aac55510bd0c37ead058dd35dbc7cd0c15085e371a89",
+      "pages": 37
+    },
+    {
+      "id": "fda-multiple-endpoints",
+      "issuer": "FDA",
+      "jurisdiction": "US",
+      "title": "Multiple Endpoints in Clinical Trials",
+      "reference": "Guidance for Industry",
+      "date": "2022-10",
+      "status": "final",
+      "topics": [
+        "statistics",
+        "multiplicity"
+      ],
+      "url": "https://www.fda.gov/media/162416/download",
+      "sha256": "40284a050aab0037799072b2340e37d4b02ab6f7f2339fff6ea1cd55673a9563",
+      "pages": 29
+    },
+    {
+      "id": "fda-informed-consent",
+      "issuer": "FDA",
+      "jurisdiction": "US",
+      "title": "Informed Consent: Guidance for IRBs, Clinical Investigators, and Sponsors",
+      "reference": "Guidance",
+      "date": "2023-08",
+      "status": "final",
+      "topics": [
+        "gcp",
+        "informed-consent"
+      ],
+      "url": "https://www.fda.gov/media/88915/download",
+      "sha256": "96b26b2edb06e20ee2872ca59f4ec7c04cde8a8b1adf98bc150764e3d52f906a",
+      "pages": 66
+    },
+    {
+      "id": "fda-expedited-programs",
+      "issuer": "FDA",
+      "jurisdiction": "US",
+      "title": "Expedited Programs for Serious Conditions — Drugs and Biologics",
+      "reference": "Guidance for Industry",
+      "date": "2014-05",
+      "status": "final",
+      "topics": [
+        "expedited-programs"
+      ],
+      "url": "https://www.fda.gov/media/86377/download",
+      "sha256": "4f3c166bb4d6dead18a0d15bae514e96dafa6f4ead673aac48b04ff4826645fb",
+      "pages": 40
+    },
+    {
+      "id": "ema-bioequivalence",
+      "issuer": "EMA",
+      "jurisdiction": "EU",
+      "title": "Guideline on the Investigation of Bioequivalence",
+      "reference": "CPMP/EWP/QWP/1401/98 Rev. 1",
+      "date": "2010-01-20",
+      "status": "final",
+      "topics": [
+        "bioequivalence"
+      ],
+      "url": "https://www.ema.europa.eu/en/documents/scientific-guideline/guideline-investigation-bioequivalence-rev1_en.pdf",
+      "sha256": "331a6948620dc246c4ae12cfe2a782a42e17bc82d5f9ed6ed743df82d1266d33",
+      "pages": 27
+    },
+    {
+      "id": "ema-gvp-module-vi",
+      "issuer": "EMA",
+      "jurisdiction": "EU",
+      "title": "GVP Module VI — Collection, management and submission of reports of suspected adverse reactions to medicinal products (Rev 2)",
+      "reference": "EMA/873138/2011 Rev 2",
+      "date": "2017-07-28",
+      "status": "final",
+      "topics": [
+        "safety-reporting",
+        "pharmacovigilance"
+      ],
+      "url": "https://www.ema.europa.eu/en/documents/regulatory-procedural-guideline/guideline-good-pharmacovigilance-practices-gvp-module-vi-collection-management-and-submission-reports-suspected-adverse-reactions-medicinal-products-rev-2_en.pdf",
+      "sha256": "f27a7f0d678b17f2d6374946ae03d0b59db18217ed0fabae0b2f8a9111513b9e",
+      "pages": 144
+    },
+    {
+      "id": "ema-first-in-human",
+      "issuer": "EMA",
+      "jurisdiction": "EU",
+      "title": "Guideline on strategies to identify and mitigate risks for first-in-human and early clinical trials with investigational medicinal products",
+      "reference": "EMEA/CHMP/SWP/28367/07 Rev. 1",
+      "date": "2017-07-20",
+      "status": "final",
+      "topics": [
+        "trial-design",
+        "safety"
+      ],
+      "url": "https://www.ema.europa.eu/en/documents/scientific-guideline/guideline-strategies-identify-and-mitigate-risks-first-human-and-early-clinical-trials-investigational-medicinal-products-revision-1_en.pdf",
+      "sha256": "6d05cacd3b6da723f15d608ded724b620d76309e275bc6424a229e804411d719",
+      "pages": 22
+    },
+    {
+      "id": "ema-baseline-covariates",
+      "issuer": "EMA",
+      "jurisdiction": "EU",
+      "title": "Guideline on adjustment for baseline covariates in clinical trials",
+      "reference": "EMA/CHMP/295050/2013",
+      "date": "2015-02-26",
+      "status": "final",
+      "topics": [
+        "statistics"
+      ],
+      "url": "https://www.ema.europa.eu/en/documents/scientific-guideline/guideline-adjustment-baseline-covariates-clinical-trials_en.pdf",
+      "sha256": "e20cf15d0cfcb5a1fb807e369814f02d3a665aad6b4864d1e5eb9327c31fdb26",
+      "pages": 11
+    },
+    {
+      "id": "ema-multiplicity-ptc",
+      "issuer": "EMA",
+      "jurisdiction": "EU",
+      "title": "Points to consider on multiplicity issues in clinical trials",
+      "reference": "CPMP/EWP/908/99",
+      "date": "2002-09-19",
+      "status": "final",
+      "topics": [
+        "statistics",
+        "multiplicity"
+      ],
+      "url": "https://www.ema.europa.eu/en/documents/scientific-guideline/points-consider-multiplicity-issues-clinical-trials_en.pdf",
+      "sha256": "897bb9d6e9ced1865f709ca5fde8bbdcc2258ac6d89ed831cd6dcfaa0621e284",
+      "pages": 11
+    },
+    {
+      "id": "eu-gmp-annex11",
+      "issuer": "European Commission",
+      "jurisdiction": "EU",
+      "title": "EudraLex Volume 4, Annex 11: Computerised Systems",
+      "reference": "Annex 11",
+      "date": "2011-06-30",
+      "status": "final",
+      "topics": [
+        "electronic-records"
+      ],
+      "url": "https://health.ec.europa.eu/system/files/2016-11/annex11_01-2011_en_0.pdf",
+      "sha256": "8ec11211ba33bf88ad4e71acc6bf60fd0e7823cfa495b116872e2c287e4aebbb",
+      "pages": 5
+    }
+  ],
+  "cdisc": {
+    "source": "NCI Enterprise Vocabulary Services, the official distributor of CDISC Controlled Terminology",
+    "note": "Re-issued quarterly, so no checksum is pinned; the fetch records what it got in data/raw/cdisc/LOCK.json",
+    "files": {
+      "sdtm": "https://evs.nci.nih.gov/ftp1/CDISC/SDTM/SDTM%20Terminology.txt",
+      "adam": "https://evs.nci.nih.gov/ftp1/CDISC/ADaM/ADaM%20Terminology.txt",
+      "send": "https://evs.nci.nih.gov/ftp1/CDISC/SEND/SEND%20Terminology.txt",
+      "ddf": "https://evs.nci.nih.gov/ftp1/CDISC/DDF/DDF%20Terminology.txt",
+      "glossary": "https://evs.nci.nih.gov/ftp1/CDISC/Glossary/CDISC%20Glossary.txt"
+    }
+  },
+  "faers": {
+    "source": "openFDA drug adverse event bulk download (FAERS)",
+    "index": "https://api.fda.gov/download.json",
+    "quarter": "2025q1",
+    "parts": [
+      1,
+      2,
+      3
+    ],
+    "note": "A sample of one quarter, not all of FAERS. Every FAERS answer states this denominator."
+  }
+}
