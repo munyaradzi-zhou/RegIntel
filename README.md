@@ -192,6 +192,10 @@ scripts/          corpus download, Azure deploy and smoke test, UI screenshots
 tests/            unit tests and evaluation suites with their datasets
 ```
 
+## Write-up
+
+A five-part series on what building and measuring RegIntel taught me: [RegIntel: regulatory answers you can check](https://munyaradzi-zhou.github.io/portfolio/blog/regintel/part1-a-citation-is-a-contract.html), and the [case study](https://munyaradzi-zhou.github.io/portfolio/work/regintel.html).
+
 ## About this project
 
 I built RegIntel to show an end-to-end, evaluation-driven RAG and agent system in a regulated domain, where a confident wrong answer costs more than no answer. Every design decision above came from a measurement, and the measurements that went the wrong way are kept in the story.
