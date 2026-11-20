@@ -46,3 +46,6 @@ emissions.csv
 # Private working notes, build log, learning docs and dated experiment runs (kept locally)
 notes/
 tests/evaluation/results/
+
+# Private improvement plan (kept locally)
+IMPROVEMENTS.md
