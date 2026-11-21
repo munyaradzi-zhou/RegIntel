@@ -65,6 +65,7 @@ def test_ask_returns_verified_statements_numbered_sources_and_a_request_id(clien
     assert body["sources"][0]["label"] == "EMA BE guideline · §4.1.8, p.15"
     assert body["path"] == "guidance_single" and body["timings"]["writing"] == 1.5
     assert "not legal, medical or regulatory advice" in body["disclaimer"]
+    assert body["prompts"]["writer"].startswith("v")  # every answer names the prompts behind it
 
 
 def test_follow_up_is_rewritten_and_the_session_keeps_both_turns(client: TestClient, service: FakeService) -> None:

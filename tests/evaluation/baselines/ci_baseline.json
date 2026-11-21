@@ -1,0 +1,42 @@
+{
+  "updated": "2026-11-21",
+  "top_k": 8,
+  "fixtures": {
+    "chunks.jsonl.gz": "32afb2e46344",
+    "verifier_cases.json": "7a6d45eda4ea"
+  },
+  "metrics": {
+    "retrieval.bm25.doc_hit@1": 0.962,
+    "retrieval.bm25.doc_hit@k": 1.0,
+    "retrieval.bm25.section_hit@1": 0.712,
+    "retrieval.bm25.section_hit@k": 1.0,
+    "retrieval.bm25.doc_mrr": 0.978,
+    "retrieval.bm25.section_mrr": 0.826,
+    "retrieval.bm25.comparison_all_docs@k": 1.0,
+    "retrieval.bm25.multihop_all_sources@k": 0.6,
+    "verifier.statement_decisions_match": 1.0,
+    "verifier.labels_match": 1.0
+  },
+  "prompts": {
+    "writer": {
+      "version": "v5",
+      "sha256": "4764a29bf796"
+    },
+    "router": {
+      "version": "v1",
+      "sha256": "8b2165de7299"
+    },
+    "reviewer": {
+      "version": "v1",
+      "sha256": "b0f32f3cc86f"
+    },
+    "rewriter": {
+      "version": "v1",
+      "sha256": "fd24c2acb99b"
+    },
+    "agent": {
+      "version": "v1",
+      "sha256": "f1736fd89e6e"
+    }
+  }
+}

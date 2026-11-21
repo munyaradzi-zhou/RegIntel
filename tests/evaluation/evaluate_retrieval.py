@@ -15,6 +15,7 @@ from pathlib import Path
 from typing import TYPE_CHECKING
 
 from regintel.config import get_settings
+from regintel.evaluation.provenance import run_metadata
 from regintel.evaluation.retrieval_metrics import load_golden_set, score_question, summarise
 from regintel.ingestion.pipeline import read_chunks
 from regintel.retrieval.bm25 import BM25Retriever
@@ -148,6 +149,7 @@ def main() -> None:
         report["embedding_model"] = args.model
     out = HERE / "results" / args.label
     out.mkdir(parents=True, exist_ok=True)
+    report["run"] = run_metadata()
     (out / "retrieval.json").write_text(json.dumps(report, indent=2), encoding="utf-8")
     (out / "retrieval.md").write_text(to_markdown(report, args.label), encoding="utf-8")
     print(to_markdown(report, args.label))

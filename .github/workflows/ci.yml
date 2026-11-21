@@ -1,7 +1,8 @@
 # =============================================================================
 # RegIntel — CI
 # Quality gates on every push and pull request. Nothing here calls a model or Azure: the unit
-# tests use fakes, and the evaluations (which cost money) run on demand, not in CI.
+# tests use fakes, the evaluation gate replays recorded fixtures, and the evaluations that cost
+# money run on demand.
 # =============================================================================
 name: CI
 
@@ -60,6 +61,36 @@ jobs:
             pytest-results.xml
             coverage.xml
           retention-days: 14
+
+  eval-gate:
+    name: Evaluation gate (offline, compared with the baseline)
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: write  # the gate's report is posted on the pull request
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+          cache: pip
+          cache-dependency-path: pyproject.toml
+
+      - name: Install
+        run: pip install -e .
+
+      - name: Retrieval, verifier replay and prompt versions against tests/evaluation/baselines/ci_baseline.json
+        run: python -m tests.evaluation.ci_gate --out eval-gate.md
+
+      - name: Post the report on the pull request
+        if: always() && github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository
+        env:
+          GH_TOKEN: ${{ github.token }}
+          PR: ${{ github.event.pull_request.number }}
+        run: |
+          test -f eval-gate.md || exit 0
+          gh pr comment "$PR" --body-file eval-gate.md --edit-last --create-if-none
 
   security:
     name: Security scans

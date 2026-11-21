@@ -41,6 +41,8 @@ if TYPE_CHECKING:
 
 MAX_TOOL_CALLS = 8
 
+INSTRUCTIONS_VERSION = "v1"  # bump when INSTRUCTIONS change (checked in CI by regintel.prompts)
+
 INSTRUCTIONS = """\
 You are the research step of a regulatory question-answering system for medicines. You do not \
 write the final answer: another step writes it, using only the evidence your tool calls return.

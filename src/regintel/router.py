@@ -23,6 +23,8 @@ if TYPE_CHECKING:
 
 Path = Literal["agent", "guidance_multi", "guidance_single"]
 
+ROUTER_PROMPT_VERSION = "v1"  # bump when ROUTER_PROMPT changes (checked in CI by regintel.prompts)
+
 ROUTER_PROMPT = """\
 Classify a question for a regulatory question-answering system for medicines. The system has \
 indexed FDA, EMA/EU and ICH guidance documents, plus two data tools: counts of adverse event \
