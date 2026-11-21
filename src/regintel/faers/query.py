@@ -32,6 +32,12 @@ def _n(value: int) -> str:
     return f"{value:,}"
 
 
+def _ranked(counts: list[tuple[str, int]]) -> list[tuple[int, bool, str, int]]:
+    """Competition ranking (1, 2, 3, 3, 5): equal counts share a rank and are marked as tied."""
+    values = [n for _, n in counts]
+    return [(1 + sum(v > n for v in values), values.count(n) > 1, name, n) for name, n in counts]
+
+
 def _pct(part: int, whole: int) -> str:
     return f"{100 * part / whole:.1f}%" if whole else "n/a"
 
@@ -49,14 +55,20 @@ class DrugSummary:
     def to_text(self) -> str:
         if not self.reports:
             return f"{SCOPE}: no reports list {self.drug.upper()} as a suspect drug."
-        reactions = "; ".join(f"{name} {_n(n)}" for name, n in self.top_reactions)
+        # Each reaction is a self-contained phrase with its rank, so a quote of one entry still says
+        # it is among the most frequent (a bare "Death 48" is too short to quote, and the reviewer
+        # rightly calls "the second most frequent" overreach when the quote omits the ranking).
+        reactions = " ".join(
+            f"Most frequent reaction {rank}{' (tied)' if tied else ''}: {name}, {_n(n)} reports."
+            for rank, tied, name, n in _ranked(self.top_reactions)
+        )
         return (
             f"{SCOPE}, {_n(self.total_reports)} reports in total. "
             f"Reports listing {self.drug.upper()} as a suspect drug: {_n(self.reports)} "
             f"(matched names: {', '.join(self.matched_names)}). "
             f"Serious: {_n(self.serious)} ({_pct(self.serious, self.reports)}). "
             f"Death reported: {_n(self.deaths)} ({_pct(self.deaths, self.reports)}). "
-            f"Most frequent reactions: {reactions}."
+            f"{reactions}"
         )
 
 
