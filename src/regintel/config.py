@@ -33,6 +33,14 @@ class Settings(BaseSettings):
     azure_openai_endpoint: str | None = None
     azure_openai_chat_deployment: str = "gpt-5-mini"
     azure_openai_embedding_deployment: str = "text-embedding-3-large"
+    # Answer writer, when it is not the Azure OpenAI chat deployment above: any model on an Azure
+    # endpoint with the /openai/v1/ API (e.g. grok-4.7 or Llama on the AI Services resource).
+    # "responses" uses the Responses API; "chat" uses Chat Completions with a JSON schema, for models
+    # whose Responses API ignores the schema.
+    writer_api: Literal["responses", "chat"] = "responses"
+    writer_endpoint: str | None = None  # default: azure_openai_endpoint
+    writer_deployment: str | None = None  # default: azure_openai_chat_deployment
+    writer_reasoning_effort: Literal["minimal", "low", "medium", "high", "none"] = "low"  # responses only
     # Answer reviewer: a different model family from the writer, on an AI Services (Foundry) resource
     azure_judge_endpoint: str | None = None
     azure_judge_deployment: str = "gpt-oss-120b"

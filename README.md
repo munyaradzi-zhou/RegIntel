@@ -101,6 +101,22 @@ What the evaluations changed along the way:
 - **The first live evaluation caught a production bug.** Blocking model calls held the API's event loop for ~16 s, health probes timed out and the platform restarted the container mid-run (15 of 70 requests failed). The blocking work now runs in worker threads: 0 of 70 failed.
 - **Prompt injection.** Of 13 attacks (direct, prompt extraction, and instructions planted in retrieved passages), 1 got through: a forged passage containing no instructions, which is data poisoning rather than injection; the corpus is pinned by checksum against exactly that. No benign question was blocked.
 
+**Writers from four model families**, on the same 60 questions with identical retrieved passages, the same prompt and schema, and the same verifier and reviewer. Only the writer changes:
+
+| Writer | Answered | Declined | Fact recall | All facts | Statements dropped by the verifier | Dropped by the reviewer | Latency p50 / p95 | Tokens in / out per answer |
+|---|---|---|---|---|---|---|---|---|
+| `gpt-5-mini` (OpenAI) | 52 / 52 | 8 / 8 | 0.942 | 0.904 | 11 of 264 (4.2%) | 11–13 | 6.1 / 11.8 s | 3,812 / 860 |
+| `grok-4.7` (xAI) | 52 / 52 | 8 / 8 | **0.971** | **0.942** | **6 of 233 (2.6%)** | **6** | 12.1 / 26.5 s | 3,929 / 470 |
+| `Llama-3.3-70B-Instruct` (Meta) | 50 / 52 | 8 / 8 | 0.804 | 0.692 | 15 of 132 (11.4%) | 8 | 8.8 / 64.5 s | 3,544 / 618 |
+| `DeepSeek-V3.2-Speciale` | 52 / 52 | 7 / 8 | 0.926 | 0.885 | 42 of 309 (13.6%) | 18 | 13.2 / 24.0 s | 3,558 / 744 |
+
+- Grok-4.7 recalled the most facts and misquoted the least, at twice gpt-5-mini's latency; gpt-5-mini stays the default for speed.
+- DeepSeek wrote the most statements and had the most dropped, mostly numbers its quotes did not contain (33). It also answered one of the unanswerable questions, with a true but beside-the-point statement. Without the verifier, those would have been shown.
+- Llama and DeepSeek ignore the answer schema on the Responses API but follow it through Chat Completions, so the writer supports both (`WRITER_API`). Llama still returned malformed JSON 3 times; the writer retries, and one question with no valid draft is scored as a failure, not skipped. Its retries account for the 64 s p95.
+- The reviewer is a model too: re-reviewing the same gpt-5-mini drafts dropped 11 statements on one pass and 13 on the next, so review counts are compared with care. The verifier is deterministic.
+
+The writer is chosen with `WRITER_ENDPOINT`, `WRITER_DEPLOYMENT` and `WRITER_API`; all four are pay-as-you-go deployments on Azure, so the comparison ran on the same subscription.
+
 ## Run it locally
 
 Requirements: Python 3.11+, `az login` to a subscription with the Azure resources (or run `scripts/azure/deploy.sh` first).
@@ -165,7 +181,7 @@ claude mcp add regintel -- python -m regintel.mcp_server
 `make check` runs the same gates as CI:
 
 - **Ruff** lint and formatting, **mypy `--strict`** over the whole package
-- **197 unit tests** with an 85% coverage gate: verifier, reviewer, router, agent loop (a fake agent calling the real tools), guards, chunking and glyph repair, FAERS statistics, sessions and follow-up rewriting, API auth and rate limits, SSE, UI escaping
+- **202 unit tests** with an 85% coverage gate: verifier, reviewer, router, agent loop (a fake agent calling the real tools), guards, chunking and glyph repair, FAERS statistics, sessions and follow-up rewriting, API auth and rate limits, SSE, UI escaping
 - **Bandit**, **pip-audit** and **gitleaks** over the full history
 - Both **Docker** images built, and the API image started with no data or credentials (it must stay up and report why it is not ready), **Bicep** build, **shellcheck**
 
