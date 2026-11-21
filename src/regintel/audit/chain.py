@@ -3,7 +3,8 @@
     hash = sha256(prev_hash + canonical JSON of the record without its hash)
 
 Canonical JSON (sorted keys, no spaces, UTF-8, whole-number floats as integers) makes the hash
-independent of how a store serialises the document; fields a store adds (Cosmos `_rid`, `_etag`, `_ts`, ...) are left out.
+independent of how a store serialises the document; fields a store adds (Cosmos `_rid`, `_etag`,
+`_ts`, ...) are left out.
 Editing any field of a record changes its hash; deleting or reordering records breaks the
 `prev_hash` link or the sequence. Records are stored one partition per day with a sequence per
 day; a day's first record links to the previous day's last record, and the very first to GENESIS.
