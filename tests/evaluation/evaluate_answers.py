@@ -25,6 +25,7 @@ from regintel.answering.schema import DraftAnswer, Usage
 from regintel.config import get_settings
 from regintel.corpus.manifest import load_manifest
 from regintel.evaluation.answer_metrics import AnswerScore, score_answer, summarise_answers
+from regintel.evaluation.provenance import run_metadata
 from regintel.evaluation.retrieval_metrics import load_golden_set
 from regintel.ingestion.pipeline import read_chunks
 from regintel.retrieval.base import Hit
@@ -186,6 +187,7 @@ def build_report(scores: list[AnswerScore], version: str, setup: str, model: str
 def write_report(report: dict[str, object], label: str) -> None:
     out = HERE / "results" / label
     out.mkdir(parents=True, exist_ok=True)
+    report.setdefault("run", run_metadata())
     (out / "answers.json").write_text(json.dumps(report, indent=2, ensure_ascii=False), encoding="utf-8")
     (out / "answers.md").write_text(to_markdown(report, label), encoding="utf-8")
     print(to_markdown(report, label))

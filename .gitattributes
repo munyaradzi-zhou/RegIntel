@@ -5,3 +5,4 @@
 *.jpg binary
 *.pdf binary
 *.parquet binary
+*.gz binary

@@ -32,6 +32,8 @@ if TYPE_CHECKING:
 
 HISTORY_TURNS = 4  # turns the rewriter sees; older context rarely changes what a follow-up means
 
+REWRITE_PROMPT_VERSION = "v1"  # bump when REWRITE_PROMPT changes (checked in CI by regintel.prompts)
+
 REWRITE_PROMPT = """\
 Rewrite the user's latest message into one standalone question about regulatory guidance for \
 medicines, using the user's earlier questions only to resolve what it refers to (pronouns, \

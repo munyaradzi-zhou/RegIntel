@@ -8,6 +8,7 @@ from typing import TYPE_CHECKING
 from pydantic import BaseModel, Field
 
 from regintel.guard.screens import MAX_QUESTION_CHARS
+from regintel.prompts import prompt_tags
 
 if TYPE_CHECKING:
     from regintel.conversation import ChatAnswer, Session
@@ -59,6 +60,7 @@ class AskResponse(BaseModel):
     path: str | None
     tool_calls: list[ToolCallOut]
     timings: dict[str, float]
+    prompts: dict[str, str] = Field(default_factory=dict)  # "writer": "v5+<hash>": the prompts behind this answer
     disclaimer: str = DISCLAIMER
 
     @classmethod
@@ -92,6 +94,7 @@ class AskResponse(BaseModel):
                 "writing": round(result.generation_seconds, 2),
                 "web": round(chat.answer.web_seconds, 2),
             },
+            prompts=prompt_tags(),
         )
 
 

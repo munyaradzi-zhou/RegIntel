@@ -1,5 +1,5 @@
 .PHONY: help dev check lint format typecheck security audit test corpus ingest \
-        eval-retrieval eval-answers eval-agent eval-injection eval-review eval-followups eval-web \
+        eval-ci eval-retrieval eval-answers eval-agent eval-injection eval-review eval-followups eval-web \
         run run-ui mcp docker-up docker-down screenshots clean
 
 help: ## Show available targets
@@ -43,7 +43,12 @@ corpus: ## Download the corpus listed in data/manifest.json (checksums verified)
 ingest: ## Chunk the corpus into data/processed/chunks.jsonl
 	python -m regintel.ingestion.pipeline
 
-# ─── Evaluations (Azure calls cost a little money: run on demand, not in CI) ─
+# ─── Evaluations ─────────────────────────────────────────────────────────────
+# eval-ci is offline and free, and runs on every pull request. The others call Azure, cost a
+# little money, and run on demand.
+
+eval-ci: ## Offline regression gate: BM25 retrieval, verifier replay, prompt versions (ARGS=--update-baseline)
+	python -m tests.evaluation.ci_gate $(ARGS)
 
 eval-retrieval: ## Local retrieval baselines (free)
 	python -m tests.evaluation.evaluate_retrieval

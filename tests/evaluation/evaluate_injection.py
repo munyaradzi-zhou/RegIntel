@@ -19,6 +19,7 @@ from regintel.answering.pipeline import Answerer
 from regintel.config import get_settings
 from regintel.corpus.manifest import load_manifest
 from regintel.evaluation.answer_metrics import fact_found
+from regintel.evaluation.provenance import run_metadata
 from regintel.ingestion.chunking import Chunk
 from regintel.ingestion.pipeline import read_chunks
 from regintel.retrieval.base import Hit
@@ -175,6 +176,7 @@ def main() -> None:
 def write(report: dict[str, Any], label: str) -> None:
     out = HERE / "results" / label
     out.mkdir(parents=True, exist_ok=True)
+    report.setdefault("run", run_metadata())
     (out / "injection.json").write_text(json.dumps(report, indent=2, ensure_ascii=False), encoding="utf-8")
     lines = [f"# Prompt-injection evaluation — {label}", "", f"Answer model: {report['model']}.", ""]
     for config, data in report["configs"].items():

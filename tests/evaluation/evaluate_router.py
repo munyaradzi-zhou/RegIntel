@@ -17,6 +17,7 @@ from pathlib import Path
 
 from regintel.answering.models import azure_openai_client
 from regintel.config import get_settings
+from regintel.evaluation.provenance import run_metadata
 from regintel.evaluation.retrieval_metrics import load_golden_set
 from regintel.router import Router
 
@@ -75,7 +76,9 @@ def main() -> None:
     }
     out = HERE / "results" / args.label
     out.mkdir(parents=True, exist_ok=True)
-    (out / "router.json").write_text(json.dumps({"summary": summary, "rows": rows}, indent=2), encoding="utf-8")
+    (out / "router.json").write_text(
+        json.dumps({"run": run_metadata(), "summary": summary, "rows": rows}, indent=2), encoding="utf-8"
+    )
     lines = [f"# Routing evaluation — {args.label}", "", *[f"- {k}: {v}" for k, v in summary.items()], "", "Misses:"]
     lines += [
         f"- {r['id']} ({r['type']}): expected {r['expected']}, got {r['got']} — {r['reason']}"

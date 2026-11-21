@@ -31,6 +31,8 @@ if TYPE_CHECKING:
     from regintel.answering.schema import AnswerResult
     from regintel.config import Settings
 
+REVIEW_PROMPT_VERSION = "v1"  # bump when REVIEW_PROMPT changes (checked in CI by regintel.prompts)
+
 REVIEW_PROMPT = """\
 You review answers about regulatory guidance for medicines. Each statement comes with the exact \
 quotes that support it; the quotes are verified to be real text from the guidance. Judge only \

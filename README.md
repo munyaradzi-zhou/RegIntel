@@ -143,7 +143,7 @@ curl "localhost:8000/v1/faers/profile?drug=atorvastatin" -H "X-API-Key: $KEY"
 curl "localhost:8000/v1/cdisc?term=MILLIGRAM" -H "X-API-Key: $KEY"
 ```
 
-Also `GET /v1/sessions/{id}`, `GET /healthz`, `GET /readyz`. Every answer carries a grounding label (`grounded`, `partially_grounded`, `not_grounded`, `declined`), its sources with the verbatim quotes, the path taken and per-stage timings. Full schemas at `/docs`; more in [`docs/api-and-mcp.md`](docs/api-and-mcp.md).
+Also `GET /v1/sessions/{id}`, `GET /healthz`, `GET /readyz`. Every answer carries a grounding label (`grounded`, `partially_grounded`, `not_grounded`, `declined`), its sources with the verbatim quotes, the path taken, per-stage timings and the version and text hash of each prompt that produced it (evaluation results record the same). Full schemas at `/docs`; more in [`docs/api-and-mcp.md`](docs/api-and-mcp.md).
 
 ## Use it from other agents (MCP)
 
@@ -165,11 +165,13 @@ claude mcp add regintel -- python -m regintel.mcp_server
 `make check` runs the same gates as CI:
 
 - **Ruff** lint and formatting, **mypy `--strict`** over the whole package
-- **185 unit tests** with an 85% coverage gate: verifier, reviewer, router, agent loop (a fake agent calling the real tools), guards, chunking and glyph repair, FAERS statistics, sessions and follow-up rewriting, API auth and rate limits, SSE, UI escaping
+- **197 unit tests** with an 85% coverage gate: verifier, reviewer, router, agent loop (a fake agent calling the real tools), guards, chunking and glyph repair, FAERS statistics, sessions and follow-up rewriting, API auth and rate limits, SSE, UI escaping
 - **Bandit**, **pip-audit** and **gitleaks** over the full history
 - Both **Docker** images built, and the API image started with no data or credentials (it must stay up and report why it is not ready), **Bicep** build, **shellcheck**
 
-Evaluations call real models, so they run on demand rather than in CI: `make eval-retrieval`, `eval-answers`, `eval-agent`, `eval-injection`, `eval-review`, `eval-followups`, `eval-web`, and `python -m tests.evaluation.evaluate_live --url <api>` against a deployment.
+**Evaluation gate on every pull request** (`make eval-ci`, free, no model calls). It scores BM25 retrieval on the golden set over the committed chunk fixture, replays 114 recorded and deliberately mutated drafts through the verifier (each statement must be kept or dropped exactly as recorded), and checks that every prompt whose text changed has a new version. Results are compared with [`ci_baseline.json`](tests/evaluation/baselines/ci_baseline.json): a metric that drops more than 0.02 fails the build, and the report is posted on the pull request. `make eval-ci ARGS=--update-baseline` moves the bar deliberately, in the same pull request as the improvement.
+
+The other evaluations call real models, so they run on demand: `make eval-retrieval`, `eval-answers`, `eval-agent`, `eval-injection`, `eval-review`, `eval-followups`, `eval-web`, and `python -m tests.evaluation.evaluate_live --url <api>` against a deployment.
 
 ## Project layout
 

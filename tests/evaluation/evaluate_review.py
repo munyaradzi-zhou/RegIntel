@@ -17,6 +17,7 @@ from openai import OpenAI
 from regintel.answering.review import AnswerReviewer
 from regintel.answering.schema import AnswerResult, CheckedStatement, Usage, VerifiedCitation
 from regintel.config import get_settings
+from regintel.evaluation.provenance import run_metadata
 
 try:
     import truststore
@@ -89,7 +90,7 @@ def main() -> None:
     }
     out = HERE / "results" / args.label
     out.mkdir(parents=True, exist_ok=True)
-    report = {"model": model, "summary": summary, "statements": rows, "questions": question_rows}
+    report = {"run": run_metadata(), "model": model, "summary": summary, "statements": rows, "questions": question_rows}
     (out / "review.json").write_text(json.dumps(report, indent=2, ensure_ascii=False), encoding="utf-8")
     lines = [f"# Answer reviewer calibration — {args.label}", "", f"Reviewer: {model}.", ""]
     lines += [f"- {k}: {v}" for k, v in summary.items()]

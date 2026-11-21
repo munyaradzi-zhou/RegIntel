@@ -8,7 +8,7 @@ from typing import TYPE_CHECKING
 if TYPE_CHECKING:
     from regintel.retrieval.base import Hit
 
-PROMPT_VERSION = "v5"  # bump when SYSTEM_PROMPT changes; recorded with every evaluation run
+PROMPT_VERSION = "v5"  # bump when SYSTEM_PROMPT changes (checked in CI by regintel.prompts)
 
 SYSTEM_PROMPT = """\
 You answer questions about regulatory guidance for medicines (FDA, EMA/EU, ICH) for people who \

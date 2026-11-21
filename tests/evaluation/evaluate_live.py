@@ -24,6 +24,7 @@ from pathlib import Path
 import httpx
 
 from regintel.evaluation.answer_metrics import fact_found
+from regintel.evaluation.provenance import run_metadata
 
 try:
     import truststore
@@ -149,12 +150,16 @@ def main() -> None:
                 "status": response.status_code,
                 "seconds": seconds,
                 "timings": body.get("timings", {}),
+                "prompts": body.get("prompts"),
                 **score(q, body),
             }
             rows.append(row)
             print(f"{q['id']:<8} {response.status_code} {row['label']:<20} {row['path']!s:<16} {seconds:>6.1f}s")
 
-    summary = {"url": base, "first_contact_seconds": first_contact, **summarise(rows)}
+    # the deployed API reports its own prompt versions; record those, not the local checkout's
+    deployed = next((r["prompts"] for r in rows if r.get("prompts")), None)
+    summary = {"run": run_metadata(deployed), "url": base, "first_contact_seconds": first_contact,
+               **summarise(rows)}  # fmt: skip
     (out / "live.jsonl").write_text("\n".join(json.dumps(r) for r in rows) + "\n", encoding="utf-8")
     (out / "summary.json").write_text(json.dumps(summary, indent=2) + "\n", encoding="utf-8")
     print(json.dumps(summary, indent=2))
