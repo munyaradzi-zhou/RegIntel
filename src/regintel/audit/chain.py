@@ -2,8 +2,8 @@
 
     hash = sha256(prev_hash + canonical JSON of the record without its hash)
 
-Canonical JSON (sorted keys, no spaces, UTF-8) makes the hash independent of how a store
-serialises the document; fields a store adds (Cosmos `_rid`, `_etag`, `_ts`, ...) are left out.
+Canonical JSON (sorted keys, no spaces, UTF-8, whole-number floats as integers) makes the hash
+independent of how a store serialises the document; fields a store adds (Cosmos `_rid`, `_etag`, `_ts`, ...) are left out.
 Editing any field of a record changes its hash; deleting or reordering records breaks the
 `prev_hash` link or the sequence. Records are stored one partition per day with a sequence per
 day; a day's first record links to the previous day's last record, and the very first to GENESIS.
@@ -24,8 +24,19 @@ GENESIS = "0" * 64
 HASHED_OUT = frozenset({"hash"})  # the hash cannot cover itself
 
 
+def _plain(value: Any) -> Any:
+    """Whole-number floats as integers: Cosmos DB returns 0.0 as 0, and the hash must survive that."""
+    if isinstance(value, float) and value.is_integer():
+        return int(value)
+    if isinstance(value, dict):
+        return {k: _plain(v) for k, v in value.items()}
+    if isinstance(value, list):
+        return [_plain(v) for v in value]
+    return value
+
+
 def canonical(record: dict[str, Any]) -> bytes:
-    body = {k: v for k, v in record.items() if k not in HASHED_OUT and not k.startswith("_")}
+    body = {k: _plain(v) for k, v in record.items() if k not in HASHED_OUT and not k.startswith("_")}
     return json.dumps(body, sort_keys=True, separators=(",", ":"), ensure_ascii=False).encode("utf-8")
 
 
