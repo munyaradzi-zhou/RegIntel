@@ -13,15 +13,18 @@ import argparse
 import hashlib
 import json
 import os
+import sys
 import time
 from dataclasses import asdict
 from datetime import date
 from pathlib import Path
 from typing import TYPE_CHECKING
 
+from pydantic import ValidationError
+
 from regintel.answering.models import answer_model_from_settings
 from regintel.answering.pipeline import Answerer, verify_draft
-from regintel.answering.schema import DraftAnswer, Usage
+from regintel.answering.schema import AnswerResult, DraftAnswer, Usage
 from regintel.config import get_settings
 from regintel.corpus.manifest import load_manifest
 from regintel.evaluation.answer_metrics import AnswerScore, score_answer, summarise_answers
@@ -123,6 +126,8 @@ def to_markdown(report: dict[str, object], label: str) -> str:
 
 
 def main() -> None:
+    if hasattr(sys.stdout, "reconfigure"):
+        sys.stdout.reconfigure(encoding="utf-8")  # answers quote guidance typography; Windows consoles use cp1252
     parser = argparse.ArgumentParser()
     parser.add_argument("--label", default=f"{date.today().isoformat()}-answers")
     parser.add_argument("--effort", choices=["minimal", "low", "medium"], default="medium", help="KB retrieval effort")
@@ -148,8 +153,13 @@ def main() -> None:
     model = answer_model_from_settings(settings, tokens)
     answerer = Answerer(retriever, model, load_manifest(settings.data_dir / "manifest.json"), top_k=TOP_K)
     scores = []
+    writer_errors: list[str] = []
     for question, question_hits in zip(questions, hits, strict=True):
-        result = answerer.answer(question.question, hits=question_hits)
+        try:
+            result = answerer.answer(question.question, hits=question_hits)
+        except (ValidationError, ValueError) as exc:  # no schema-valid draft after the writer's retries
+            writer_errors.append(question.id)
+            result = writer_failed(question.question, question_hits, str(exc))
         scores.append(score_answer(question, result))
         print(f"{question.id:7} {result.label:18} facts={scores[-1].fact_recall}")
 
@@ -157,7 +167,17 @@ def main() -> None:
         f"Retrieval: Azure AI Search knowledge base over section chunks, {args.effort} reasoning effort, "
         f"top {TOP_K}. Answers: {model.name} (structured output), verified by regintel.answering.verify."
     )
-    write_report(build_report(scores, golden.version, setup, settings.azure_openai_chat_deployment), args.label)
+    writer = settings.writer_deployment or settings.azure_openai_chat_deployment
+    report = build_report(scores, golden.version, setup, writer)
+    report["summary"]["writer_errors"] = writer_errors  # type: ignore[index]
+    report["summary"]["malformed_outputs"] = getattr(model, "malformed", 0)  # type: ignore[index]
+    write_report(report, args.label)
+
+
+def writer_failed(question: str, hits: list[Hit], reason: str) -> AnswerResult:
+    """What a user would get if the writer never produced a valid draft: nothing shown (fail closed)."""
+    return AnswerResult(question, "not_grounded", [], f"Writer error: {reason[:200]}", [h.chunk.chunk_id for h in hits],
+                        Usage(), 0.0, 0.0)  # fmt: skip
 
 
 def build_report(scores: list[AnswerScore], version: str, setup: str, model: str) -> dict[str, object]:
