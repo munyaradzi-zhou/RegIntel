@@ -152,6 +152,10 @@ def main() -> None:
                 "timings": body.get("timings", {}),
                 "prompts": body.get("prompts"),
                 **score(q, body),
+                # kept so an intermittent decline can be diagnosed afterwards (reviewer, verifier or tool)
+                "answer": body.get("answer"),
+                "dropped": body.get("dropped", []),
+                "tool_calls": [{k: c.get(k) for k in ("name", "arguments")} for c in body.get("tool_calls", [])],
             }
             rows.append(row)
             print(f"{q['id']:<8} {response.status_code} {row['label']:<20} {row['path']!s:<16} {seconds:>6.1f}s")
