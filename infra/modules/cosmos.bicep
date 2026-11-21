@@ -1,4 +1,4 @@
-// Cosmos DB (NoSQL, serverless) for conversation sessions: pay per request, nothing while idle.
+// Cosmos DB (NoSQL, serverless) for conversation sessions and the audit trail: pay per request, nothing while idle.
 // Local (key) auth is disabled; the apps' identity gets the built-in data contributor role.
 
 param location string
@@ -38,6 +38,19 @@ resource sessions 'Microsoft.DocumentDB/databaseAccounts/sqlDatabases/containers
       id: 'sessions'
       partitionKey: { paths: [ '/id' ], kind: 'Hash' }
       defaultTtl: -1 // expiry is set per document (7 days after the last turn)
+    }
+  }
+}
+
+// The audit trail: one record per answer, hash-chained, one partition per day. No TTL: records are
+// kept. The API creates and reads; nothing in the application updates or deletes a record.
+resource audit 'Microsoft.DocumentDB/databaseAccounts/sqlDatabases/containers@2024-05-15' = {
+  parent: database
+  name: 'audit'
+  properties: {
+    resource: {
+      id: 'audit'
+      partitionKey: { paths: [ '/day' ], kind: 'Hash' }
     }
   }
 }
