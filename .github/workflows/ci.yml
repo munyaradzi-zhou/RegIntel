@@ -77,7 +77,7 @@ jobs:
           cache: pip
           cache-dependency-path: pyproject.toml
 
-      - name: Install (what the API image installs: the prompts live in modules that import the Azure SDKs)
+      - name: Install with the serve extra, as the API image does (the prompt modules import the Azure SDKs)
         run: pip install -e ".[serve]"
 
       - name: Retrieval, verifier replay and prompt versions against tests/evaluation/baselines/ci_baseline.json
