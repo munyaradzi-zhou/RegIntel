@@ -7,6 +7,7 @@ from fastapi.testclient import TestClient
 
 from regintel.answering.schema import AnswerResult, CheckedStatement, Usage, VerifiedCitation
 from regintel.api.app import RateLimiter, create_app
+from regintel.audit.store import InMemoryAuditStore
 from regintel.config import get_settings
 from regintel.conversation import InMemorySessionStore, RegIntelChat, Rewrite, Turn
 from regintel.service import RoutedAnswer
@@ -46,7 +47,7 @@ def client(service: FakeService, monkeypatch: pytest.MonkeyPatch) -> Iterator[Te
     monkeypatch.setenv("RATE_LIMIT_PER_MINUTE", "100")
     get_settings.cache_clear()
     chat = RegIntelChat(service, FakeRewriter(), InMemorySessionStore())  # type: ignore[arg-type]
-    with TestClient(create_app(chat)) as test_client:
+    with TestClient(create_app(chat, InMemoryAuditStore())) as test_client:
         yield test_client
     get_settings.cache_clear()
 
@@ -101,7 +102,7 @@ def test_api_key_required_when_configured(service: FakeService, monkeypatch: pyt
     monkeypatch.setenv("API_KEYS", "k1-secret,k2-secret")
     get_settings.cache_clear()
     chat = RegIntelChat(service, FakeRewriter(), InMemorySessionStore())  # type: ignore[arg-type]
-    with TestClient(create_app(chat)) as c:
+    with TestClient(create_app(chat, InMemoryAuditStore())) as c:
         assert c.post("/v1/ask", json={"question": "q"}).status_code == 401
         assert c.post("/v1/ask", json={"question": "q"}, headers={"X-API-Key": "wrong"}).status_code == 401
         assert c.post("/v1/ask", json={"question": "q"}, headers={"X-API-Key": "k2-secret"}).status_code == 200
@@ -137,7 +138,7 @@ def test_service_that_cannot_start_leaves_the_api_up_and_not_ready(monkeypatch: 
 
     monkeypatch.setattr(api_app, "build_chat", broken)
     get_settings.cache_clear()
-    with TestClient(create_app()) as c:
+    with TestClient(create_app(audit=InMemoryAuditStore())) as c:
         assert c.get("/healthz").status_code == 200
         ready = c.get("/readyz")
         assert ready.status_code == 503 and "no Azure credentials" in ready.json()["reason"]

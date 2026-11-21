@@ -10,6 +10,7 @@ Labels:
 
 from __future__ import annotations
 
+import hashlib
 import time
 from typing import TYPE_CHECKING
 
@@ -24,6 +25,12 @@ if TYPE_CHECKING:
     from regintel.corpus.manifest import Manifest
     from regintel.ingestion.chunking import Chunk
     from regintel.retrieval.base import Hit, Retriever
+
+
+def is_tool_record(chunk_id: str) -> bool:
+    """Tool results (faers:..., cdisc:..., openfda:...) versus corpus chunks (doc#0001)."""
+    return ":" in chunk_id and "#" not in chunk_id
+
 
 NOT_GROUNDED_MESSAGE = (
     "An answer was drafted but its citations could not be verified against the guidance text, so it is withheld."
@@ -112,4 +119,6 @@ def verify_draft(
         retrieval_seconds=0.0,
         generation_seconds=0.0,
         draft=draft,
+        passage_sha256={c.chunk_id: hashlib.sha256(c.text.encode("utf-8")).hexdigest() for c in passages},
+        record_texts={c.chunk_id: c.text for c in passages if is_tool_record(c.chunk_id)},
     )

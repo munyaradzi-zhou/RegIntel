@@ -21,6 +21,7 @@ RegIntel answers questions about FDA, ICH and EMA guidance, CDISC terminology, F
 | **Independent reviewer** | `gpt-oss-120b`, a different model family from the writer, judges each verified statement as supported, overreach or unsupported. It catches what string matching cannot: a "should" written as "must", or a general rule stretched to a subject the source never mentions. |
 | **Research agent with data tools** | A Microsoft Agent Framework agent for questions that need data: CDISC Controlled Terminology lookup, FAERS safety signals over 36,000 reports in DuckDB (counts and reporting odds ratios with 95% CI, computed by parameterised queries, never written by the model), and live openFDA drug label sections and recalls, verified like any passage. |
 | **Guards** | Input screens for instruction overrides and prompt extraction, and a passage screen so retrieved text carrying instructions never reaches the writer. Declined questions get up to three pages from regulator websites, clearly marked as unverified pointers. |
+| **GxP-style audit trail** | Every answer is recorded before it is released: who asked (key id), the route, each source with its sha256, models, prompt versions, the raw draft and every verifier and reviewer decision. Records are hash-chained in Cosmos DB; `GET /v1/audit/verify` finds the first edited or removed record, and `scripts/replay.py` re-verifies any answer. A [validation pack](docs/validation/) traces each requirement to its tests. |
 | **Production plumbing** | FastAPI with SSE streaming, API keys and rate limits, follow-up questions in Cosmos DB sessions, OpenTelemetry to Application Insights, an MCP server, and a Streamlit UI. |
 
 ## Architecture
@@ -163,7 +164,7 @@ curl "localhost:8000/v1/faers/profile?drug=atorvastatin" -H "X-API-Key: $KEY"
 curl "localhost:8000/v1/cdisc?term=MILLIGRAM" -H "X-API-Key: $KEY"
 ```
 
-Also `GET /v1/sessions/{id}`, `GET /healthz`, `GET /readyz`. Every answer carries a grounding label (`grounded`, `partially_grounded`, `not_grounded`, `declined`), its sources with the verbatim quotes, the path taken, per-stage timings and the version and text hash of each prompt that produced it (evaluation results record the same). Full schemas at `/docs`; more in [`docs/api-and-mcp.md`](docs/api-and-mcp.md).
+Also `GET /v1/audit/verify` (recompute the audit trail's hash chain), `GET /v1/sessions/{id}`, `GET /healthz`, `GET /readyz`. Every answer carries a grounding label (`grounded`, `partially_grounded`, `not_grounded`, `declined`), its sources with the verbatim quotes, the path taken, per-stage timings and the version and text hash of each prompt that produced it (evaluation results record the same), and the id of its audit record (`python scripts/replay.py <audit_id>`). Full schemas at `/docs`; more in [`docs/api-and-mcp.md`](docs/api-and-mcp.md).
 
 ## Use it from other agents (MCP)
 
@@ -187,7 +188,7 @@ claude mcp add regintel -- python -m regintel.mcp_server
 `make check` runs the same gates as CI:
 
 - **Ruff** lint and formatting, **mypy `--strict`** over the whole package
-- **214 unit tests** with an 85% coverage gate: verifier, reviewer, router, agent loop (a fake agent calling the real tools), guards, chunking and glyph repair, FAERS statistics, the openFDA client against recorded responses (429, 5xx, timeouts, cache, an unreachable API adds no evidence), sessions and follow-up rewriting, API auth and rate limits, SSE, UI escaping
+- **235 unit tests** with an 85% coverage gate: verifier, reviewer, router, agent loop (a fake agent calling the real tools), guards, chunking and glyph repair, FAERS statistics, the openFDA client against recorded responses (429, 5xx, timeouts, cache, an unreachable API adds no evidence), sessions and follow-up rewriting, the audit trail (hash chain, tampering, a Cosmos fake with ETags under contention, fail-closed recording, replay), the validation pack's links, API auth and rate limits, SSE, UI escaping
 - **Bandit**, **pip-audit** and **gitleaks** over the full history
 - Both **Docker** images built, and the API image started with no data or credentials (it must stay up and report why it is not ready), **Bicep** build, **shellcheck**
 
@@ -207,6 +208,7 @@ src/regintel/
   agent/          research agent and its tools
   faers/ terminology/   DuckDB safety-signal queries, CDISC lookup
   openfda/        live openFDA client (timeouts, retries, TTL cache) and label / recall lookups
+  audit/          hash-chained audit records, Cosmos store, chain verification, replay
   guard/          question and passage screens
   router.py service.py conversation.py   routing, end-to-end service, follow-ups
   api/            FastAPI app, models, sessions in Cosmos DB

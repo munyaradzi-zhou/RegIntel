@@ -61,10 +61,11 @@ class AskResponse(BaseModel):
     tool_calls: list[ToolCallOut]
     timings: dict[str, float]
     prompts: dict[str, str] = Field(default_factory=dict)  # "writer": "v5+<hash>": the prompts behind this answer
+    audit_id: str | None = None  # the audit record of this answer (scripts/replay.py <audit_id>)
     disclaimer: str = DISCLAIMER
 
     @classmethod
-    def from_chat(cls, chat: ChatAnswer) -> AskResponse:
+    def from_chat(cls, chat: ChatAnswer, audit_id: str | None = None) -> AskResponse:
         result = chat.answer.result
         # A declined, withheld or blocked answer shows only its reason: statements that survived
         # checking are not presented as an answer the label says does not exist.
@@ -95,6 +96,7 @@ class AskResponse(BaseModel):
                 "web": round(chat.answer.web_seconds, 2),
             },
             prompts=prompt_tags(),
+            audit_id=audit_id,
         )
 
 

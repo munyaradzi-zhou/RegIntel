@@ -87,6 +87,10 @@ class AnswerResult:
     screened_out: list[str] = field(default_factory=list)  # passages dropped by the injection screen
     review_usage: Usage | None = None  # tokens spent by the answer reviewer, when it ran
     web_pointers: list[WebPointer] = field(default_factory=list)  # only on declined answers
+    # For the audit trail: sha256 of every passage the writer saw, and the full text of tool records
+    # (FAERS, CDISC, openFDA), which, unlike corpus chunks, cannot be looked up again later.
+    passage_sha256: dict[str, str] = field(default_factory=dict)
+    record_texts: dict[str, str] = field(default_factory=dict)
 
     @property
     def shown(self) -> list[CheckedStatement]:

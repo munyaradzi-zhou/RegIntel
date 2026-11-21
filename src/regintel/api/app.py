@@ -5,11 +5,15 @@
     GET  /v1/sessions/{id}    the turns of a conversation
     GET  /v1/faers/profile    FAERS counts and per-reaction reporting odds ratios for a drug
     GET  /v1/cdisc            CDISC Controlled Terminology lookup
+    GET  /v1/audit/verify     recompute the audit trail's hash chain; report the first broken link
     GET  /healthz             process is up
     GET  /readyz              the answering service is built and can take questions
 
 Clients send `X-API-Key` when keys are configured (API_KEYS); requests are rate limited per
 client. Every response carries an `X-Request-ID`, also written to the structured log.
+
+Every answer is written to the audit trail (regintel.audit) before it is returned. If the record
+cannot be stored, the answer is withheld (503): an answer without its record is not released.
 """
 
 from __future__ import annotations
@@ -31,14 +35,16 @@ from sse_starlette.sse import EventSourceResponse
 
 from regintel import data_tools
 from regintel.api.schemas import AskRequest, AskResponse, SessionOut
-from regintel.config import get_settings
+from regintel.audit.record import build_record
+from regintel.audit.store import AuditStore, InMemoryAuditStore, verify_store
+from regintel.config import Settings, get_settings
 
 if TYPE_CHECKING:
     from collections.abc import AsyncIterator, Awaitable, Callable
 
     from starlette.responses import Response
 
-    from regintel.conversation import RegIntelChat
+    from regintel.conversation import ChatAnswer, RegIntelChat
 
 log = structlog.get_logger("regintel.api")
 PROGRESS_INTERVAL_SECONDS = 1.5
@@ -80,6 +86,45 @@ def build_chat() -> RegIntelChat:
     return RegIntelChat(components.service(), rewriter, store)
 
 
+def build_audit(settings: Settings) -> AuditStore:
+    if settings.cosmos_endpoint:
+        from regintel.audit.store import CosmosAuditStore
+        from regintel.runtime import azure_credential
+
+        return CosmosAuditStore.connect(settings.cosmos_endpoint, azure_credential())
+    return InMemoryAuditStore()
+
+
+def audit_models(settings: Settings) -> dict[str, str | None]:
+    return {
+        "writer": settings.writer_deployment or settings.azure_openai_chat_deployment,
+        "reviewer": settings.azure_judge_deployment if settings.azure_judge_endpoint else None,
+        "router": settings.azure_openai_chat_deployment,
+        "agent": settings.azure_openai_chat_deployment,
+    }
+
+
+class AuditUnavailableError(Exception):
+    pass
+
+
+async def recorded(request: Request, chat: ChatAnswer, caller: str, started: float) -> str:
+    """Write the answer's audit record; returns its id. Raises if it cannot be stored."""
+    record = build_record(
+        chat,
+        caller=caller,
+        request_id=getattr(request.state, "request_id", ""),
+        models=request.app.state.audit_models,
+        latency_seconds=time.perf_counter() - started,
+    )
+    try:
+        sealed = await asyncio.to_thread(request.app.state.audit.append, record)
+    except Exception as error:
+        log.exception("audit_write_failed")
+        raise AuditUnavailableError from error
+    return str(sealed["id"])
+
+
 # Dependencies live at module level: with postponed annotations FastAPI resolves `Depends(...)`
 # from module globals, and keys and the limiter come from app.state.
 
@@ -106,8 +151,8 @@ def get_chat(request: Request) -> Any:  # RegIntelChat; Any keeps FastAPI from i
     return chat
 
 
-def create_app(chat: RegIntelChat | None = None) -> FastAPI:
-    """`chat` is injected in tests; otherwise the Azure-backed service is built at startup."""
+def create_app(chat: RegIntelChat | None = None, audit: AuditStore | None = None) -> FastAPI:
+    """`chat` and `audit` are injected in tests; otherwise the Azure-backed ones are built at startup."""
     settings = get_settings()
     from regintel.runtime import configure_telemetry
 
@@ -138,10 +183,13 @@ def create_app(chat: RegIntelChat | None = None) -> FastAPI:
     app = FastAPI(title="RegIntel", version="0.1.0", lifespan=lifespan)
     app.state.keys = keys
     app.state.limiter = limiter
+    app.state.audit = audit if audit is not None else build_audit(settings)
+    app.state.audit_models = audit_models(settings)
 
     @app.middleware("http")
     async def request_context(request: Request, call_next: Callable[[Request], Awaitable[Response]]) -> Response:
         request_id = request.headers.get("x-request-id") or uuid.uuid4().hex
+        request.state.request_id = request_id
         structlog.contextvars.bind_contextvars(request_id=request_id)
         started = time.perf_counter()
         try:
@@ -167,15 +215,28 @@ def create_app(chat: RegIntelChat | None = None) -> FastAPI:
 
     @app.post("/v1/ask")
     async def ask(
-        body: AskRequest, _: Annotated[str, Depends(guarded)], chat_service: Annotated[Any, Depends(get_chat)]
+        request: Request,
+        body: AskRequest,
+        caller: Annotated[str, Depends(guarded)],
+        chat_service: Annotated[Any, Depends(get_chat)],
     ) -> AskResponse:
+        started = time.perf_counter()
         answer = await chat_service.ask(body.question, body.session_id)
-        log.info("answer", label=answer.answer.result.label, path=answer.answer.path)
-        return AskResponse.from_chat(answer)
+        try:
+            audit_id = await recorded(request, answer, caller, started)
+        except AuditUnavailableError:
+            raise HTTPException(
+                503, "The answer could not be recorded in the audit trail, so it is withheld."
+            ) from None
+        log.info("answer", label=answer.answer.result.label, path=answer.answer.path, audit_id=audit_id)
+        return AskResponse.from_chat(answer, audit_id)
 
     @app.post("/v1/ask/stream")
     async def ask_stream(
-        body: AskRequest, _: Annotated[str, Depends(guarded)], chat_service: Annotated[Any, Depends(get_chat)]
+        request: Request,
+        body: AskRequest,
+        caller: Annotated[str, Depends(guarded)],
+        chat_service: Annotated[Any, Depends(get_chat)],
     ) -> EventSourceResponse:
         session_id = chat_service.session(body.session_id).id
 
@@ -196,7 +257,13 @@ def create_app(chat: RegIntelChat | None = None) -> FastAPI:
                 log.exception("stream_failed")
                 yield {"event": "error", "data": json.dumps({"detail": "The answer could not be produced."})}
                 return
-            yield {"event": "answer", "data": AskResponse.from_chat(answer).model_dump_json()}
+            try:
+                audit_id = await recorded(request, answer, caller, started)
+            except AuditUnavailableError:
+                detail = "The answer could not be recorded in the audit trail, so it is withheld."
+                yield {"event": "error", "data": json.dumps({"detail": detail})}
+                return
+            yield {"event": "answer", "data": AskResponse.from_chat(answer, audit_id).model_dump_json()}
             yield {"event": "done", "data": "{}"}
 
         return EventSourceResponse(events())
@@ -214,6 +281,13 @@ def create_app(chat: RegIntelChat | None = None) -> FastAPI:
     ) -> list[dict[str, Any]]:
         """Exact lookup in CDISC Controlled Terminology."""
         return data_tools.cdisc_lookup(data_tools.terminology(), term)
+
+    @app.get("/v1/audit/verify")
+    async def audit_verify(request: Request, _: Annotated[str, Depends(guarded)]) -> dict[str, Any]:
+        """Recompute the hash chain over every audit record; `first_break` names the first record that
+        was edited, removed or reordered."""
+        report: dict[str, Any] = await asyncio.to_thread(verify_store, request.app.state.audit)
+        return report
 
     @app.get("/v1/sessions/{session_id}")
     async def get_session(
