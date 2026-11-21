@@ -77,8 +77,8 @@ jobs:
           cache: pip
           cache-dependency-path: pyproject.toml
 
-      - name: Install
-        run: pip install -e .
+      - name: Install (what the API image installs: the prompts live in modules that import the Azure SDKs)
+        run: pip install -e ".[serve]"
 
       - name: Retrieval, verifier replay and prompt versions against tests/evaluation/baselines/ci_baseline.json
         run: python -m tests.evaluation.ci_gate --out eval-gate.md
