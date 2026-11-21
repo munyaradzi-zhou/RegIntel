@@ -60,6 +60,14 @@ def test_drug_summary_counts_suspect_reports_only(store: FaersStore) -> None:
     assert summary.top_reactions[:2] == [("Nausea", 2), ("Rash", 2)]
     text = summary.to_text()
     assert "8 reports in total" in text and "as a suspect drug: 4" in text and "Serious: 2 (50.0%)" in text
+    assert "Most frequent reaction 1 (tied): Nausea, 2 reports. Most frequent reaction 1 (tied): Rash" in text
+
+
+def test_reaction_ranks_share_a_rank_on_ties() -> None:
+    from regintel.faers.query import _ranked
+
+    ranked = _ranked([("A", 9), ("B", 5), ("C", 5), ("D", 2)])
+    assert ranked == [(1, False, "A", 9), (2, True, "B", 5), (2, True, "C", 5), (4, False, "D", 2)]
 
 
 def test_unknown_drug(store: FaersStore) -> None:
