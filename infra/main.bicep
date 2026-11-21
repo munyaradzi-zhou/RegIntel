@@ -50,6 +50,9 @@ param judgeName string
 param chatDeployment string = 'gpt-5-mini'
 param judgeDeployment string = 'gpt-oss-120b'
 
+@description('True once the Key Vault holds an `openfda-api-key` secret (raises the openFDA daily limit). False: anonymous calls.')
+param openFdaKeyInVault bool = false
+
 @description('GitHub repository (owner/name) allowed to deploy through OIDC. Empty: no CD identity.')
 param githubRepository string = ''
 
@@ -121,6 +124,7 @@ module apps 'modules/container-apps.bicep' = if (deployApps) {
     chatDeployment: chatDeployment
     judgeEndpoint: shared.outputs.judgeEndpoint
     judgeDeployment: judgeDeployment
+    openFdaKeyInVault: openFdaKeyInVault
     cosmosEndpoint: cosmos.outputs.endpoint
     existingEnvironmentId: existingEnvironmentId
   }

@@ -6,7 +6,7 @@
 [![License: MIT](https://img.shields.io/badge/license-MIT-5F594A)](LICENSE)
 
 **Regulatory question answering for biopharma, with every quote and number checked against the source.**
-RegIntel answers questions about FDA, ICH and EMA guidance, CDISC terminology and FAERS adverse-event data. A router sends each question to a retrieval pipeline or a tool-using research agent; the answer is then verified in code: a quote that is not verbatim in a retrieved passage, or a number that is not in a quote, is removed before the user sees it. When nothing survives, RegIntel declines instead of guessing.
+RegIntel answers questions about FDA, ICH and EMA guidance, CDISC terminology, FAERS adverse-event data, and US drug labels and recalls (live from openFDA). A router sends each question to a retrieval pipeline or a tool-using research agent; the answer is then verified in code: a quote that is not verbatim in a retrieved passage, or a number that is not in a quote, is removed before the user sees it. When nothing survives, RegIntel declines instead of guessing.
 
 ![RegIntel answering a FAERS safety-signal question, every number quoted from the computed record](assets/ask-answer.png)
 
@@ -19,7 +19,7 @@ RegIntel answers questions about FDA, ICH and EMA guidance, CDISC terminology an
 | **Agentic retrieval** | Azure AI Search knowledge bases over 1,869 section-aware chunks of 23 public guidances (FDA, ICH, EMA, European Commission), each pinned by sha256. The planner decomposes multi-part questions into sub-queries; reasoning effort is chosen per question shape (`low` for single lookups, `medium` for comparisons), a choice made from measurements, not defaults. |
 | **Grounding enforced in code** | The writer (`gpt-5-mini`, structured output) returns statements, each with verbatim quotes. A verifier checks every quote against the passage text and every number, by value, against the quotes. Unverified statements are dropped; an answer with none left is withheld. |
 | **Independent reviewer** | `gpt-oss-120b`, a different model family from the writer, judges each verified statement as supported, overreach or unsupported. It catches what string matching cannot: a "should" written as "must", or a general rule stretched to a subject the source never mentions. |
-| **Research agent with data tools** | A Microsoft Agent Framework agent for questions that need data: CDISC Controlled Terminology lookup, and FAERS safety signals over 36,000 reports in DuckDB (counts and reporting odds ratios with 95% CI, computed by parameterised queries, never written by the model). |
+| **Research agent with data tools** | A Microsoft Agent Framework agent for questions that need data: CDISC Controlled Terminology lookup, FAERS safety signals over 36,000 reports in DuckDB (counts and reporting odds ratios with 95% CI, computed by parameterised queries, never written by the model), and live openFDA drug label sections and recalls, verified like any passage. |
 | **Guards** | Input screens for instruction overrides and prompt extraction, and a passage screen so retrieved text carrying instructions never reaches the writer. Declined questions get up to three pages from regulator websites, clearly marked as unverified pointers. |
 | **Production plumbing** | FastAPI with SSE streaming, API keys and rate limits, follow-up questions in Cosmos DB sessions, OpenTelemetry to Application Insights, an MCP server, and a Streamlit UI. |
 
@@ -49,6 +49,7 @@ graph LR
     subgraph Data
         DUCK["FAERS · DuckDB"]
         CT["CDISC CT"]
+        FDA["openFDA (live)<br/>labels · recalls"]
         COSMOS["Cosmos DB<br/>sessions"]
     end
     UI --> API
@@ -59,6 +60,7 @@ graph LR
     AGENT --> KB
     AGENT --> DUCK
     AGENT --> CT
+    AGENT --> FDA
     PIPE --> VERIFY
     AGENT --> VERIFY
     VERIFY --> OSS
@@ -163,7 +165,7 @@ Also `GET /v1/sessions/{id}`, `GET /healthz`, `GET /readyz`. Every answer carrie
 
 ## Use it from other agents (MCP)
 
-RegIntel is also a [Model Context Protocol](https://modelcontextprotocol.io) server, so Claude Code, Claude Desktop, GitHub Copilot or a Foundry agent can use it as a tool. All four tools are read-only.
+RegIntel is also a [Model Context Protocol](https://modelcontextprotocol.io) server, so Claude Code, Claude Desktop, GitHub Copilot or a Foundry agent can use it as a tool. All six tools are read-only; the two openFDA tools are the only ones that call out of the process.
 
 | Tool | Does |
 |---|---|
@@ -171,6 +173,8 @@ RegIntel is also a [Model Context Protocol](https://modelcontextprotocol.io) ser
 | `lookup_cdisc_term` | Exact CDISC Controlled Terminology lookup |
 | `faers_drug_summary` | Report counts and most frequent reactions for a drug |
 | `faers_disproportionality` | Reporting odds ratio with 95% CI for a drug–reaction pair |
+| `drug_label_section` | A section of a drug's current US label (boxed warning, contraindications, ...), live from openFDA, with set id, version and effective date |
+| `recent_recalls` | FDA enforcement reports (recalls) for a drug in a date range, live from openFDA |
 
 ```bash
 claude mcp add regintel -- python -m regintel.mcp_server
@@ -181,7 +185,7 @@ claude mcp add regintel -- python -m regintel.mcp_server
 `make check` runs the same gates as CI:
 
 - **Ruff** lint and formatting, **mypy `--strict`** over the whole package
-- **202 unit tests** with an 85% coverage gate: verifier, reviewer, router, agent loop (a fake agent calling the real tools), guards, chunking and glyph repair, FAERS statistics, sessions and follow-up rewriting, API auth and rate limits, SSE, UI escaping
+- **213 unit tests** with an 85% coverage gate: verifier, reviewer, router, agent loop (a fake agent calling the real tools), guards, chunking and glyph repair, FAERS statistics, the openFDA client against recorded responses (429, 5xx, timeouts, cache, an unreachable API adds no evidence), sessions and follow-up rewriting, API auth and rate limits, SSE, UI escaping
 - **Bandit**, **pip-audit** and **gitleaks** over the full history
 - Both **Docker** images built, and the API image started with no data or credentials (it must stay up and report why it is not ready), **Bicep** build, **shellcheck**
 
@@ -200,6 +204,7 @@ src/regintel/
   answering/      writer prompt, verifier, reviewer, answer schema
   agent/          research agent and its tools
   faers/ terminology/   DuckDB safety-signal queries, CDISC lookup
+  openfda/        live openFDA client (timeouts, retries, TTL cache) and label / recall lookups
   guard/          question and passage screens
   router.py service.py conversation.py   routing, end-to-end service, follow-ups
   api/            FastAPI app, models, sessions in Cosmos DB

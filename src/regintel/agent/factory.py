@@ -7,6 +7,7 @@ from __future__ import annotations
 
 import json
 from dataclasses import dataclass
+from functools import cached_property
 from typing import TYPE_CHECKING, Any
 
 from regintel.agent.research import RegIntelAgent, azure_agent_client
@@ -16,6 +17,7 @@ from regintel.answering.review import reviewer_from_settings
 from regintel.corpus.manifest import load_manifest
 from regintel.faers.query import FaersStore
 from regintel.ingestion.pipeline import read_chunks
+from regintel.openfda.client import OpenFDAClient
 from regintel.router import Router
 from regintel.service import RegIntel
 from regintel.terminology.cdisc import load_terminology
@@ -86,6 +88,12 @@ class AzureComponents:
         )
         return KnowledgeBaseRetriever("kb-web", client, [], "minimal")
 
+    @cached_property
+    def openfda(self) -> OpenFDAClient:
+        """One client (and cache) shared by every question; an API key raises the daily limit."""
+        key = self.settings.openfda_api_key
+        return OpenFDAClient(key.get_secret_value() if key else None)
+
     def agent(self) -> RegIntelAgent:
         """Guidance search runs at `minimal` effort: the agent itself splits the question into sub-questions."""
         cdisc_dir = self.settings.data_dir / "raw" / "cdisc"
@@ -97,6 +105,7 @@ class AzureComponents:
             terminology=load_terminology(cdisc_dir),
             terminology_version=f"NCI EVS, fetched {fetched}",
             faers=FaersStore(self.settings.data_dir / "processed" / "faers"),
+            openfda=self.openfda,
             manifest=self.manifest,
             reviewer=self.reviewer,
         )

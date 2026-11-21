@@ -39,8 +39,11 @@ def test_tools_are_listed_read_only(server: Any) -> None:
     tools = asyncio.run(server.list_tools())
     assert [t.name for t in tools] == [
         "ask_regulatory_question", "lookup_cdisc_term", "faers_drug_summary", "faers_disproportionality",
+        "drug_label_section", "recent_recalls",
     ]  # fmt: skip
     assert all(t.annotations.read_only_hint for t in tools)
+    live = {t.name for t in tools if t.annotations.open_world_hint}
+    assert live == {"drug_label_section", "recent_recalls"}  # the only tools that leave the process
 
 
 def test_cdisc_lookup_returns_codelist_members(server: Any) -> None:

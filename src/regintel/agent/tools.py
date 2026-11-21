@@ -5,24 +5,30 @@ numbered, so the agent can see what it has; nothing here generates text with a m
   the decomposition, one call per sub-question, which is what the multi-hop evaluation favoured).
 - lookup_cdisc_term: exact lookup in CDISC Controlled Terminology (NCI EVS).
 - faers_drug_summary / faers_disproportionality: DuckDB computations over the FAERS extract.
+- drug_label_section / recent_recalls: live openFDA lookups (label sections, enforcement reports).
+  If openFDA cannot be reached, the tool says so and adds no evidence: the answer falls back to
+  the indexed corpus and can never cite a label that was not retrieved.
 """
 
 from __future__ import annotations
 
 import time
 from dataclasses import dataclass, field
-from typing import TYPE_CHECKING, Annotated
+from typing import TYPE_CHECKING, Annotated, Any
 
 from agent_framework import FunctionTool, tool
 from pydantic import Field
 
 from regintel.agent.evidence import EvidencePool
 from regintel.faers.query import SCOPE
+from regintel.openfda import drugs
+from regintel.openfda.client import OpenFDAUnavailableError
 
 if TYPE_CHECKING:
     from collections.abc import Callable
 
     from regintel.faers.query import FaersStore
+    from regintel.openfda.client import OpenFDAClient
     from regintel.retrieval.base import Retriever
     from regintel.terminology.cdisc import Term, Terminology
 
@@ -44,6 +50,7 @@ class ResearchTools:
     terminology: Terminology | None = None
     faers: FaersStore | None = None
     terminology_version: str = ""
+    openfda: OpenFDAClient | None = None
     pool: EvidencePool = field(default_factory=EvidencePool)
     calls: list[ToolCall] = field(default_factory=list)
 
@@ -133,10 +140,62 @@ class ResearchTools:
         self._record("faers_disproportionality", {"drug": drug, "reaction": reaction}, started, [item.number])
         return item.render()
 
+    async def drug_label_section(
+        self,
+        drug: Annotated[str, Field(description="Generic or brand name, e.g. 'semaglutide' or 'Ozempic'.")],
+        section: Annotated[drugs.Section, Field(description="The label section to read.")],
+    ) -> str:
+        """Read one section of the current FDA drug label (US prescribing information), live from openFDA:
+        boxed warning, indications, dosage, contraindications, warnings and precautions, adverse reactions,
+        drug interactions, use in specific populations."""
+        started = time.perf_counter()
+        if self.openfda is None:
+            return "openFDA is not available."
+        arguments = {"drug": drug, "section": section}
+        try:
+            result = await drugs.label_section(self.openfda, drug, section)
+        except OpenFDAUnavailableError as exc:
+            self._record("drug_label_section", arguments, started, [])
+            return f"{exc}. No label text was retrieved: do not state what the label says."
+        if not result.found:
+            self._record("drug_label_section", arguments, started, [])
+            return result.to_text()
+        item = self.pool.add_record("label", result.record_id, result.source_label, result.to_text())
+        self._record("drug_label_section", arguments, started, [item.number])
+        return item.render()
+
+    async def recent_recalls(
+        self,
+        drug: Annotated[str, Field(description="Generic or brand name.")],
+        since: Annotated[
+            str | None, Field(description="Earliest report date, YYYY-MM-DD (default: 2 years back).")
+        ] = None,
+        until: Annotated[str | None, Field(description="Latest report date, YYYY-MM-DD.")] = None,
+    ) -> str:
+        """FDA drug recalls (enforcement reports) for a drug, live from openFDA: recall number, class,
+        status, firm, reason and product, most recent first."""
+        started = time.perf_counter()
+        if self.openfda is None:
+            return "openFDA is not available."
+        arguments = {"drug": drug, "since": since or "", "until": until or ""}
+        try:
+            result = await drugs.recalls(self.openfda, drug, since, until)
+        except ValueError:
+            self._record("recent_recalls", arguments, started, [])
+            return "Dates must be YYYY-MM-DD."
+        except OpenFDAUnavailableError as exc:
+            self._record("recent_recalls", arguments, started, [])
+            return f"{exc}. No recall data was retrieved: do not state whether the drug was recalled."
+        item = self.pool.add_record("recall", result.record_id, result.source_label, result.to_text())
+        self._record("recent_recalls", arguments, started, [item.number])
+        return item.render()
+
     def as_tools(self) -> list[FunctionTool]:
-        available: list[Callable[..., str]] = [self.search_guidance]
+        available: list[Callable[..., Any]] = [self.search_guidance]
         if self.terminology is not None:
             available.append(self.lookup_cdisc_term)
         if self.faers is not None:
             available += [self.faers_drug_summary, self.faers_disproportionality]
+        if self.openfda is not None:
+            available += [self.drug_label_section, self.recent_recalls]
         return [tool(f) for f in available]

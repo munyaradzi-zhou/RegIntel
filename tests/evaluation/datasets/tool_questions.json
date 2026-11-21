@@ -1,6 +1,6 @@
 {
-  "description": "Questions that need the agent's structured-data tools. `tools` must all be called. FAERS ground truth is not stored: `faers` names the computation, and the evaluator computes the expected numbers from the Parquet tables at run time, so the check cannot drift from the data. `facts` are fixed strings (CDISC codes from the NCI EVS file recorded in data/raw/cdisc/LOCK.json; guidance facts verified against the chunks). `guidance` lists expected guidance sources for mixed questions. `no_guidance_search` marks questions the guidance corpus cannot answer, where a guidance search is a wasted call.",
-  "version": "2026-11-14",
+  "description": "Questions that need the agent's structured-data tools. `tools` must all be called. FAERS ground truth is not stored: `faers` names the computation, and the evaluator computes the expected numbers from the Parquet tables at run time, so the check cannot drift from the data. `facts` are fixed strings (CDISC codes from the NCI EVS file recorded in data/raw/cdisc/LOCK.json; guidance facts verified against the chunks; label and recall facts checked against openFDA on 2026-11-21: labels change, so a label fact that goes missing is checked against the current label before it is counted as a failure). `guidance` lists expected guidance sources for mixed questions. `no_guidance_search` marks questions the guidance corpus cannot answer, where a guidance search is a wasted call.",
+  "version": "2026-11-21",
   "questions": [
     {"id": "fa-01", "question": "How many reports in the loaded FAERS data list semaglutide as a suspect drug, and how many of those were serious?",
      "tools": ["faers_drug_summary"], "faers": {"summary": "semaglutide", "fields": ["reports", "serious"]}, "facts": [], "no_guidance_search": true},
@@ -23,6 +23,18 @@
      "guidance": [{"doc_id": "fda-sponsor-safety-reporting", "sections": ["IV", "VIII.E"]}], "no_guidance_search": false},
     {"id": "mx-02", "question": "Which CDISC codelist holds adverse event severity values, and how does ICH E2A distinguish 'severe' from 'serious'?",
      "tools": ["lookup_cdisc_term", "search_guidance"], "facts": ["C66769", "intensity"],
-     "guidance": [{"doc_id": "ich-e2a", "sections": ["II.B"]}], "no_guidance_search": false}
+     "guidance": [{"doc_id": "ich-e2a", "sections": ["II.B"]}], "no_guidance_search": false},
+    {"id": "lb-01", "question": "What does the boxed warning on the US label for semaglutide (Ozempic) warn about?",
+     "tools": ["drug_label_section"], "facts": ["thyroid C-cell tumors"], "no_guidance_search": true},
+    {"id": "lb-02", "question": "According to its FDA label, in which patients is Ozempic contraindicated?",
+     "tools": ["drug_label_section"], "facts": ["MTC", "MEN 2"], "no_guidance_search": true},
+    {"id": "lb-03", "question": "What risk does the boxed warning on the warfarin label describe, and what monitoring does it ask for?",
+     "tools": ["drug_label_section"], "facts": ["bleeding", "INR"], "no_guidance_search": true},
+    {"id": "lb-04", "question": "What is the boxed warning on the metformin label about?",
+     "tools": ["drug_label_section"], "facts": ["lactic acidosis"], "no_guidance_search": true},
+    {"id": "rc-01", "question": "Which recalls of metformin were reported to FDA between 1 January and 30 June 2025? Give the recall numbers.",
+     "tools": ["recent_recalls"], "facts": ["D-0328-2025", "D-0292-2025", "D-0192-2025"], "no_guidance_search": true},
+    {"id": "rc-02", "question": "How many FDA recalls of valsartan were reported in 2024 and 2025?",
+     "tools": ["recent_recalls"], "facts": [], "no_guidance_search": true}
   ]
 }

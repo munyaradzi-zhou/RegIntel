@@ -1,16 +1,19 @@
 """Structured payloads for the data tools, shared by the HTTP API and the MCP server.
 
-Everything here is computed from local data (FAERS Parquet, CDISC Controlled Terminology); no model
-is involved, so the numbers can be shown as they are.
+Everything here is computed from data (FAERS Parquet, CDISC Controlled Terminology, live openFDA
+labels and recalls); no model is involved, so the numbers can be shown as they are.
 """
 
 from __future__ import annotations
 
+from dataclasses import asdict
 from functools import cache
 from typing import TYPE_CHECKING, Any
 
 from regintel.config import get_settings
 from regintel.faers.query import CAVEAT, SCOPE
+from regintel.openfda import drugs
+from regintel.openfda.client import OpenFDAClient
 
 if TYPE_CHECKING:
     from regintel.faers.query import FaersStore
@@ -24,6 +27,22 @@ def faers_store() -> FaersStore:
     from regintel.faers.query import FaersStore
 
     return FaersStore(get_settings().data_dir / "processed" / "faers")
+
+
+@cache
+def openfda() -> OpenFDAClient:
+    key = get_settings().openfda_api_key
+    return OpenFDAClient(key.get_secret_value() if key else None)
+
+
+async def label_section(client: OpenFDAClient, drug: str, section: drugs.Section) -> dict[str, Any]:
+    result = await drugs.label_section(client, drug, section)
+    return asdict(result) | {"source": result.source_label if result.found else None, "text": result.to_text()}
+
+
+async def drug_recalls(client: OpenFDAClient, drug: str, since: str | None, until: str | None) -> dict[str, Any]:
+    result = await drugs.recalls(client, drug, since, until)
+    return asdict(result) | {"source": result.source_label, "text": result.to_text()}
 
 
 @cache

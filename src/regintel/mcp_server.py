@@ -7,6 +7,7 @@ Tools, all read-only:
   REGINTEL_API_URL set it calls the deployed API (thin client, API key from REGINTEL_API_KEY);
   otherwise it runs in-process with the local Azure credentials.
 - lookup_cdisc_term, faers_drug_summary, faers_disproportionality: local data, no model involved.
+- drug_label_section, recent_recalls: live openFDA lookups (no model involved).
 
 Answers are returned as structured JSON (label, statements, numbered sources with quotes), so the
 calling model can show citations instead of re-stating facts from memory.
@@ -24,6 +25,7 @@ from mcp.types import ToolAnnotations
 from pydantic import Field
 
 from regintel import data_tools
+from regintel.openfda.drugs import Section  # noqa: TC001  (resolved at runtime for the MCP tool schema)
 
 if TYPE_CHECKING:
     from regintel.conversation import RegIntelChat
@@ -39,6 +41,7 @@ regulatory advice.\
 """
 
 READ_ONLY = ToolAnnotations(read_only_hint=True, destructive_hint=False, idempotent_hint=True, open_world_hint=False)
+LIVE = ToolAnnotations(read_only_hint=True, destructive_hint=False, idempotent_hint=True, open_world_hint=True)
 
 
 @cache
@@ -122,6 +125,31 @@ def build_server() -> MCPServer:
         reaction: Annotated[str, Field(description="MedDRA preferred term, e.g. 'Nausea'.", max_length=200)],
     ) -> dict[str, Any]:
         return data_tools.faers_signal(_faers(), drug, reaction)
+
+    @server.tool(
+        title="FDA drug label section",
+        description="One section of a drug's current US label (boxed warning, indications, contraindications, "
+        "warnings and precautions, ...), live from openFDA, with the label set id, version and effective date.",
+        annotations=LIVE,
+    )
+    async def drug_label_section(
+        drug: Annotated[str, Field(description="Generic or brand name.", max_length=200)],
+        section: Annotated[Section, Field(description="The label section.")],
+    ) -> dict[str, Any]:
+        return await data_tools.label_section(data_tools.openfda(), drug, section)
+
+    @server.tool(
+        title="FDA drug recalls",
+        description="Drug recalls (FDA enforcement reports) for a drug, live from openFDA, most recent first: recall "
+        "number, class, status, firm, reason and product.",
+        annotations=LIVE,
+    )
+    async def recent_recalls(
+        drug: Annotated[str, Field(description="Generic or brand name.", max_length=200)],
+        since: Annotated[str | None, Field(description="Earliest report date, YYYY-MM-DD.")] = None,
+        until: Annotated[str | None, Field(description="Latest report date, YYYY-MM-DD.")] = None,
+    ) -> dict[str, Any]:
+        return await data_tools.drug_recalls(data_tools.openfda(), drug, since, until)
 
     return server
 
