@@ -23,8 +23,8 @@
       "sha256": "4764a29bf796"
     },
     "router": {
-      "version": "v1",
-      "sha256": "8b2165de7299"
+      "version": "v2",
+      "sha256": "4bd3048b3730"
     },
     "reviewer": {
       "version": "v1",
@@ -35,8 +35,8 @@
       "sha256": "fd24c2acb99b"
     },
     "agent": {
-      "version": "v1",
-      "sha256": "f1736fd89e6e"
+      "version": "v2",
+      "sha256": "89e26490c396"
     }
   }
 }

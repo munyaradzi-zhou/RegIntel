@@ -1,6 +1,6 @@
 """Route each question to the cheapest path that the evaluations show can answer it.
 
-- needs FAERS or CDISC data            -> research agent (tools)
+- needs FAERS, CDISC or openFDA data   -> research agent (tools)
 - guidance only, several parts         -> fixed pipeline, knowledge base at medium effort
   (query planning found every needed passage for 9/10 multi-hop questions vs 5/10 at minimal)
 - guidance only, one focused question  -> fixed pipeline, knowledge base at minimal effort
@@ -23,16 +23,18 @@ if TYPE_CHECKING:
 
 Path = Literal["agent", "guidance_multi", "guidance_single"]
 
-ROUTER_PROMPT_VERSION = "v1"  # bump when ROUTER_PROMPT changes (checked in CI by regintel.prompts)
+ROUTER_PROMPT_VERSION = "v2"  # bump when ROUTER_PROMPT changes (checked in CI by regintel.prompts)
 
 ROUTER_PROMPT = """\
 Classify a question for a regulatory question-answering system for medicines. The system has \
-indexed FDA, EMA/EU and ICH guidance documents, plus two data tools: counts of adverse event \
-reports from FAERS (including disproportionality signals), and CDISC Controlled Terminology \
-(codelists, submission values, NCI codes).
+indexed FDA, EMA/EU and ICH guidance documents, plus data tools: counts of adverse event \
+reports from FAERS (including disproportionality signals), CDISC Controlled Terminology \
+(codelists, submission values, NCI codes), and live openFDA lookups of a named drug's US label \
+sections and its recalls.
 
-needs_data_tools: true only if answering requires FAERS report counts or signals, or a CDISC \
-terminology code, codelist or submission value. Questions about what guidance says on safety \
+needs_data_tools: true only if answering requires FAERS report counts or signals, a CDISC \
+terminology code, codelist or submission value, what a named drug's label says, or recalls of a \
+named drug. Questions about what guidance says on safety \
 reporting, terminology or data standards in general are guidance questions (false).
 
 multi_part: true if the question asks about two or more regulators or documents (for example a \
@@ -41,7 +43,7 @@ comparison), or asks for two or more distinct facts that are likely in different
 
 
 class RouteDecision(BaseModel):
-    needs_data_tools: bool = Field(description="Needs FAERS counts/signals or CDISC terminology codes.")
+    needs_data_tools: bool = Field(description="Needs FAERS, CDISC, a named drug's label or its recalls.")
     multi_part: bool = Field(description="Several regulators, documents or distinct facts.")
     reason: str = Field(description="One short sentence.")
 

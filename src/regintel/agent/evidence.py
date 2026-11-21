@@ -1,7 +1,7 @@
 """Evidence gathered during one question: every tool result, numbered in the order it arrived.
 
 Guidance passages keep their real chunk (document, section, pages) so citations and the
-evaluation work exactly as in Phase 3. Terminology entries and FAERS computations become
+evaluation work exactly as in Phase 3. Terminology entries, FAERS computations and openFDA labels and recalls become
 chunk-shaped records with their own source label, so the same writer and verifier handle them.
 """
 
@@ -13,7 +13,7 @@ from typing import Literal
 
 from regintel.ingestion.chunking import Chunk
 
-Kind = Literal["guidance", "terminology", "faers"]
+Kind = Literal["guidance", "terminology", "faers", "label", "recall"]
 
 
 @dataclass(frozen=True)

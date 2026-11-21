@@ -21,6 +21,9 @@ param judgeEndpoint string
 param judgeDeployment string
 param cosmosEndpoint string
 
+@description('Reference the `openfda-api-key` secret. Only when it exists: a missing secret stops the revision from starting.')
+param openFdaKeyInVault bool = false
+
 @description('Use an existing Container Apps environment instead of creating one (free-trial subscriptions allow only one per subscription). Must be in `location`.')
 param existingEnvironmentId string = ''
 
@@ -51,6 +54,7 @@ var environmentId = createEnvironment ? environment.id : existingEnvironmentId
 // `ui-api-key` is the one key the UI presents (it is also in that list).
 var apiKeySecret = { name: 'api-keys', keyVaultUrl: '${keyVaultUri}secrets/api-keys', identity: identityId }
 var uiKeySecret = { name: 'ui-api-key', keyVaultUrl: '${keyVaultUri}secrets/ui-api-key', identity: identityId }
+var openFdaSecret = { name: 'openfda-api-key', keyVaultUrl: '${keyVaultUri}secrets/openfda-api-key', identity: identityId }
 
 resource api 'Microsoft.App/containerApps@2024-03-01' = {
   name: 'ca-${name}-api'
@@ -63,7 +67,7 @@ resource api 'Microsoft.App/containerApps@2024-03-01' = {
       activeRevisionsMode: 'Single'
       ingress: { external: true, targetPort: 8000, transport: 'auto', allowInsecure: false }
       registries: [ { server: registryServer, identity: identityId } ]
-      secrets: [ apiKeySecret ]
+      secrets: openFdaKeyInVault ? [ apiKeySecret, openFdaSecret ] : [ apiKeySecret ]
     }
     template: {
       containers: [
@@ -71,7 +75,7 @@ resource api 'Microsoft.App/containerApps@2024-03-01' = {
           name: 'api'
           image: apiImage
           resources: { cpu: json('1.0'), memory: '2Gi' }
-          env: [
+          env: concat([
             { name: 'AZURE_CLIENT_ID', value: identityClientId } // which identity DefaultAzureCredential uses
             { name: 'SEARCH_BACKEND', value: 'azure' }
             { name: 'AZURE_SEARCH_ENDPOINT', value: searchEndpoint }
@@ -83,7 +87,7 @@ resource api 'Microsoft.App/containerApps@2024-03-01' = {
             { name: 'APPLICATIONINSIGHTS_CONNECTION_STRING', value: appInsightsConnectionString }
             { name: 'API_KEYS', secretRef: 'api-keys' }
             { name: 'DATA_DIR', value: '/app/data' }
-          ]
+          ], openFdaKeyInVault ? [ { name: 'OPENFDA_API_KEY', secretRef: 'openfda-api-key' } ] : [])
           probes: [
             // timeoutSeconds 5: the default 1 s restarted the container under load (probes queue behind requests)
             { type: 'Startup', httpGet: { path: '/healthz', port: 8000 }, initialDelaySeconds: 3, periodSeconds: 5, timeoutSeconds: 5, failureThreshold: 30 }

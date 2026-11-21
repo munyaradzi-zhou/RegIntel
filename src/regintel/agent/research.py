@@ -1,8 +1,8 @@
 """Research agent, then writer, then verifier.
 
 1. A Microsoft Agent Framework agent plans: it splits the question into sub-questions and calls
-   the tools (guidance search per sub-question, CDISC lookup, FAERS computations), capped at a
-   fixed number of tool calls. It does not write the answer.
+   the tools (guidance search per sub-question, CDISC lookup, FAERS computations, live openFDA
+   label sections and recalls), capped at a fixed number of tool calls. It does not write the answer.
 2. The writer (`regintel.answering`, the Phase 3 model and prompt) drafts statements citing the
    evidence the tools returned, with verbatim quotes.
 3. The verifier checks every quote and number against that evidence and labels the answer.
@@ -36,12 +36,13 @@ if TYPE_CHECKING:
     from regintel.corpus.manifest import Manifest
     from regintel.faers.query import FaersStore
     from regintel.ingestion.chunking import Chunk
+    from regintel.openfda.client import OpenFDAClient
     from regintel.retrieval.base import Retriever
     from regintel.terminology.cdisc import Terminology
 
 MAX_TOOL_CALLS = 8
 
-INSTRUCTIONS_VERSION = "v1"  # bump when INSTRUCTIONS change (checked in CI by regintel.prompts)
+INSTRUCTIONS_VERSION = "v2"  # bump when INSTRUCTIONS change (checked in CI by regintel.prompts)
 
 INSTRUCTIONS = """\
 You are the research step of a regulatory question-answering system for medicines. You do not \
@@ -56,7 +57,13 @@ short, focused query naming the regulator or guideline when known;
 not contain CDISC terminology);
    - counts of adverse event reports or a drug-reaction signal: faers_drug_summary or \
 faers_disproportionality (the guidance corpus does not contain FAERS data). Never estimate such \
-numbers yourself.
+numbers yourself;
+   - what a specific drug's US label says (boxed warning, indications, contraindications, warnings, \
+dosage, interactions): drug_label_section, live from openFDA;
+   - recalls of a specific drug: recent_recalls, live from openFDA, with since/until dates if the \
+question gives a period.
+   If a live tool reports that openFDA could not be reached, do not retry more than once; say so in \
+your final note and continue with the other sub-questions.
 3. Make independent tool calls together in one turn. Do not repeat a search that already found \
 the passage.
 4. Stop when every sub-question has evidence, or when searches show the guidance does not cover \
@@ -87,6 +94,7 @@ class RegIntelAgent:
         terminology: Terminology | None = None,
         terminology_version: str = "",
         faers: FaersStore | None = None,
+        openfda: OpenFDAClient | None = None,
         manifest: Manifest | None = None,
         max_tool_calls: int = MAX_TOOL_CALLS,
         guard: bool = True,
@@ -98,6 +106,7 @@ class RegIntelAgent:
         self.terminology = terminology
         self.terminology_version = terminology_version
         self.faers = faers
+        self.openfda = openfda
         self.manifest = manifest
         self.max_tool_calls = max_tool_calls
         self.guard = guard
@@ -105,7 +114,7 @@ class RegIntelAgent:
 
     def tools_for_question(self) -> ResearchTools:
         """Fresh tools (and a fresh evidence pool) per question, so evidence never leaks between questions."""
-        return ResearchTools(self.retriever, self.terminology, self.faers, self.terminology_version)
+        return ResearchTools(self.retriever, self.terminology, self.faers, self.terminology_version, self.openfda)
 
     async def answer(self, question: str) -> AgentAnswer:
         if self.guard and not (screen := screen_question(question)).allowed:
