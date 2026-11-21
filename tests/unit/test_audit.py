@@ -72,6 +72,13 @@ def test_truncating_the_newest_records_is_caught_by_the_head() -> None:
     assert not report.ok and report.first_break is not None and report.first_break.id == "head"
 
 
+def test_the_hash_survives_a_store_that_returns_whole_floats_as_integers() -> None:
+    sealed = seal(dict(_record(), timings={"web": 0.0, "route": 1.25}, latency=3.0), 1, GENESIS)
+    stored = dict(sealed, timings={"web": 0, "route": 1.25}, latency=3)  # as read back from Cosmos DB
+    assert record_hash(stored) == sealed["hash"]
+    assert record_hash(dict(stored, latency=3.5)) != sealed["hash"]  # a real change still shows
+
+
 def test_store_fields_do_not_affect_the_hash() -> None:
     sealed = seal(_record(), 1, GENESIS)
     stored = dict(sealed, _rid="x", _etag='"1"', _ts=123, _self="dbs/x")
@@ -97,6 +104,17 @@ def test_days_chain_into_each_other_and_a_tampered_record_is_found() -> None:
 # ---- Cosmos store against a fake container with ETags and transactional batches ----
 
 
+def _as_cosmos_returns(item: Any) -> Any:
+    """Cosmos DB stores JSON numbers as doubles and returns whole numbers as integers (0.0 -> 0)."""
+    if isinstance(item, float) and item.is_integer():
+        return int(item)
+    if isinstance(item, dict):
+        return {k: _as_cosmos_returns(v) for k, v in item.items()}
+    if isinstance(item, list):
+        return [_as_cosmos_returns(v) for v in item]
+    return item
+
+
 class FakeContainer:
     def __init__(self) -> None:
         self.items: dict[tuple[str, str], dict[str, Any]] = {}
@@ -105,7 +123,7 @@ class FakeContainer:
 
     def _put(self, item: dict[str, Any]) -> None:
         self.etag += 1
-        self.items[(item["day"], item["id"])] = dict(copy.deepcopy(item), _etag=str(self.etag))
+        self.items[(item["day"], item["id"])] = dict(_as_cosmos_returns(item), _etag=str(self.etag))
 
     def read_item(self, item: str, partition_key: str) -> dict[str, Any]:
         if (partition_key, item) not in self.items:
@@ -152,7 +170,7 @@ class FakeContainer:
 
 def test_cosmos_store_chains_records_and_days() -> None:
     store = CosmosAuditStore(FakeContainer())
-    a = store.append(_record(DAY1, 1))
+    a = store.append(dict(_record(DAY1, 1), timings={"web": 0.0}))  # stored back as 0
     b = store.append(_record(DAY1, 2))
     c = store.append(_record(DAY2, 1))
     assert (a["seq"], b["seq"], c["seq"]) == (1, 2, 1)
