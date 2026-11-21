@@ -82,16 +82,18 @@ Every service-to-service call uses Microsoft Entra ID through a user-assigned ma
 
 ## Running on Azure
 
-Deployed with Bicep and measured over HTTPS against the live API: 60 golden questions (8 deliberately unanswerable) and 10 data questions, sent one at a time as a client would.
+Deployed with Bicep and measured over HTTPS against the live API: 60 golden questions (8 deliberately unanswerable) and 16 data questions (FAERS, CDISC, openFDA labels and recalls), sent one at a time as a client would.
 
 | Measured on the live deployment | |
 |---|---|
-| Answerable questions answered | 58 / 62 |
+| Answerable questions answered | 64 / 68 |
 | Unanswerable questions declined | 8 / 8 |
-| Expected facts in answers | 96 / 105 |
-| Expected source document cited | 48 / 52 |
-| Data questions routed to the agent and answered with tool evidence | 10 / 10 |
-| Latency p50 / p95 | 12.3 s / 21.8 s (single-document 12.1 / 17.1 s, multi-part 19.1 / 24.3 s, agent 11.3 / 15.3 s) |
+| Expected facts in answers | 102 / 114 |
+| Expected source document cited | 50 / 52 |
+| Data questions routed to the agent / answered with tool evidence | 15 / 16 · 14 / 16 |
+| Latency p50 / p95 | 13.4 s / 20.3 s (single-document 12.1 / 17.9 s, multi-part 18.2 / 23.6 s, agent 12.3 / 17.8 s) |
+
+The models are not deterministic: an earlier run the same day, before one fix, scored 109 / 114 facts and 16 / 16 data questions routed. Single questions flip between runs in both directions, so differences of a few facts are noise.
 
 ![FAERS safety signals with reporting odds ratios](assets/safety-signals.png)
 
@@ -185,7 +187,7 @@ claude mcp add regintel -- python -m regintel.mcp_server
 `make check` runs the same gates as CI:
 
 - **Ruff** lint and formatting, **mypy `--strict`** over the whole package
-- **213 unit tests** with an 85% coverage gate: verifier, reviewer, router, agent loop (a fake agent calling the real tools), guards, chunking and glyph repair, FAERS statistics, the openFDA client against recorded responses (429, 5xx, timeouts, cache, an unreachable API adds no evidence), sessions and follow-up rewriting, API auth and rate limits, SSE, UI escaping
+- **214 unit tests** with an 85% coverage gate: verifier, reviewer, router, agent loop (a fake agent calling the real tools), guards, chunking and glyph repair, FAERS statistics, the openFDA client against recorded responses (429, 5xx, timeouts, cache, an unreachable API adds no evidence), sessions and follow-up rewriting, API auth and rate limits, SSE, UI escaping
 - **Bandit**, **pip-audit** and **gitleaks** over the full history
 - Both **Docker** images built, and the API image started with no data or credentials (it must stay up and report why it is not ready), **Bicep** build, **shellcheck**
 
