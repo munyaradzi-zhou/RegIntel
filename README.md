@@ -158,6 +158,31 @@ Hosting changed nothing about the answers. It adds versioned agent definitions w
 - Where the SDK helps is the other direction: high retrieval scores on declined answers point to over-strict declines. All three were the reviewer's subject check declining a question its passages do answer.
 - Relevance penalises a correct abstention, so it must not be used to score declines.
 
+## Costs
+
+Measured, not estimated: fixed costs from Azure Cost Management (actual billing in EUR on a trial subscription, daily rates for 15 to 21 November) and per-answer costs from the token counts of the evaluations (USD at gpt-5-mini list prices: $0.25 per million input tokens, $0.025 cached, $2.00 output).
+
+| Fixed cost | Tier | Per month |
+|---|---|---|
+| Azure AI Search (shared with LegalMind) | Basic | ≈ €66 (€2.18 to €2.49 a day) |
+| Container Registry | Basic | ≈ €4.60 |
+| Container Apps (API and UI) | consumption, scale to zero | €0.44 in 30 days |
+| Cosmos DB (sessions, audit trail) | serverless | cents |
+| Key Vault, Log Analytics, Application Insights | pay per use | cents |
+| Foundry project and AI Services account | pay per call | nothing while idle |
+| **Total** | | **≈ €71, 93% of it the search service** |
+
+| Per answer | Model calls | Cost |
+|---|---|---|
+| Router | gpt-5-mini, 310 input / 60 output tokens | $0.0002 |
+| Retrieval planning (`low`) | gpt-5-mini, ≈ 680 / 65 tokens | $0.0003 |
+| Writer, guidance questions | gpt-5-mini, 3,812 / 860 tokens (219 cached) | $0.0026 |
+| Research agent plus writer, data questions | gpt-5-mini, in process / hosted on Foundry | $0.0020 / $0.0024 |
+| Reviewer | gpt-oss-120b, ≈ 540 / 110 tokens | €0.22 billed for all review runs to date |
+| Other writers (one 60-question run each, actual billing) | grok-4.7 · Llama-3.3-70B · DeepSeek-V3.2 | ≈ €0.009 · €0.004 · €0.003 |
+
+A guidance answer costs about $0.003 in model calls and a data answer about $0.002, so 1,000 questions a month add about $3 to the €71 fixed cost. **Prompt caching** matters for the agent, whose instructions and tool schemas repeat on every call: 2,096 of its 2,739 input tokens are cached, which cuts a data answer from $0.0025 to $0.0020 (21%). The writer's prompt is mostly the retrieved passages, which differ per question: 219 of 3,812 tokens are cached, saving about 2%. Design decisions and their evidence are in [`docs/adr/`](docs/adr/).
+
 ## Run it locally
 
 Requirements: Python 3.11+, `az login` to a subscription with the Azure resources (or run `scripts/azure/deploy.sh` first).
