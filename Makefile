@@ -1,5 +1,5 @@
 .PHONY: help dev check lint format typecheck security audit test corpus ingest \
-        eval-ci eval-retrieval eval-answers eval-agent eval-injection eval-review eval-followups eval-web \
+        eval-ci train-router eval-retrieval eval-answers eval-agent eval-injection eval-review eval-followups eval-web \
         run run-ui mcp docker-up docker-down screenshots clean
 
 help: ## Show available targets
@@ -47,8 +47,11 @@ ingest: ## Chunk the corpus into data/processed/chunks.jsonl
 # eval-ci is offline and free, and runs on every pull request. The others call Azure, cost a
 # little money, and run on demand.
 
-eval-ci: ## Offline regression gate: BM25 retrieval, verifier replay, prompt versions (ARGS=--update-baseline)
+eval-ci: ## Offline regression gate: BM25 retrieval, verifier replay, trained router, prompt versions (ARGS=--update-baseline)
 	python -m tests.evaluation.ci_gate $(ARGS)
+
+train-router: ## Train, evaluate and register the ML router in MLflow; exports router-v<N>.json (needs .[train])
+	python scripts/train_router.py $(ARGS)
 
 eval-retrieval: ## Local retrieval baselines (free)
 	python -m tests.evaluation.evaluate_retrieval

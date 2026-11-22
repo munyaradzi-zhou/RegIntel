@@ -10,6 +10,8 @@ from dataclasses import dataclass
 from functools import cached_property
 from typing import TYPE_CHECKING, Any
 
+import structlog
+
 from regintel.agent.research import RegIntelAgent, azure_agent_client
 from regintel.answering.models import answer_model_from_settings, azure_openai_client
 from regintel.answering.pipeline import Answerer
@@ -17,8 +19,9 @@ from regintel.answering.review import reviewer_from_settings
 from regintel.corpus.manifest import load_manifest
 from regintel.faers.query import FaersStore
 from regintel.ingestion.pipeline import read_chunks
+from regintel.ml_router import FallbackRouter, MLRouter, load_model
 from regintel.openfda.client import OpenFDAClient
-from regintel.router import Router
+from regintel.router import Router, Routes
 from regintel.service import RegIntel
 from regintel.terminology.cdisc import load_terminology
 
@@ -29,6 +32,9 @@ if TYPE_CHECKING:
     from regintel.config import Settings
     from regintel.corpus.manifest import Manifest
     from regintel.ingestion.chunking import Chunk
+
+
+log = structlog.get_logger("regintel.factory")
 
 
 @dataclass
@@ -110,10 +116,19 @@ class AzureComponents:
             reviewer=self.reviewer,
         )
 
+    def router(self) -> Routes:
+        """ROUTING picks the router; the trained one is loaded by version and its checksum logged."""
+        llm = Router(azure_openai_client(self.settings, self.tokens), self.settings.azure_openai_chat_deployment)
+        if self.settings.routing == "llm":
+            return llm
+        model = load_model(self.settings.router_model_version)
+        log.info("router_model", version=model.version, sha256=model.sha256[:12], routing=self.settings.routing)
+        ml = MLRouter(model)
+        return ml if self.settings.routing == "ml" else FallbackRouter(ml, llm)
+
     def service(self) -> RegIntel:
-        router = Router(azure_openai_client(self.settings, self.tokens), self.settings.azure_openai_chat_deployment)
         return RegIntel(
-            router,
+            self.router(),
             Answerer(self.retriever("low"), self.writer, self.manifest, top_k=8, reviewer=self.reviewer),
             Answerer(self.retriever("medium"), self.writer, self.manifest, top_k=8, reviewer=self.reviewer),
             self.agent(),

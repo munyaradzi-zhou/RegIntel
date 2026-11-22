@@ -1,0 +1,3954 @@
+{
+ "description": "Router training and test data. Real questions from golden_set.json and tool_questions.json, split once (seed below); generated variants come only from training questions. See docs/router-data-card.md.",
+ "seed": 20261122,
+ "generator": "gpt-5-mini",
+ "questions": [
+  {
+   "id": "be-01",
+   "question": "In an EU bioequivalence study at steady state, under what condition may the washout of the previous treatment overlap with the build-up of the next one?",
+   "route": "guidance_single",
+   "kind": "single",
+   "split": "test",
+   "source": "real"
+  },
+  {
+   "id": "be-02",
+   "question": "Which acceptance range must the 90% confidence interval of the test-to-reference ratio fall within to show bioequivalence in the EU?",
+   "route": "guidance_single",
+   "kind": "single",
+   "split": "train",
+   "source": "real"
+  },
+  {
+   "id": "be-03",
+   "question": "What is the smallest number of evaluable subjects the EMA accepts in a bioequivalence study?",
+   "route": "guidance_single",
+   "kind": "single",
+   "split": "train",
+   "source": "real"
+  },
+  {
+   "id": "be-04",
+   "question": "For a highly variable drug product in the EU, may the bioequivalence acceptance range for AUC be widened like it can be for Cmax?",
+   "route": "guidance_single",
+   "kind": "single",
+   "split": "train",
+   "source": "real"
+  },
+  {
+   "id": "be-05",
+   "question": "When does FDA expect a generic drug applicant to run both fasting and fed bioequivalence studies?",
+   "route": "guidance_single",
+   "kind": "single",
+   "split": "train",
+   "source": "real"
+  },
+  {
+   "id": "be-06",
+   "question": "What statistical criterion does FDA use for average bioequivalence of pharmacokinetic measures?",
+   "route": "guidance_single",
+   "kind": "single",
+   "split": "test",
+   "source": "real"
+  },
+  {
+   "id": "sr-01",
+   "question": "Under ICH E2A, how fast must regulators be told about a fatal or life-threatening unexpected adverse drug reaction from a clinical trial?",
+   "route": "guidance_single",
+   "kind": "single",
+   "split": "test",
+   "source": "real"
+  },
+  {
+   "id": "sr-02",
+   "question": "Per ICH E2A, what is the reporting deadline for serious, unexpected ADRs that are neither fatal nor life-threatening?",
+   "route": "guidance_single",
+   "kind": "single",
+   "split": "train",
+   "source": "real"
+  },
+  {
+   "id": "sr-03",
+   "question": "How long does a sponsor have to submit an IND safety report to FDA once it determines the information qualifies?",
+   "route": "guidance_single",
+   "kind": "single",
+   "split": "train",
+   "source": "real"
+  },
+  {
+   "id": "sr-04",
+   "question": "What is FDA's deadline for notifying it of an unexpected fatal or life-threatening suspected adverse reaction under an IND?",
+   "route": "guidance_single",
+   "kind": "single",
+   "split": "train",
+   "source": "real"
+  },
+  {
+   "id": "sr-05",
+   "question": "When must an IND safety report be based on an aggregate analysis of serious adverse events rather than single cases?",
+   "route": "guidance_single",
+   "kind": "single",
+   "split": "train",
+   "source": "real"
+  },
+  {
+   "id": "sr-06",
+   "question": "In the EU pharmacovigilance system, within what time frame must non-serious ICSRs be submitted?",
+   "route": "guidance_single",
+   "kind": "single",
+   "split": "train",
+   "source": "real"
+  },
+  {
+   "id": "er-01",
+   "question": "Does FDA enforce Part 11 for computer systems that were already running before the regulation took effect?",
+   "route": "guidance_single",
+   "kind": "single",
+   "split": "train",
+   "source": "real"
+  },
+  {
+   "id": "er-02",
+   "question": "Which Part 11 requirements does FDA say it will not enforce while it re-examines the rule?",
+   "route": "guidance_single",
+   "kind": "single",
+   "split": "test",
+   "source": "real"
+  },
+  {
+   "id": "er-03",
+   "question": "What does EU GMP Annex 11 expect when GMP-relevant data in a computerised system are changed or deleted?",
+   "route": "guidance_single",
+   "kind": "single",
+   "split": "test",
+   "source": "real"
+  },
+  {
+   "id": "er-04",
+   "question": "What properties must electronic signatures have under EU GMP Annex 11?",
+   "route": "guidance_single",
+   "kind": "single",
+   "split": "train",
+   "source": "real"
+  },
+  {
+   "id": "er-05",
+   "question": "May electronic records from a clinical investigation be kept on cloud computing services, according to FDA?",
+   "route": "guidance_single",
+   "kind": "single",
+   "split": "train",
+   "source": "real"
+  },
+  {
+   "id": "er-06",
+   "question": "Should a regulated entity keep a certified copy when it retains a copy of a clinical investigation electronic record?",
+   "route": "guidance_single",
+   "kind": "single",
+   "split": "test",
+   "source": "real"
+  },
+  {
+   "id": "st-01",
+   "question": "Under the estimand framework, what does the treatment policy strategy do with intercurrent events?",
+   "route": "guidance_single",
+   "kind": "single",
+   "split": "test",
+   "source": "real"
+  },
+  {
+   "id": "st-02",
+   "question": "What is a principal stratum strategy for intercurrent events?",
+   "route": "guidance_single",
+   "kind": "single",
+   "split": "train",
+   "source": "real"
+  },
+  {
+   "id": "st-03",
+   "question": "When must the reasons for excluding subjects from the per protocol set be defined and documented?",
+   "route": "guidance_single",
+   "kind": "single",
+   "split": "train",
+   "source": "real"
+  },
+  {
+   "id": "st-04",
+   "question": "How does FDA define an adaptive design for a clinical trial?",
+   "route": "guidance_single",
+   "kind": "single",
+   "split": "test",
+   "source": "real"
+  },
+  {
+   "id": "st-05",
+   "question": "Which multiplicity adjustment procedures that assume no hierarchy among hypotheses does FDA name for trials with multiple endpoints?",
+   "route": "guidance_single",
+   "kind": "single",
+   "split": "train",
+   "source": "real"
+  },
+  {
+   "id": "st-06",
+   "question": "What happens to statistical power when a drug must show an effect on each of two co-primary endpoints?",
+   "route": "guidance_single",
+   "kind": "single",
+   "split": "train",
+   "source": "real"
+  },
+  {
+   "id": "st-07",
+   "question": "According to the CPMP points to consider, what should be done when an unforeseen multiple testing situation arises?",
+   "route": "guidance_single",
+   "kind": "single",
+   "split": "train",
+   "source": "real"
+  },
+  {
+   "id": "st-08",
+   "question": "How do stratified randomisation and covariate adjustment relate, in the EMA guideline on baseline covariates?",
+   "route": "guidance_single",
+   "kind": "single",
+   "split": "train",
+   "source": "real"
+  },
+  {
+   "id": "tr-01",
+   "question": "Which reference points should the starting dose of a first-in-human trial in healthy volunteers be based on in the EU?",
+   "route": "guidance_single",
+   "kind": "single",
+   "split": "train",
+   "source": "real"
+  },
+  {
+   "id": "tr-02",
+   "question": "What is sentinel dosing in early clinical trials?",
+   "route": "guidance_single",
+   "kind": "single",
+   "split": "train",
+   "source": "real"
+  },
+  {
+   "id": "tr-03",
+   "question": "On what basis should regions or subpopulations be pooled in a multi-regional clinical trial?",
+   "route": "guidance_single",
+   "kind": "single",
+   "split": "train",
+   "source": "real"
+  },
+  {
+   "id": "tr-04",
+   "question": "What are critical to quality factors in the design of a clinical study?",
+   "route": "guidance_single",
+   "kind": "single",
+   "split": "test",
+   "source": "real"
+  },
+  {
+   "id": "tr-05",
+   "question": "How long should the synopsis of a clinical study report usually be?",
+   "route": "guidance_single",
+   "kind": "single",
+   "split": "test",
+   "source": "real"
+  },
+  {
+   "id": "tr-06",
+   "question": "Who must keep essential records of a clinical trial, and for how long, under ICH GCP E6(R3)?",
+   "route": "guidance_single",
+   "kind": "single",
+   "split": "train",
+   "source": "real"
+  },
+  {
+   "id": "tr-07",
+   "question": "How should computerised systems used in clinical trials be validated under ICH E6(R3)?",
+   "route": "guidance_single",
+   "kind": "single",
+   "split": "train",
+   "source": "real"
+  },
+  {
+   "id": "qr-01",
+   "question": "How formal should a quality risk management process be under ICH Q9(R1)?",
+   "route": "guidance_single",
+   "kind": "single",
+   "split": "train",
+   "source": "real"
+  },
+  {
+   "id": "ic-01",
+   "question": "When may a short form written consent document be used in an FDA-regulated clinical investigation?",
+   "route": "guidance_single",
+   "kind": "single",
+   "split": "train",
+   "source": "real"
+  },
+  {
+   "id": "ex-01",
+   "question": "What is FDA's review goal for an application with priority review designation, compared with standard review?",
+   "route": "guidance_single",
+   "kind": "single",
+   "split": "test",
+   "source": "real"
+  },
+  {
+   "id": "ex-02",
+   "question": "Which four expedited programs does FDA offer for drugs that treat serious conditions?",
+   "route": "guidance_single",
+   "kind": "single",
+   "split": "train",
+   "source": "real"
+  },
+  {
+   "id": "cmp-01",
+   "question": "Compare the FDA and EMA acceptance limits for average bioequivalence.",
+   "route": "guidance_multi",
+   "kind": "comparison",
+   "split": "test",
+   "source": "real"
+  },
+  {
+   "id": "cmp-02",
+   "question": "How do ICH E2A and FDA's IND rules compare on the deadline for reporting unexpected fatal or life-threatening reactions?",
+   "route": "guidance_multi",
+   "kind": "comparison",
+   "split": "train",
+   "source": "real"
+  },
+  {
+   "id": "cmp-03",
+   "question": "What do FDA's Part 11 guidance and EU GMP Annex 11 each say about audit trails?",
+   "route": "guidance_multi",
+   "kind": "comparison",
+   "split": "train",
+   "source": "real"
+  },
+  {
+   "id": "cmp-04",
+   "question": "How do FDA and the EMA approach multiplicity adjustment when a trial tests several hypotheses?",
+   "route": "guidance_multi",
+   "kind": "comparison",
+   "split": "train",
+   "source": "real"
+  },
+  {
+   "id": "cmp-05",
+   "question": "Compare EU and US timelines for submitting reports of serious suspected adverse reactions.",
+   "route": "guidance_multi",
+   "kind": "comparison",
+   "split": "train",
+   "source": "real"
+  },
+  {
+   "id": "mh-01",
+   "question": "A generic product's Cmax turns out to be highly variable. How far could the EU widen the acceptance limits, and at what within-subject standard deviation of the reference does the FDA switch from the usual two one-sided tests to reference scaling?",
+   "route": "guidance_multi",
+   "kind": "multihop",
+   "split": "train",
+   "source": "real"
+  },
+  {
+   "id": "mh-02",
+   "question": "A trial participant dies from an unexpected reaction to the study drug. How quickly must regulators hear about it under the ICH harmonised definitions, and does the FDA allow more or less time for that kind of IND safety report?",
+   "route": "guidance_multi",
+   "kind": "multihop",
+   "split": "train",
+   "source": "real"
+  },
+  {
+   "id": "mh-03",
+   "question": "On computer-generated audit trails, how does the FDA's position on Part 11 differ from what EU GMP Annex 11 expects?",
+   "route": "guidance_multi",
+   "kind": "multihop",
+   "split": "train",
+   "source": "real"
+  },
+  {
+   "id": "mh-04",
+   "question": "Randomisation in my trial was stratified by region. What does the EMA expect for that factor in the primary analysis, and which strategies does ICH E9(R1) offer for handling participants who stop treatment early?",
+   "route": "guidance_multi",
+   "kind": "multihop",
+   "split": "test",
+   "source": "real"
+  },
+  {
+   "id": "mh-05",
+   "question": "Once the primary endpoint has been met, under what conditions can secondary endpoints support an additional claim according to both the EMA multiplicity points to consider and the FDA multiple endpoints guidance?",
+   "route": "guidance_multi",
+   "kind": "multihop",
+   "split": "train",
+   "source": "real"
+  },
+  {
+   "id": "mh-06",
+   "question": "For an EU first-in-human trial, which reference points can the starting dose be derived from, and how should the first dose of each new cohort be administered?",
+   "route": "guidance_multi",
+   "kind": "multihop",
+   "split": "test",
+   "source": "real"
+  },
+  {
+   "id": "mh-07",
+   "question": "Why must an adaptive trial design address inflation of false-positive conclusions, and how can the sponsor demonstrate control when no analytical formula is available?",
+   "route": "guidance_multi",
+   "kind": "multihop",
+   "split": "train",
+   "source": "real"
+  },
+  {
+   "id": "mh-08",
+   "question": "What qualities should a trial's source records have under ICH E6(R3), and what must a GMP computerised system capture when someone changes or deletes data?",
+   "route": "guidance_multi",
+   "kind": "multihop",
+   "split": "train",
+   "source": "real"
+  },
+  {
+   "id": "mh-09",
+   "question": "For narrow therapeutic index drugs, what tightened AUC acceptance range does the EMA apply, and what study design does the FDA expect?",
+   "route": "guidance_multi",
+   "kind": "multihop",
+   "split": "train",
+   "source": "real"
+  },
+  {
+   "id": "mh-10",
+   "question": "Line up the standard 15-day reporting clocks: serious unexpected reactions that are not fatal under ICH E2A, IND safety reports to the FDA, and serious individual case reports in the EU under GVP Module VI.",
+   "route": "guidance_multi",
+   "kind": "multihop",
+   "split": "test",
+   "source": "real"
+  },
+  {
+   "id": "na-01",
+   "question": "What are Japan's PMDA requirements for bioequivalence studies of generic drugs?",
+   "route": "guidance_single",
+   "kind": "unanswerable",
+   "split": "test",
+   "source": "real"
+  },
+  {
+   "id": "na-02",
+   "question": "What does FDA require to designate a biosimilar as interchangeable?",
+   "route": "guidance_single",
+   "kind": "unanswerable",
+   "split": "test",
+   "source": "real"
+  },
+  {
+   "id": "na-03",
+   "question": "By when must a paediatric investigation plan be submitted to the EMA?",
+   "route": "guidance_single",
+   "kind": "unanswerable",
+   "split": "train",
+   "source": "real"
+  },
+  {
+   "id": "na-04",
+   "question": "What is the user fee amount for an application with priority review in fiscal year 2026?",
+   "route": "guidance_single",
+   "kind": "unanswerable",
+   "split": "train",
+   "source": "real"
+  },
+  {
+   "id": "na-05",
+   "question": "What does Annex 2 of ICH E6(R3) say about decentralised clinical trial elements?",
+   "route": "guidance_single",
+   "kind": "unanswerable",
+   "split": "train",
+   "source": "real"
+  },
+  {
+   "id": "na-06",
+   "question": "Which validation requirements does EU GMP Annex 11 set for machine learning models?",
+   "route": "guidance_single",
+   "kind": "unanswerable",
+   "split": "train",
+   "source": "real"
+  },
+  {
+   "id": "na-07",
+   "question": "Under ICH E6(R3), what is the maximum number of participants one investigator site may enrol?",
+   "route": "guidance_single",
+   "kind": "unanswerable",
+   "split": "train",
+   "source": "real"
+  },
+  {
+   "id": "na-08",
+   "question": "What starting dose of fentanyl should I give a patient with cancer pain?",
+   "route": "guidance_single",
+   "kind": "unanswerable",
+   "split": "test",
+   "source": "real"
+  },
+  {
+   "id": "fa-01",
+   "question": "How many reports in the loaded FAERS data list semaglutide as a suspect drug, and how many of those were serious?",
+   "route": "agent",
+   "kind": "data",
+   "split": "test",
+   "source": "real"
+  },
+  {
+   "id": "fa-02",
+   "question": "What are the three most frequently reported reactions for pembrolizumab in the FAERS extract?",
+   "route": "agent",
+   "kind": "data",
+   "split": "train",
+   "source": "real"
+  },
+  {
+   "id": "fa-03",
+   "question": "Is nausea reported disproportionately often with semaglutide in FAERS? Give the reporting odds ratio and its 95% confidence interval.",
+   "route": "agent",
+   "kind": "data",
+   "split": "test",
+   "source": "real"
+  },
+  {
+   "id": "fa-04",
+   "question": "Compute the reporting odds ratio for pneumonitis with pembrolizumab in the FAERS data.",
+   "route": "agent",
+   "kind": "data",
+   "split": "train",
+   "source": "real"
+  },
+  {
+   "id": "fa-05",
+   "question": "In the FAERS extract, how many reports with fentanyl as a suspect drug record a death?",
+   "route": "agent",
+   "kind": "data",
+   "split": "test",
+   "source": "real"
+  },
+  {
+   "id": "cd-01",
+   "question": "What is the NCI code of the CDISC SDTM codelist for the outcome of an adverse event, submission value OUT?",
+   "route": "agent",
+   "kind": "data",
+   "split": "train",
+   "source": "real"
+  },
+  {
+   "id": "cd-02",
+   "question": "What is the code of the CDISC codelist 'Action Taken with Study Treatment', and what is its submission value?",
+   "route": "agent",
+   "kind": "data",
+   "split": "train",
+   "source": "real"
+  },
+  {
+   "id": "cd-03",
+   "question": "Which CDISC SDTM codelist (give its code) holds the values for a subject's sex?",
+   "route": "agent",
+   "kind": "data",
+   "split": "train",
+   "source": "real"
+  },
+  {
+   "id": "mx-01",
+   "question": "How quickly must an unexpected fatal suspected adverse reaction be reported to FDA, and how many FAERS reports with apixaban as a suspect drug record a death?",
+   "route": "agent",
+   "kind": "data",
+   "split": "train",
+   "source": "real"
+  },
+  {
+   "id": "mx-02",
+   "question": "Which CDISC codelist holds adverse event severity values, and how does ICH E2A distinguish 'severe' from 'serious'?",
+   "route": "agent",
+   "kind": "data",
+   "split": "train",
+   "source": "real"
+  },
+  {
+   "id": "lb-01",
+   "question": "What does the boxed warning on the US label for semaglutide (Ozempic) warn about?",
+   "route": "agent",
+   "kind": "data",
+   "split": "train",
+   "source": "real"
+  },
+  {
+   "id": "lb-02",
+   "question": "According to its FDA label, in which patients is Ozempic contraindicated?",
+   "route": "agent",
+   "kind": "data",
+   "split": "train",
+   "source": "real"
+  },
+  {
+   "id": "lb-03",
+   "question": "What risk does the boxed warning on the warfarin label describe, and what monitoring does it ask for?",
+   "route": "agent",
+   "kind": "data",
+   "split": "test",
+   "source": "real"
+  },
+  {
+   "id": "lb-04",
+   "question": "What is the boxed warning on the metformin label about?",
+   "route": "agent",
+   "kind": "data",
+   "split": "train",
+   "source": "real"
+  },
+  {
+   "id": "rc-01",
+   "question": "Which recalls of metformin were reported to FDA between 1 January and 30 June 2025? Give the recall numbers.",
+   "route": "agent",
+   "kind": "data",
+   "split": "train",
+   "source": "real"
+  },
+  {
+   "id": "rc-02",
+   "question": "How many FDA recalls of valsartan were reported in 2024 and 2025?",
+   "route": "agent",
+   "kind": "data",
+   "split": "test",
+   "source": "real"
+  },
+  {
+   "id": "be-02-p1",
+   "question": "According to EU guidance, what acceptance range must the 90% confidence interval of the test-to-reference ratio fall within to demonstrate bioequivalence?",
+   "route": "guidance_single",
+   "kind": "paraphrase",
+   "split": "train",
+   "source": "generated",
+   "parent": "be-02"
+  },
+  {
+   "id": "be-02-p2",
+   "question": "In the EU, what is the required acceptance interval for the 90% CI of the test/reference ratio to claim bioequivalence?",
+   "route": "guidance_single",
+   "kind": "paraphrase",
+   "split": "train",
+   "source": "generated",
+   "parent": "be-02"
+  },
+  {
+   "id": "be-02-p3",
+   "question": "What acceptance range does the EU guidance specify for the 90% confidence interval of the test-to-reference ratio to show bioequivalence?",
+   "route": "guidance_single",
+   "kind": "paraphrase",
+   "split": "train",
+   "source": "generated",
+   "parent": "be-02"
+  },
+  {
+   "id": "be-02-p4",
+   "question": "Per EU regulatory guidance, within what acceptance limits must the 90% CI of the test-to-reference ratio lie to establish bioequivalence?",
+   "route": "guidance_single",
+   "kind": "paraphrase",
+   "split": "train",
+   "source": "generated",
+   "parent": "be-02"
+  },
+  {
+   "id": "be-02-n1",
+   "question": "According to FDA guidance, what is the required timeframe for expedited serious adverse event reporting for investigational new drugs?",
+   "route": "guidance_single",
+   "kind": "new",
+   "split": "train",
+   "source": "generated",
+   "parent": "be-02"
+  },
+  {
+   "id": "be-02-n2",
+   "question": "What does ICH E2B(R3) guidance specify as the standard data elements required when submitting individual case safety reports (ICSRs)?",
+   "route": "guidance_single",
+   "kind": "new",
+   "split": "train",
+   "source": "generated",
+   "parent": "be-02"
+  },
+  {
+   "id": "be-02-n3",
+   "question": "Per EMA guidance, what common terminology (MedDRA edition/version) should be used for coding adverse drug reactions in pharmacovigilance submissions?",
+   "route": "guidance_single",
+   "kind": "new",
+   "split": "train",
+   "source": "generated",
+   "parent": "be-02"
+  },
+  {
+   "id": "be-03-p1",
+   "question": "What is the minimum number of evaluable subjects the EMA requires for a bioequivalence study?",
+   "route": "guidance_single",
+   "kind": "paraphrase",
+   "split": "train",
+   "source": "generated",
+   "parent": "be-03"
+  },
+  {
+   "id": "be-03-p2",
+   "question": "How few evaluable subjects will the EMA accept in a bioequivalence trial?",
+   "route": "guidance_single",
+   "kind": "paraphrase",
+   "split": "train",
+   "source": "generated",
+   "parent": "be-03"
+  },
+  {
+   "id": "be-03-p3",
+   "question": "According to EMA guidance, what is the smallest acceptable number of evaluable subjects in a bioequivalence study?",
+   "route": "guidance_single",
+   "kind": "paraphrase",
+   "split": "train",
+   "source": "generated",
+   "parent": "be-03"
+  },
+  {
+   "id": "be-03-p4",
+   "question": "What's the lowest number of evaluable subjects that the EMA allows in a bioequivalence study?",
+   "route": "guidance_single",
+   "kind": "paraphrase",
+   "split": "train",
+   "source": "generated",
+   "parent": "be-03"
+  },
+  {
+   "id": "be-03-n1",
+   "question": "According to ICH E2A guidance, how is a 'serious adverse event' defined?",
+   "route": "guidance_single",
+   "kind": "new",
+   "split": "train",
+   "source": "generated",
+   "parent": "be-03"
+  },
+  {
+   "id": "be-03-n2",
+   "question": "What timeframe does FDA guidance require for reporting unexpected fatal or life‑threatening suspected adverse reactions in IND safety reports?",
+   "route": "guidance_single",
+   "kind": "new",
+   "split": "train",
+   "source": "generated",
+   "parent": "be-03"
+  },
+  {
+   "id": "be-03-n3",
+   "question": "Which data standard does the EMA recommend for clinical trial tabulation datasets in regulatory submissions (e.g., CDISC SDTM) according to its guidance?",
+   "route": "guidance_single",
+   "kind": "new",
+   "split": "train",
+   "source": "generated",
+   "parent": "be-03"
+  },
+  {
+   "id": "be-04-p1",
+   "question": "According to EU (EMA) guidance for highly variable drug products, can the bioequivalence acceptance range for AUC be widened in the same way that Cmax can be?",
+   "route": "guidance_single",
+   "kind": "paraphrase",
+   "split": "train",
+   "source": "generated",
+   "parent": "be-04"
+  },
+  {
+   "id": "be-04-p2",
+   "question": "In the EU, does EMA guidance allow widening the bioequivalence limits for AUC for a highly variable drug product the way it permits widening for Cmax?",
+   "route": "guidance_single",
+   "kind": "paraphrase",
+   "split": "train",
+   "source": "generated",
+   "parent": "be-04"
+  },
+  {
+   "id": "be-04-p3",
+   "question": "For a highly variable product in the EU, may the AUC bioequivalence acceptance interval be broadened similarly to Cmax under EMA guidance?",
+   "route": "guidance_single",
+   "kind": "paraphrase",
+   "split": "train",
+   "source": "generated",
+   "parent": "be-04"
+  },
+  {
+   "id": "be-04-p4",
+   "question": "Under EU regulatory guidance, can the acceptance range for AUC be expanded for highly variable drugs as is done for Cmax?",
+   "route": "guidance_single",
+   "kind": "paraphrase",
+   "split": "train",
+   "source": "generated",
+   "parent": "be-04"
+  },
+  {
+   "id": "be-04-n1",
+   "question": "According to EMA guidance on clinical trial safety reporting, must suspected unexpected serious adverse reactions (SUSARs) be reported to the competent authority within 7 days for life‑threatening or fatal cases?",
+   "route": "guidance_single",
+   "kind": "new",
+   "split": "train",
+   "source": "generated",
+   "parent": "be-04"
+  },
+  {
+   "id": "be-04-n2",
+   "question": "Per ICH E6(R2) guidance, is there a specified minimum retention period for essential documents (source documents and trial master file) after trial completion or marketing authorization?",
+   "route": "guidance_single",
+   "kind": "new",
+   "split": "train",
+   "source": "generated",
+   "parent": "be-04"
+  },
+  {
+   "id": "be-04-n3",
+   "question": "According to FDA guidance on electronic submissions and standards, is MedDRA the required controlled terminology for coding adverse events in regulatory safety submissions?",
+   "route": "guidance_single",
+   "kind": "new",
+   "split": "train",
+   "source": "generated",
+   "parent": "be-04"
+  },
+  {
+   "id": "be-05-p1",
+   "question": "When does FDA expect a generic drug applicant to conduct both fasting and fed bioequivalence studies?",
+   "route": "guidance_single",
+   "kind": "paraphrase",
+   "split": "train",
+   "source": "generated",
+   "parent": "be-05"
+  },
+  {
+   "id": "be-05-p2",
+   "question": "Under FDA guidance, in which situations must a generic drug applicant run both fasting and fed bioequivalence studies?",
+   "route": "guidance_single",
+   "kind": "paraphrase",
+   "split": "train",
+   "source": "generated",
+   "parent": "be-05"
+  },
+  {
+   "id": "be-05-p3",
+   "question": "At what point does the FDA require a generic drug applicant to perform both fasting and fed bioequivalence studies?",
+   "route": "guidance_single",
+   "kind": "paraphrase",
+   "split": "train",
+   "source": "generated",
+   "parent": "be-05"
+  },
+  {
+   "id": "be-05-p4",
+   "question": "According to FDA guidance, when is a generic drug applicant expected to carry out both fasting and fed bioequivalence studies?",
+   "route": "guidance_single",
+   "kind": "paraphrase",
+   "split": "train",
+   "source": "generated",
+   "parent": "be-05"
+  },
+  {
+   "id": "be-05-n1",
+   "question": "According to EMA guidance, when is a Pediatric Investigation Plan (PIP) required for a new medicinal product?",
+   "route": "guidance_single",
+   "kind": "new",
+   "split": "train",
+   "source": "generated",
+   "parent": "be-05"
+  },
+  {
+   "id": "be-05-n2",
+   "question": "Per ICH E2A guidance, when must an individual case safety report (ICSR) be submitted to regulators (what timelines trigger expedited reporting)?",
+   "route": "guidance_single",
+   "kind": "new",
+   "split": "train",
+   "source": "generated",
+   "parent": "be-05"
+  },
+  {
+   "id": "be-05-n3",
+   "question": "According to FDA guidance, when should a drug sponsor conduct a thorough QT (TQT) study versus using alternative approaches for cardiac safety assessment?",
+   "route": "guidance_single",
+   "kind": "new",
+   "split": "train",
+   "source": "generated",
+   "parent": "be-05"
+  },
+  {
+   "id": "sr-02-p1",
+   "question": "Under ICH E2A, what is the deadline for reporting serious unexpected ADRs that are neither fatal nor life‑threatening?",
+   "route": "guidance_single",
+   "kind": "paraphrase",
+   "split": "train",
+   "source": "generated",
+   "parent": "sr-02"
+  },
+  {
+   "id": "sr-02-p2",
+   "question": "Per ICH E2A guidance, how soon must you report a serious, unexpected adverse drug reaction that is not fatal or life‑threatening?",
+   "route": "guidance_single",
+   "kind": "paraphrase",
+   "split": "train",
+   "source": "generated",
+   "parent": "sr-02"
+  },
+  {
+   "id": "sr-02-p3",
+   "question": "According to ICH E2A, what reporting timeframe applies to serious unexpected ADRs that are neither life‑threatening nor fatal?",
+   "route": "guidance_single",
+   "kind": "paraphrase",
+   "split": "train",
+   "source": "generated",
+   "parent": "sr-02"
+  },
+  {
+   "id": "sr-02-p4",
+   "question": "What does ICH E2A specify as the reporting deadline for serious unexpected adverse drug reactions that are not fatal or life‑threatening?",
+   "route": "guidance_single",
+   "kind": "paraphrase",
+   "split": "train",
+   "source": "generated",
+   "parent": "sr-02"
+  },
+  {
+   "id": "sr-02-n1",
+   "question": "According to ICH E2B(R3), what electronic format and data standards are required for submitting Individual Case Safety Reports (ICSRs)?",
+   "route": "guidance_single",
+   "kind": "new",
+   "split": "train",
+   "source": "generated",
+   "parent": "sr-02"
+  },
+  {
+   "id": "sr-02-n2",
+   "question": "Per EMA GVP Module V (revise as applicable), how is an 'unexpected' adverse reaction defined in the guidance?",
+   "route": "guidance_single",
+   "kind": "new",
+   "split": "train",
+   "source": "generated",
+   "parent": "sr-02"
+  },
+  {
+   "id": "sr-02-n3",
+   "question": "Under FDA 21 CFR 314.80, what is the reporting timeframe and criteria for submitting a 15‑day alert report for postmarketing adverse drug experiences?",
+   "route": "guidance_single",
+   "kind": "new",
+   "split": "train",
+   "source": "generated",
+   "parent": "sr-02"
+  },
+  {
+   "id": "sr-03-p1",
+   "question": "How long after determining information meets the criteria must a sponsor file an IND safety report with the FDA?",
+   "route": "guidance_single",
+   "kind": "paraphrase",
+   "split": "train",
+   "source": "generated",
+   "parent": "sr-03"
+  },
+  {
+   "id": "sr-03-p2",
+   "question": "Once a sponsor decides the information qualifies, what is the FDA timeframe for submitting an IND safety report?",
+   "route": "guidance_single",
+   "kind": "paraphrase",
+   "split": "train",
+   "source": "generated",
+   "parent": "sr-03"
+  },
+  {
+   "id": "sr-03-p3",
+   "question": "Per FDA requirements, within what period must the sponsor submit an IND safety report once the reportable information is identified?",
+   "route": "guidance_single",
+   "kind": "paraphrase",
+   "split": "train",
+   "source": "generated",
+   "parent": "sr-03"
+  },
+  {
+   "id": "sr-03-p4",
+   "question": "When a sponsor determines information qualifies for reporting, how much time does the FDA allow to submit the IND safety report?",
+   "route": "guidance_single",
+   "kind": "paraphrase",
+   "split": "train",
+   "source": "generated",
+   "parent": "sr-03"
+  },
+  {
+   "id": "sr-03-n1",
+   "question": "How long does a marketing authorisation holder have to submit a SUSAR (serious unexpected suspected adverse reaction) report to EMA once it determines the information qualifies (per EU GVP)?",
+   "route": "guidance_single",
+   "kind": "new",
+   "split": "train",
+   "source": "generated",
+   "parent": "sr-03"
+  },
+  {
+   "id": "sr-03-n2",
+   "question": "According to ICH E6(R2), within what timeframe must an investigator notify the sponsor of a serious adverse event once the investigator becomes aware of it?",
+   "route": "guidance_single",
+   "kind": "new",
+   "split": "train",
+   "source": "generated",
+   "parent": "sr-03"
+  },
+  {
+   "id": "sr-03-n3",
+   "question": "What timeframe does ICH E2B(R3) specify for transmission of an individual case safety report (ICSR) to a regulatory authority after it is prepared?",
+   "route": "guidance_single",
+   "kind": "new",
+   "split": "train",
+   "source": "generated",
+   "parent": "sr-03"
+  },
+  {
+   "id": "sr-04-p1",
+   "question": "According to FDA guidance, how long after discovering an unexpected fatal or life‑threatening suspected adverse reaction under an IND must the sponsor notify the Agency?",
+   "route": "guidance_single",
+   "kind": "paraphrase",
+   "split": "train",
+   "source": "generated",
+   "parent": "sr-04"
+  },
+  {
+   "id": "sr-04-p2",
+   "question": "What is the FDA’s deadline for reporting to them an unexpected fatal or life‑threatening suspected adverse reaction that occurs during an IND study?",
+   "route": "guidance_single",
+   "kind": "paraphrase",
+   "split": "train",
+   "source": "generated",
+   "parent": "sr-04"
+  },
+  {
+   "id": "sr-04-p3",
+   "question": "Under an IND, how quickly does FDA expect notification of an unexpected fatal or life‑threatening suspected adverse reaction?",
+   "route": "guidance_single",
+   "kind": "paraphrase",
+   "split": "train",
+   "source": "generated",
+   "parent": "sr-04"
+  },
+  {
+   "id": "sr-04-p4",
+   "question": "Per FDA IND reporting requirements, within what timeframe must a sponsor notify the FDA about an unexpected fatal or life‑threatening suspected adverse reaction?",
+   "route": "guidance_single",
+   "kind": "paraphrase",
+   "split": "train",
+   "source": "generated",
+   "parent": "sr-04"
+  },
+  {
+   "id": "sr-04-n1",
+   "question": "According to EMA guidance/Clinical Trials Regulation, what is the deadline for notifying the agency of an unexpected fatal or life‑threatening suspected adverse reaction occurring in a clinical trial?",
+   "route": "guidance_single",
+   "kind": "new",
+   "split": "train",
+   "source": "generated",
+   "parent": "sr-04"
+  },
+  {
+   "id": "sr-04-n2",
+   "question": "What does ICH E2A (or its successor guidance) specify as the reporting timeframe for expedited notification of unexpected serious suspected adverse reactions?",
+   "route": "guidance_single",
+   "kind": "new",
+   "split": "train",
+   "source": "generated",
+   "parent": "sr-04"
+  },
+  {
+   "id": "sr-04-n3",
+   "question": "Per FDA guidance, what is the required reporting timeline for submitting a 15‑day IND safety report for a serious and unexpected suspected adverse reaction?",
+   "route": "guidance_single",
+   "kind": "new",
+   "split": "train",
+   "source": "generated",
+   "parent": "sr-04"
+  },
+  {
+   "id": "sr-05-p1",
+   "question": "Under what circumstances should an IND safety report be submitted on the basis of an aggregate analysis of serious adverse events instead of individual case reports?",
+   "route": "guidance_single",
+   "kind": "paraphrase",
+   "split": "train",
+   "source": "generated",
+   "parent": "sr-05"
+  },
+  {
+   "id": "sr-05-p2",
+   "question": "When is it appropriate for an IND safety report to rely on an aggregate review of serious AEs rather than on single-case reports?",
+   "route": "guidance_single",
+   "kind": "paraphrase",
+   "split": "train",
+   "source": "generated",
+   "parent": "sr-05"
+  },
+  {
+   "id": "sr-05-p3",
+   "question": "At what point must an IND safety report be founded on an aggregate analysis of serious adverse events, rather than reporting individual cases?",
+   "route": "guidance_single",
+   "kind": "paraphrase",
+   "split": "train",
+   "source": "generated",
+   "parent": "sr-05"
+  },
+  {
+   "id": "sr-05-p4",
+   "question": "In what situations does FDA guidance require that an IND safety report be based on an aggregate analysis of serious adverse events instead of single-case submissions?",
+   "route": "guidance_single",
+   "kind": "paraphrase",
+   "split": "train",
+   "source": "generated",
+   "parent": "sr-05"
+  },
+  {
+   "id": "sr-05-n1",
+   "question": "According to FDA guidance, when must an expedited IND safety report be submitted for a serious and unexpected suspected adverse reaction?",
+   "route": "guidance_single",
+   "kind": "new",
+   "split": "train",
+   "source": "generated",
+   "parent": "sr-05"
+  },
+  {
+   "id": "sr-05-n2",
+   "question": "What does ICH E2A (or subsequent ICH guidance) state about the required content and length of a narrative in an expedited safety report?",
+   "route": "guidance_single",
+   "kind": "new",
+   "split": "train",
+   "source": "generated",
+   "parent": "sr-05"
+  },
+  {
+   "id": "sr-05-n3",
+   "question": "Per EMA/EU guidance, when is a periodic safety update report (PSUR) required for a medicine, and which products are exempt?",
+   "route": "guidance_single",
+   "kind": "new",
+   "split": "train",
+   "source": "generated",
+   "parent": "sr-05"
+  },
+  {
+   "id": "sr-06-p1",
+   "question": "In the EU pharmacovigilance system, what is the time limit for submitting non-serious ICSRs?",
+   "route": "guidance_single",
+   "kind": "paraphrase",
+   "split": "train",
+   "source": "generated",
+   "parent": "sr-06"
+  },
+  {
+   "id": "sr-06-p2",
+   "question": "Within the EU pharmacovigilance framework, how soon must non-serious ICSRs be sent in?",
+   "route": "guidance_single",
+   "kind": "paraphrase",
+   "split": "train",
+   "source": "generated",
+   "parent": "sr-06"
+  },
+  {
+   "id": "sr-06-p3",
+   "question": "Under the EU pharmacovigilance system, within what timeframe are non-serious individual case safety reports required to be submitted?",
+   "route": "guidance_single",
+   "kind": "paraphrase",
+   "split": "train",
+   "source": "generated",
+   "parent": "sr-06"
+  },
+  {
+   "id": "sr-06-p4",
+   "question": "How long does the EU pharmacovigilance system allow for the submission of non-serious ICSRs?",
+   "route": "guidance_single",
+   "kind": "paraphrase",
+   "split": "train",
+   "source": "generated",
+   "parent": "sr-06"
+  },
+  {
+   "id": "sr-06-n1",
+   "question": "According to ICH E2A, how is a 'serious adverse event' defined? (guidance_single)",
+   "route": "guidance_single",
+   "kind": "new",
+   "split": "train",
+   "source": "generated",
+   "parent": "sr-06"
+  },
+  {
+   "id": "sr-06-n2",
+   "question": "Under FDA IND safety reporting guidance, within how many calendar days must sponsors report deaths or life‑threatening events suspected to be related to the investigational drug? (guidance_single)",
+   "route": "guidance_single",
+   "kind": "new",
+   "split": "train",
+   "source": "generated",
+   "parent": "sr-06"
+  },
+  {
+   "id": "sr-06-n3",
+   "question": "Per EMA Good Pharmacovigilance Practices (GVP), Module VI, within what timeframe must expedited reports of serious unexpected adverse reactions be submitted to EudraVigilance? (guidance_single)",
+   "route": "guidance_single",
+   "kind": "new",
+   "split": "train",
+   "source": "generated",
+   "parent": "sr-06"
+  },
+  {
+   "id": "er-01-p1",
+   "question": "Does the FDA apply Part 11 requirements to computer systems that were already in operation before the rule became effective?",
+   "route": "guidance_single",
+   "kind": "paraphrase",
+   "split": "train",
+   "source": "generated",
+   "parent": "er-01"
+  },
+  {
+   "id": "er-01-p2",
+   "question": "Is Part 11 enforced by FDA for systems installed and running prior to the regulation's effective date?",
+   "route": "guidance_single",
+   "kind": "paraphrase",
+   "split": "train",
+   "source": "generated",
+   "parent": "er-01"
+  },
+  {
+   "id": "er-01-p3",
+   "question": "Does the FDA require compliance with 21 CFR Part 11 for legacy computer systems that existed before Part 11 took effect?",
+   "route": "guidance_single",
+   "kind": "paraphrase",
+   "split": "train",
+   "source": "generated",
+   "parent": "er-01"
+  },
+  {
+   "id": "er-01-p4",
+   "question": "Are computer systems that were already functioning before Part 11 became effective subject to FDA enforcement of Part 11?",
+   "route": "guidance_single",
+   "kind": "paraphrase",
+   "split": "train",
+   "source": "generated",
+   "parent": "er-01"
+  },
+  {
+   "id": "er-01-n1",
+   "question": "Does EMA require submission of Periodic Safety Update Reports (PSURs) for centrally authorised medicines at fixed intervals under the current guidance?",
+   "route": "guidance_single",
+   "kind": "new",
+   "split": "train",
+   "source": "generated",
+   "parent": "er-01"
+  },
+  {
+   "id": "er-01-n2",
+   "question": "According to ICH E6(R2), must trial investigators sign and date the original informed consent document before any trial-related procedures are performed?",
+   "route": "guidance_single",
+   "kind": "new",
+   "split": "train",
+   "source": "generated",
+   "parent": "er-01"
+  },
+  {
+   "id": "er-01-n3",
+   "question": "What does FDA guidance state about when an adverse event must be reported as a suspected unexpected serious adverse reaction (SUSAR) for IND safety reporting?",
+   "route": "guidance_single",
+   "kind": "new",
+   "split": "train",
+   "source": "generated",
+   "parent": "er-01"
+  },
+  {
+   "id": "er-04-p1",
+   "question": "What characteristics are required for electronic signatures under EU GMP Annex 11?",
+   "route": "guidance_single",
+   "kind": "paraphrase",
+   "split": "train",
+   "source": "generated",
+   "parent": "er-04"
+  },
+  {
+   "id": "er-04-p2",
+   "question": "Under EU GMP Annex 11, what properties must an electronic signature possess?",
+   "route": "guidance_single",
+   "kind": "paraphrase",
+   "split": "train",
+   "source": "generated",
+   "parent": "er-04"
+  },
+  {
+   "id": "er-04-p3",
+   "question": "Which attributes must electronic signatures meet according to Annex 11 of the EU GMP guidance?",
+   "route": "guidance_single",
+   "kind": "paraphrase",
+   "split": "train",
+   "source": "generated",
+   "parent": "er-04"
+  },
+  {
+   "id": "er-04-p4",
+   "question": "According to EU GMP Annex 11, what are the mandatory features of electronic signatures?",
+   "route": "guidance_single",
+   "kind": "paraphrase",
+   "split": "train",
+   "source": "generated",
+   "parent": "er-04"
+  },
+  {
+   "id": "er-04-n1",
+   "question": "According to the FDA guidance 'Computerized Systems Used in Clinical Investigations', what are the requirements for maintaining audit trails in computerized clinical systems?",
+   "route": "guidance_single",
+   "kind": "new",
+   "split": "train",
+   "source": "generated",
+   "parent": "er-04"
+  },
+  {
+   "id": "er-04-n2",
+   "question": "Under ICH E2A (Clinical Safety Data Management: Definitions and Standards for Expedited Reporting), what are the reporting timelines and conditions for expedited reporting of serious unexpected suspected adverse reactions (SUSARs)?",
+   "route": "guidance_single",
+   "kind": "new",
+   "split": "train",
+   "source": "generated",
+   "parent": "er-04"
+  },
+  {
+   "id": "er-04-n3",
+   "question": "According to ICH E6 R2 (Good Clinical Practice), what are the sponsor's responsibilities for monitoring a clinical trial when implementing a risk-based monitoring approach?",
+   "route": "guidance_single",
+   "kind": "new",
+   "split": "train",
+   "source": "generated",
+   "parent": "er-04"
+  },
+  {
+   "id": "er-05-p1",
+   "question": "Does FDA guidance permit storing clinical investigation electronic records on cloud computing services?",
+   "route": "guidance_single",
+   "kind": "paraphrase",
+   "split": "train",
+   "source": "generated",
+   "parent": "er-05"
+  },
+  {
+   "id": "er-05-p2",
+   "question": "According to the FDA, are cloud-based services acceptable for maintaining electronic records from a clinical study?",
+   "route": "guidance_single",
+   "kind": "paraphrase",
+   "split": "train",
+   "source": "generated",
+   "parent": "er-05"
+  },
+  {
+   "id": "er-05-p3",
+   "question": "Can clinical investigation electronic records be kept in cloud computing environments per FDA guidance?",
+   "route": "guidance_single",
+   "kind": "paraphrase",
+   "split": "train",
+   "source": "generated",
+   "parent": "er-05"
+  },
+  {
+   "id": "er-05-p4",
+   "question": "What does the FDA say about using cloud computing services to store electronic records from a clinical investigation?",
+   "route": "guidance_single",
+   "kind": "paraphrase",
+   "split": "train",
+   "source": "generated",
+   "parent": "er-05"
+  },
+  {
+   "id": "er-05-n1",
+   "question": "According to EMA guidance, what are the labeling requirements for investigational medicinal products in clinical trials?",
+   "route": "guidance_single",
+   "kind": "new",
+   "split": "train",
+   "source": "generated",
+   "parent": "er-05"
+  },
+  {
+   "id": "er-05-n2",
+   "question": "What does ICH E2A guidance state about the definitions and reporting timelines for expedited safety reports (SUSARs)?",
+   "route": "guidance_single",
+   "kind": "new",
+   "split": "train",
+   "source": "generated",
+   "parent": "er-05"
+  },
+  {
+   "id": "er-05-n3",
+   "question": "Per FDA guidance, are electronic informed consent (eConsent) processes acceptable for clinical trials and what key requirements must they meet?",
+   "route": "guidance_single",
+   "kind": "new",
+   "split": "train",
+   "source": "generated",
+   "parent": "er-05"
+  },
+  {
+   "id": "st-02-p1",
+   "question": "What does a principal stratum strategy for handling intercurrent events mean?",
+   "route": "guidance_single",
+   "kind": "paraphrase",
+   "split": "train",
+   "source": "generated",
+   "parent": "st-02"
+  },
+  {
+   "id": "st-02-p2",
+   "question": "Could you explain the principal stratum approach to intercurrent events?",
+   "route": "guidance_single",
+   "kind": "paraphrase",
+   "split": "train",
+   "source": "generated",
+   "parent": "st-02"
+  },
+  {
+   "id": "st-02-p3",
+   "question": "In regulatory guidance terms, what is meant by a principal stratum strategy for intercurrent events?",
+   "route": "guidance_single",
+   "kind": "paraphrase",
+   "split": "train",
+   "source": "generated",
+   "parent": "st-02"
+  },
+  {
+   "id": "st-02-p4",
+   "question": "How is a principal stratum strategy defined for dealing with intercurrent events?",
+   "route": "guidance_single",
+   "kind": "paraphrase",
+   "split": "train",
+   "source": "generated",
+   "parent": "st-02"
+  },
+  {
+   "id": "st-02-n1",
+   "question": "According to ICH E9(R1), what does a treatment policy estimand imply for handling intercurrent events?",
+   "route": "guidance_single",
+   "kind": "new",
+   "split": "train",
+   "source": "generated",
+   "parent": "st-02"
+  },
+  {
+   "id": "st-02-n2",
+   "question": "What does FDA guidance state is considered a 'serious adverse event' for safety reporting purposes?",
+   "route": "guidance_single",
+   "kind": "new",
+   "split": "train",
+   "source": "generated",
+   "parent": "st-02"
+  },
+  {
+   "id": "st-02-n3",
+   "question": "Per EMA guidance, how is a substantial modification to a clinical trial protocol defined?",
+   "route": "guidance_single",
+   "kind": "new",
+   "split": "train",
+   "source": "generated",
+   "parent": "st-02"
+  },
+  {
+   "id": "st-03-p1",
+   "question": "At what point in the study process do guidance documents require that the reasons for excluding participants from the per-protocol set be specified and recorded? (guidance_single)",
+   "route": "guidance_single",
+   "kind": "paraphrase",
+   "split": "train",
+   "source": "generated",
+   "parent": "st-03"
+  },
+  {
+   "id": "st-03-p2",
+   "question": "When must investigators define and document why subjects are excluded from the per protocol population, according to regulatory guidance? (guidance_single)",
+   "route": "guidance_single",
+   "kind": "paraphrase",
+   "split": "train",
+   "source": "generated",
+   "parent": "st-03"
+  },
+  {
+   "id": "st-03-p3",
+   "question": "According to the applicable guidance text, by what time should the reasons for excluding subjects from the per-protocol set be defined and placed on record? (guidance_single)",
+   "route": "guidance_single",
+   "kind": "paraphrase",
+   "split": "train",
+   "source": "generated",
+   "parent": "st-03"
+  },
+  {
+   "id": "st-03-p4",
+   "question": "When is it required that the rationale for excluding subjects from the per protocol analysis set be determined and documented? (guidance_single)",
+   "route": "guidance_single",
+   "kind": "paraphrase",
+   "split": "train",
+   "source": "generated",
+   "parent": "st-03"
+  },
+  {
+   "id": "st-03-n1",
+   "question": "When must serious adverse events be reported to regulatory authorities under the applicable guidance (e.g., FDA/ICH/EMA), and which timelines apply? (guidance_single)",
+   "route": "guidance_single",
+   "kind": "new",
+   "split": "train",
+   "source": "generated",
+   "parent": "st-03"
+  },
+  {
+   "id": "st-03-n2",
+   "question": "What does the EMA/FDA/ICH guidance state is the required content of informed consent documentation for clinical trial participants? (guidance_single)",
+   "route": "guidance_single",
+   "kind": "new",
+   "split": "train",
+   "source": "generated",
+   "parent": "st-03"
+  },
+  {
+   "id": "st-03-n3",
+   "question": "How does the relevant guidance define a 'suspected unexpected serious adverse reaction' (SUSAR), and which section contains that definition? (guidance_single)",
+   "route": "guidance_single",
+   "kind": "new",
+   "split": "train",
+   "source": "generated",
+   "parent": "st-03"
+  },
+  {
+   "id": "st-05-p1",
+   "question": "Which multiplicity adjustment methods that treat all hypotheses as non-hierarchical does the FDA list for trials with multiple endpoints?",
+   "route": "guidance_single",
+   "kind": "paraphrase",
+   "split": "train",
+   "source": "generated",
+   "parent": "st-05"
+  },
+  {
+   "id": "st-05-p2",
+   "question": "Which procedures for adjusting multiplicity in trials with multiple endpoints—assuming no hierarchical ordering of hypotheses—are named by the FDA?",
+   "route": "guidance_single",
+   "kind": "paraphrase",
+   "split": "train",
+   "source": "generated",
+   "parent": "st-05"
+  },
+  {
+   "id": "st-05-p3",
+   "question": "According to the FDA, what multiplicity adjustment procedures can be used for multiple-endpoint trials when no hypothesis hierarchy is assumed?",
+   "route": "guidance_single",
+   "kind": "paraphrase",
+   "split": "train",
+   "source": "generated",
+   "parent": "st-05"
+  },
+  {
+   "id": "st-05-p4",
+   "question": "What multiplicity-adjustment approaches does the FDA identify for trials with multiple endpoints that do not rely on a hierarchical structure among hypotheses?",
+   "route": "guidance_single",
+   "kind": "paraphrase",
+   "split": "train",
+   "source": "generated",
+   "parent": "st-05"
+  },
+  {
+   "id": "st-05-n1",
+   "question": "According to ICH E9 (R1), how is the term 'estimand' defined and what elements are required to specify an estimand?",
+   "route": "guidance_single",
+   "kind": "new",
+   "split": "train",
+   "source": "generated",
+   "parent": "st-05"
+  },
+  {
+   "id": "st-05-n2",
+   "question": "In the EMA Good Pharmacovigilance Practices guidance, what is the required reporting timeframe for notifying the Agency of a serious unexpected suspected adverse reaction (SUSAR) in the EU?",
+   "route": "guidance_single",
+   "kind": "new",
+   "split": "train",
+   "source": "generated",
+   "parent": "st-05"
+  },
+  {
+   "id": "st-05-n3",
+   "question": "What definition of a 'serious' adverse event does ICH E2A provide for the purposes of expedited safety reporting?",
+   "route": "guidance_single",
+   "kind": "new",
+   "split": "train",
+   "source": "generated",
+   "parent": "st-05"
+  },
+  {
+   "id": "st-06-p1",
+   "question": "How is statistical power affected when a drug is required to demonstrate efficacy on each of two co-primary endpoints?",
+   "route": "guidance_single",
+   "kind": "paraphrase",
+   "split": "train",
+   "source": "generated",
+   "parent": "st-06"
+  },
+  {
+   "id": "st-06-p2",
+   "question": "If a drug must show an effect on both of two co-primary endpoints, what happens to the study's statistical power?",
+   "route": "guidance_single",
+   "kind": "paraphrase",
+   "split": "train",
+   "source": "generated",
+   "parent": "st-06"
+  },
+  {
+   "id": "st-06-p3",
+   "question": "When a drug has two co-primary endpoints and must be effective on both, how does that requirement change the statistical power?",
+   "route": "guidance_single",
+   "kind": "paraphrase",
+   "split": "train",
+   "source": "generated",
+   "parent": "st-06"
+  },
+  {
+   "id": "st-06-p4",
+   "question": "What is the impact on power when a drug is obliged to meet both of two co-primary endpoints?",
+   "route": "guidance_single",
+   "kind": "paraphrase",
+   "split": "train",
+   "source": "generated",
+   "parent": "st-06"
+  },
+  {
+   "id": "st-06-n1",
+   "question": "According to FDA/ICH guidance, what are the reporting timelines for serious adverse events (SAEs) from clinical trials—specifically which timeframes apply for fatal or life‑threatening events versus other SAEs?",
+   "route": "guidance_single",
+   "kind": "new",
+   "split": "train",
+   "source": "generated",
+   "parent": "st-06"
+  },
+  {
+   "id": "st-06-n2",
+   "question": "What does EMA guidance state about the required contents of a pediatric investigation plan (PIP) application, and which section specifies the necessary elements?",
+   "route": "guidance_single",
+   "kind": "new",
+   "split": "train",
+   "source": "generated",
+   "parent": "st-06"
+  },
+  {
+   "id": "st-06-n3",
+   "question": "Per ICH E6(R2) or FDA guidance, what are the sponsor's responsibilities for monitoring trial data and documenting monitoring procedures—what does the guidance say in the monitoring section?",
+   "route": "guidance_single",
+   "kind": "new",
+   "split": "train",
+   "source": "generated",
+   "parent": "st-06"
+  },
+  {
+   "id": "st-07-p1",
+   "question": "According to the CPMP points to consider, how should one handle an unforeseen multiple testing situation?",
+   "route": "guidance_single",
+   "kind": "paraphrase",
+   "split": "train",
+   "source": "generated",
+   "parent": "st-07"
+  },
+  {
+   "id": "st-07-p2",
+   "question": "Per the CPMP points to consider, what actions are recommended when an unforeseen multiple testing situation arises?",
+   "route": "guidance_single",
+   "kind": "paraphrase",
+   "split": "train",
+   "source": "generated",
+   "parent": "st-07"
+  },
+  {
+   "id": "st-07-p3",
+   "question": "What does the CPMP points to consider say should be done if an unforeseen multiple testing situation occurs?",
+   "route": "guidance_single",
+   "kind": "paraphrase",
+   "split": "train",
+   "source": "generated",
+   "parent": "st-07"
+  },
+  {
+   "id": "st-07-p4",
+   "question": "If an unforeseen multiple testing situation happens, what does the CPMP points to consider advise to do?",
+   "route": "guidance_single",
+   "kind": "paraphrase",
+   "split": "train",
+   "source": "generated",
+   "parent": "st-07"
+  },
+  {
+   "id": "st-07-n1",
+   "question": "According to ICH E2A, how is a \"serious adverse event\" defined in the context of pharmacovigilance? (guidance_single)",
+   "route": "guidance_single",
+   "kind": "new",
+   "split": "train",
+   "source": "generated",
+   "parent": "st-07"
+  },
+  {
+   "id": "st-07-n2",
+   "question": "Per the FDA guidance on clinical trial safety reporting, what constitutes an unexpected adverse reaction that must be reported to the sponsor and regulators? (guidance_single)",
+   "route": "guidance_single",
+   "kind": "new",
+   "split": "train",
+   "source": "generated",
+   "parent": "st-07"
+  },
+  {
+   "id": "st-07-n3",
+   "question": "According to ICH E6(R2), what are the required contents of the Trial Master File (TMF) as specified in the guideline? (guidance_single)",
+   "route": "guidance_single",
+   "kind": "new",
+   "split": "train",
+   "source": "generated",
+   "parent": "st-07"
+  },
+  {
+   "id": "st-08-p1",
+   "question": "In the EMA guideline on baseline covariates, how are stratified randomisation and covariate adjustment linked?",
+   "route": "guidance_single",
+   "kind": "paraphrase",
+   "split": "train",
+   "source": "generated",
+   "parent": "st-08"
+  },
+  {
+   "id": "st-08-p2",
+   "question": "How does the EMA guideline on baseline covariates describe the relationship between stratified randomisation and covariate adjustment?",
+   "route": "guidance_single",
+   "kind": "paraphrase",
+   "split": "train",
+   "source": "generated",
+   "parent": "st-08"
+  },
+  {
+   "id": "st-08-p3",
+   "question": "According to the EMA guideline on baseline covariates, what is the connection between using stratified randomisation and performing covariate adjustment?",
+   "route": "guidance_single",
+   "kind": "paraphrase",
+   "split": "train",
+   "source": "generated",
+   "parent": "st-08"
+  },
+  {
+   "id": "st-08-p4",
+   "question": "What does the EMA guideline on baseline covariates say about how stratified randomisation relates to covariate adjustment?",
+   "route": "guidance_single",
+   "kind": "paraphrase",
+   "split": "train",
+   "source": "generated",
+   "parent": "st-08"
+  },
+  {
+   "id": "st-08-n1",
+   "question": "What does the FDA guidance on safety reporting require regarding the timeframe for reporting serious adverse events from clinical trials?",
+   "route": "guidance_single",
+   "kind": "new",
+   "split": "train",
+   "source": "generated",
+   "parent": "st-08"
+  },
+  {
+   "id": "st-08-n2",
+   "question": "How does ICH E9(R1) (the addendum on estimands and sensitivity analysis) define the treatment‑effect estimand attributes?",
+   "route": "guidance_single",
+   "kind": "new",
+   "split": "train",
+   "source": "generated",
+   "parent": "st-08"
+  },
+  {
+   "id": "st-08-n3",
+   "question": "In the EMA guideline on missing data in confirmatory clinical trials, what stance is taken on use of last observation carried forward (LOCF) for primary analysis?",
+   "route": "guidance_single",
+   "kind": "new",
+   "split": "train",
+   "source": "generated",
+   "parent": "st-08"
+  },
+  {
+   "id": "tr-01-p1",
+   "question": "In the EU, on which reference points should the starting dose for a first-in-human trial in healthy volunteers be based?",
+   "route": "guidance_single",
+   "kind": "paraphrase",
+   "split": "train",
+   "source": "generated",
+   "parent": "tr-01"
+  },
+  {
+   "id": "tr-01-p2",
+   "question": "For a first-in-human study in healthy volunteers in the EU, which reference points does the guidance say to use when determining the starting dose?",
+   "route": "guidance_single",
+   "kind": "paraphrase",
+   "split": "train",
+   "source": "generated",
+   "parent": "tr-01"
+  },
+  {
+   "id": "tr-01-p3",
+   "question": "Which reference points does EU guidance recommend using to set the starting dose for a first-in-human trial involving healthy volunteers?",
+   "route": "guidance_single",
+   "kind": "paraphrase",
+   "split": "train",
+   "source": "generated",
+   "parent": "tr-01"
+  },
+  {
+   "id": "tr-01-p4",
+   "question": "When planning a first-in-human trial in healthy volunteers in the EU, what reference points should be used to determine the starting dose according to regulatory guidance?",
+   "route": "guidance_single",
+   "kind": "paraphrase",
+   "split": "train",
+   "source": "generated",
+   "parent": "tr-01"
+  },
+  {
+   "id": "tr-01-n1",
+   "question": "According to EU guidance, what are the reporting timelines and requirements for suspected unexpected serious adverse reactions (SUSARs) from clinical trials?",
+   "route": "guidance_single",
+   "kind": "new",
+   "split": "train",
+   "source": "generated",
+   "parent": "tr-01"
+  },
+  {
+   "id": "tr-01-n2",
+   "question": "What definition of a 'serious adverse event' does ICH guidance provide for clinical trial safety reporting?",
+   "route": "guidance_single",
+   "kind": "new",
+   "split": "train",
+   "source": "generated",
+   "parent": "tr-01"
+  },
+  {
+   "id": "tr-01-n3",
+   "question": "Per FDA guidance, what criteria determine whether an adverse event should be considered an unexpected adverse reaction for reporting purposes?",
+   "route": "guidance_single",
+   "kind": "new",
+   "split": "train",
+   "source": "generated",
+   "parent": "tr-01"
+  },
+  {
+   "id": "tr-02-p1",
+   "question": "What is meant by 'sentinel dosing' in early clinical trials?",
+   "route": "guidance_single",
+   "kind": "paraphrase",
+   "split": "train",
+   "source": "generated",
+   "parent": "tr-02"
+  },
+  {
+   "id": "tr-02-p2",
+   "question": "Can you explain sentinel dosing used in first‑in‑human or early phase studies?",
+   "route": "guidance_single",
+   "kind": "paraphrase",
+   "split": "train",
+   "source": "generated",
+   "parent": "tr-02"
+  },
+  {
+   "id": "tr-02-p3",
+   "question": "In early clinical trials, what does the term sentinel dosing refer to and how is it applied?",
+   "route": "guidance_single",
+   "kind": "paraphrase",
+   "split": "train",
+   "source": "generated",
+   "parent": "tr-02"
+  },
+  {
+   "id": "tr-02-p4",
+   "question": "Define sentinel dosing in the context of early-phase clinical studies — what does the approach involve?",
+   "route": "guidance_single",
+   "kind": "paraphrase",
+   "split": "train",
+   "source": "generated",
+   "parent": "tr-02"
+  },
+  {
+   "id": "tr-02-n1",
+   "question": "According to FDA, EMA, or ICH guidance, how is a 'serious adverse event' defined for clinical trial safety reporting?",
+   "route": "guidance_single",
+   "kind": "new",
+   "split": "train",
+   "source": "generated",
+   "parent": "tr-02"
+  },
+  {
+   "id": "tr-02-n2",
+   "question": "What do ICH or regulatory guidances state about the expedited reporting timelines for unexpected serious adverse reactions (SUSARs)?",
+   "route": "guidance_single",
+   "kind": "new",
+   "split": "train",
+   "source": "generated",
+   "parent": "tr-02"
+  },
+  {
+   "id": "tr-02-n3",
+   "question": "How do FDA/ICH guidances define 'blinding' levels (single‑blind, double‑blind) and when should each be used in clinical trials?",
+   "route": "guidance_single",
+   "kind": "new",
+   "split": "train",
+   "source": "generated",
+   "parent": "tr-02"
+  },
+  {
+   "id": "tr-03-p1",
+   "question": "On what grounds should regions or subpopulations be combined in a multi-regional clinical trial?",
+   "route": "guidance_single",
+   "kind": "paraphrase",
+   "split": "train",
+   "source": "generated",
+   "parent": "tr-03"
+  },
+  {
+   "id": "tr-03-p2",
+   "question": "How should one decide which regions or subpopulations to pool together in an MRCT?",
+   "route": "guidance_single",
+   "kind": "paraphrase",
+   "split": "train",
+   "source": "generated",
+   "parent": "tr-03"
+  },
+  {
+   "id": "tr-03-p3",
+   "question": "What criteria justify pooling different regions or subpopulations in a multi‑regional clinical trial?",
+   "route": "guidance_single",
+   "kind": "paraphrase",
+   "split": "train",
+   "source": "generated",
+   "parent": "tr-03"
+  },
+  {
+   "id": "tr-03-p4",
+   "question": "When is it appropriate to pool regions or subgroups in a multi‑regional clinical trial, and on what basis should that decision be made?",
+   "route": "guidance_single",
+   "kind": "paraphrase",
+   "split": "train",
+   "source": "generated",
+   "parent": "tr-03"
+  },
+  {
+   "id": "tr-03-n1",
+   "question": "According to ICH E9(R1), how should the primary estimand be specified for a clinical trial?",
+   "route": "guidance_single",
+   "kind": "new",
+   "split": "train",
+   "source": "generated",
+   "parent": "tr-03"
+  },
+  {
+   "id": "tr-03-n2",
+   "question": "Per ICH E2A, what are the criteria and timeline for expedited reporting of serious unexpected suspected adverse reactions (SUSARs)?",
+   "route": "guidance_single",
+   "kind": "new",
+   "split": "train",
+   "source": "generated",
+   "parent": "tr-03"
+  },
+  {
+   "id": "tr-03-n3",
+   "question": "According to the EMA pediatric extrapolation guideline, under what circumstances can efficacy data be extrapolated from adults to pediatric populations?",
+   "route": "guidance_single",
+   "kind": "new",
+   "split": "train",
+   "source": "generated",
+   "parent": "tr-03"
+  },
+  {
+   "id": "tr-06-p1",
+   "question": "Under ICH GCP E6(R3), who is required to maintain the essential clinical trial records and for what retention period?",
+   "route": "guidance_single",
+   "kind": "paraphrase",
+   "split": "train",
+   "source": "generated",
+   "parent": "tr-06"
+  },
+  {
+   "id": "tr-06-p2",
+   "question": "Who must retain the essential records of a clinical trial and how long must they be kept according to ICH GCP E6(R3)?",
+   "route": "guidance_single",
+   "kind": "paraphrase",
+   "split": "train",
+   "source": "generated",
+   "parent": "tr-06"
+  },
+  {
+   "id": "tr-06-p3",
+   "question": "According to ICH GCP E6(R3), which party or parties are responsible for keeping essential trial records, and what is the mandated duration of retention?",
+   "route": "guidance_single",
+   "kind": "paraphrase",
+   "split": "train",
+   "source": "generated",
+   "parent": "tr-06"
+  },
+  {
+   "id": "tr-06-p4",
+   "question": "Per ICH GCP E6(R3), who holds the duty to preserve essential clinical trial documents and what retention timeframe does the guidance prescribe?",
+   "route": "guidance_single",
+   "kind": "paraphrase",
+   "split": "train",
+   "source": "generated",
+   "parent": "tr-06"
+  },
+  {
+   "id": "tr-06-n1",
+   "question": "Under ICH E2A, what is the required reporting timeframe for suspected unexpected serious adverse reactions (SUSARs) to regulatory authorities?",
+   "route": "guidance_single",
+   "kind": "new",
+   "split": "train",
+   "source": "generated",
+   "parent": "tr-06"
+  },
+  {
+   "id": "tr-06-n2",
+   "question": "According to the EMA Good Clinical Practice (EU GCP) guidance, who is responsible for obtaining informed consent from trial participants and what specific elements must the consent documentation contain?",
+   "route": "guidance_single",
+   "kind": "new",
+   "split": "train",
+   "source": "generated",
+   "parent": "tr-06"
+  },
+  {
+   "id": "tr-06-n3",
+   "question": "Under ICH E2B(R3), what minimum data elements are required in an individual case safety report (ICSR) for electronic submission?",
+   "route": "guidance_single",
+   "kind": "new",
+   "split": "train",
+   "source": "generated",
+   "parent": "tr-06"
+  },
+  {
+   "id": "tr-07-p1",
+   "question": "What does ICH E6(R3) specify about the validation of computerized systems used in clinical trials?",
+   "route": "guidance_single",
+   "kind": "paraphrase",
+   "split": "train",
+   "source": "generated",
+   "parent": "tr-07"
+  },
+  {
+   "id": "tr-07-p2",
+   "question": "Under ICH E6(R3), how should computerised systems used in clinical trials be validated?",
+   "route": "guidance_single",
+   "kind": "paraphrase",
+   "split": "train",
+   "source": "generated",
+   "parent": "tr-07"
+  },
+  {
+   "id": "tr-07-p3",
+   "question": "Can you summarize ICH E6(R3) requirements for validating computerised systems in clinical trials?",
+   "route": "guidance_single",
+   "kind": "paraphrase",
+   "split": "train",
+   "source": "generated",
+   "parent": "tr-07"
+  },
+  {
+   "id": "tr-07-p4",
+   "question": "According to ICH E6(R3), what are the expectations for validation of computerized systems employed during clinical trials?",
+   "route": "guidance_single",
+   "kind": "paraphrase",
+   "split": "train",
+   "source": "generated",
+   "parent": "tr-07"
+  },
+  {
+   "id": "tr-07-n1",
+   "question": "According to ICH E2A, what are the required timelines and mechanisms for expedited reporting of SUSARs (suspected unexpected serious adverse reactions)?",
+   "route": "guidance_single",
+   "kind": "new",
+   "split": "train",
+   "source": "generated",
+   "parent": "tr-07"
+  },
+  {
+   "id": "tr-07-n2",
+   "question": "Under the EMA Good Clinical Practice guidance, how is a 'substantial amendment' to an ongoing clinical trial defined?",
+   "route": "guidance_single",
+   "kind": "new",
+   "split": "train",
+   "source": "generated",
+   "parent": "tr-07"
+  },
+  {
+   "id": "tr-07-n3",
+   "question": "What data elements and format does ICH E2B(R3) require for an individual case safety report (ICSR) submission?",
+   "route": "guidance_single",
+   "kind": "new",
+   "split": "train",
+   "source": "generated",
+   "parent": "tr-07"
+  },
+  {
+   "id": "qr-01-p1",
+   "question": "How formal does ICH Q9(R1) say a quality risk management process should be? (guidance_single)",
+   "route": "guidance_single",
+   "kind": "paraphrase",
+   "split": "train",
+   "source": "generated",
+   "parent": "qr-01"
+  },
+  {
+   "id": "qr-01-p2",
+   "question": "According to ICH Q9(R1), what level of formality is required for a quality risk management process? (guidance_single)",
+   "route": "guidance_single",
+   "kind": "paraphrase",
+   "split": "train",
+   "source": "generated",
+   "parent": "qr-01"
+  },
+  {
+   "id": "qr-01-p3",
+   "question": "Under ICH Q9(R1), how structured or formal must a QRM process be? (guidance_single)",
+   "route": "guidance_single",
+   "kind": "paraphrase",
+   "split": "train",
+   "source": "generated",
+   "parent": "qr-01"
+  },
+  {
+   "id": "qr-01-p4",
+   "question": "What degree of formality does ICH Q9(R1) recommend for a quality risk management process? (guidance_single)",
+   "route": "guidance_single",
+   "kind": "paraphrase",
+   "split": "train",
+   "source": "generated",
+   "parent": "qr-01"
+  },
+  {
+   "id": "qr-01-n1",
+   "question": "What does FDA guidance say about the timeframe for reporting an unexpected serious adverse event for investigational drugs? (guidance_single)",
+   "route": "guidance_single",
+   "kind": "new",
+   "split": "train",
+   "source": "generated",
+   "parent": "qr-01"
+  },
+  {
+   "id": "qr-01-n2",
+   "question": "How does EMA guidance define a serious adverse reaction versus an adverse event in clinical trials? (guidance_single)",
+   "route": "guidance_single",
+   "kind": "new",
+   "split": "train",
+   "source": "generated",
+   "parent": "qr-01"
+  },
+  {
+   "id": "qr-01-n3",
+   "question": "According to ICH E2B(R3), what data elements are required for electronic expedited safety reporting? (guidance_single)",
+   "route": "guidance_single",
+   "kind": "new",
+   "split": "train",
+   "source": "generated",
+   "parent": "qr-01"
+  },
+  {
+   "id": "ic-01-p1",
+   "question": "Under what circumstances can a short form written consent be used in an FDA-regulated clinical investigation?",
+   "route": "guidance_single",
+   "kind": "paraphrase",
+   "split": "train",
+   "source": "generated",
+   "parent": "ic-01"
+  },
+  {
+   "id": "ic-01-p2",
+   "question": "When is it acceptable to use a short form consent document in an FDA-regulated clinical study?",
+   "route": "guidance_single",
+   "kind": "paraphrase",
+   "split": "train",
+   "source": "generated",
+   "parent": "ic-01"
+  },
+  {
+   "id": "ic-01-p3",
+   "question": "In an FDA-regulated clinical investigation, when may investigators use a short form written informed consent?",
+   "route": "guidance_single",
+   "kind": "paraphrase",
+   "split": "train",
+   "source": "generated",
+   "parent": "ic-01"
+  },
+  {
+   "id": "ic-01-p4",
+   "question": "For an FDA-regulated clinical trial, under what conditions is a short form written consent document permitted?",
+   "route": "guidance_single",
+   "kind": "paraphrase",
+   "split": "train",
+   "source": "generated",
+   "parent": "ic-01"
+  },
+  {
+   "id": "ic-01-n1",
+   "question": "According to FDA guidance, when must an IND sponsor submit an expedited safety (serious and unexpected suspected adverse reaction) report to FDA?",
+   "route": "guidance_single",
+   "kind": "new",
+   "split": "train",
+   "source": "generated",
+   "parent": "ic-01"
+  },
+  {
+   "id": "ic-01-n2",
+   "question": "Per EMA guidance, when should a marketing authorisation holder submit a Periodic Safety Update Report (PSUR) for a medicinal product?",
+   "route": "guidance_single",
+   "kind": "new",
+   "split": "train",
+   "source": "generated",
+   "parent": "ic-01"
+  },
+  {
+   "id": "ic-01-n3",
+   "question": "What does ICH E6(R2) state about when and how frequently a sponsor must conduct monitoring of a clinical trial?",
+   "route": "guidance_single",
+   "kind": "new",
+   "split": "train",
+   "source": "generated",
+   "parent": "ic-01"
+  },
+  {
+   "id": "ex-02-p1",
+   "question": "Which four expedited programs does the FDA provide for drugs that treat serious conditions?",
+   "route": "guidance_single",
+   "kind": "paraphrase",
+   "split": "train",
+   "source": "generated",
+   "parent": "ex-02"
+  },
+  {
+   "id": "ex-02-p2",
+   "question": "For drugs intended to treat serious conditions, what are the four expedited programs offered by FDA?",
+   "route": "guidance_single",
+   "kind": "paraphrase",
+   "split": "train",
+   "source": "generated",
+   "parent": "ex-02"
+  },
+  {
+   "id": "ex-02-p3",
+   "question": "Name the four FDA expedited programs available for drugs addressing serious conditions.",
+   "route": "guidance_single",
+   "kind": "paraphrase",
+   "split": "train",
+   "source": "generated",
+   "parent": "ex-02"
+  },
+  {
+   "id": "ex-02-p4",
+   "question": "What are the four expedited pathways the FDA has for drugs that treat serious conditions?",
+   "route": "guidance_single",
+   "kind": "paraphrase",
+   "split": "train",
+   "source": "generated",
+   "parent": "ex-02"
+  },
+  {
+   "id": "ex-02-n1",
+   "question": "guidance_single — According to EMA guidance, what is the regulatory definition of a 'serious adverse event' for pharmacovigilance reporting?",
+   "route": "guidance_single",
+   "kind": "new",
+   "split": "train",
+   "source": "generated",
+   "parent": "ex-02"
+  },
+  {
+   "id": "ex-02-n2",
+   "question": "guidance_single — Under ICH E2A/E2B guidance, what information elements are required in an expedited (7‑day) serious unexpected adverse reaction report?",
+   "route": "guidance_single",
+   "kind": "new",
+   "split": "train",
+   "source": "generated",
+   "parent": "ex-02"
+  },
+  {
+   "id": "ex-02-n3",
+   "question": "guidance_single — Per FDA guidance on safety reporting, which types of postmarketing safety reports must be submitted as individual case safety reports (ICSRs) versus periodic aggregate reports?",
+   "route": "guidance_single",
+   "kind": "new",
+   "split": "train",
+   "source": "generated",
+   "parent": "ex-02"
+  },
+  {
+   "id": "cmp-02-p1",
+   "question": "How do ICH E2A and FDA's IND rules differ regarding the deadline for reporting unexpected fatal or life-threatening reactions?",
+   "route": "guidance_multi",
+   "kind": "paraphrase",
+   "split": "train",
+   "source": "generated",
+   "parent": "cmp-02"
+  },
+  {
+   "id": "cmp-02-p2",
+   "question": "What is the comparison between ICH E2A and FDA IND requirements on the timeframe to report unexpected fatal or life-threatening reactions?",
+   "route": "guidance_multi",
+   "kind": "paraphrase",
+   "split": "train",
+   "source": "generated",
+   "parent": "cmp-02"
+  },
+  {
+   "id": "cmp-02-p3",
+   "question": "Can you compare ICH E2A with the FDA's IND rules about the reporting deadline for unexpected fatal or life‑threatening reactions?",
+   "route": "guidance_multi",
+   "kind": "paraphrase",
+   "split": "train",
+   "source": "generated",
+   "parent": "cmp-02"
+  },
+  {
+   "id": "cmp-02-p4",
+   "question": "Between ICH E2A and FDA IND rules, how do the deadlines for reporting unexpected fatal or life-threatening reactions compare?",
+   "route": "guidance_multi",
+   "kind": "paraphrase",
+   "split": "train",
+   "source": "generated",
+   "parent": "cmp-02"
+  },
+  {
+   "id": "cmp-02-n1",
+   "question": "How do EMA's Clinical Trials Regulation (EU CTR) and FDA's IND safety reporting requirements compare on timelines for submitting SUSARs (suspected unexpected serious adverse reactions)?",
+   "route": "guidance_multi",
+   "kind": "new",
+   "split": "train",
+   "source": "generated",
+   "parent": "cmp-02"
+  },
+  {
+   "id": "cmp-02-n2",
+   "question": "Compare ICH E2C(R2) guidance and FDA requirements for the frequency and content of Periodic Benefit-Risk Evaluation Reports (PBRERs) / PADERs — what are the key differences?",
+   "route": "guidance_multi",
+   "kind": "new",
+   "split": "train",
+   "source": "generated",
+   "parent": "cmp-02"
+  },
+  {
+   "id": "cmp-02-n3",
+   "question": "What are the differences between ICH E14 guidance and FDA guidance on the recommended evaluation and reporting timelines for drug-induced QT prolongation findings in clinical trials?",
+   "route": "guidance_multi",
+   "kind": "new",
+   "split": "train",
+   "source": "generated",
+   "parent": "cmp-02"
+  },
+  {
+   "id": "cmp-03-p1",
+   "question": "How do FDA's Part 11 guidance and EU GMP Annex 11 each address audit trails?",
+   "route": "guidance_multi",
+   "kind": "paraphrase",
+   "split": "train",
+   "source": "generated",
+   "parent": "cmp-03"
+  },
+  {
+   "id": "cmp-03-p2",
+   "question": "What do the FDA Part 11 guidance and the EU GMP Annex 11 say, respectively, regarding audit trails?",
+   "route": "guidance_multi",
+   "kind": "paraphrase",
+   "split": "train",
+   "source": "generated",
+   "parent": "cmp-03"
+  },
+  {
+   "id": "cmp-03-p3",
+   "question": "Can you compare the treatment of audit trails in FDA's Part 11 guidance versus EU GMP Annex 11?",
+   "route": "guidance_multi",
+   "kind": "paraphrase",
+   "split": "train",
+   "source": "generated",
+   "parent": "cmp-03"
+  },
+  {
+   "id": "cmp-03-p4",
+   "question": "In FDA Part 11 guidance and in EU GMP Annex 11, what are the requirements or recommendations for audit trails?",
+   "route": "guidance_multi",
+   "kind": "paraphrase",
+   "split": "train",
+   "source": "generated",
+   "parent": "cmp-03"
+  },
+  {
+   "id": "cmp-03-n1",
+   "question": "How do FDA's Part 11 guidance and EMA's data integrity guidances differ in their expectations for electronic signatures and record retention?",
+   "route": "guidance_multi",
+   "kind": "new",
+   "split": "train",
+   "source": "generated",
+   "parent": "cmp-03"
+  },
+  {
+   "id": "cmp-03-n2",
+   "question": "Compare ICH E6(R2) and FDA's guidance on risk-based monitoring: what responsibilities and approaches do each assign to sponsors and monitors?",
+   "route": "guidance_multi",
+   "kind": "new",
+   "split": "train",
+   "source": "generated",
+   "parent": "cmp-03"
+  },
+  {
+   "id": "cmp-03-n3",
+   "question": "What do EU GMP Annex 1 and the PIC/S Annex 1 draft each require about environmental monitoring and viable particle limits for aseptic manufacturing?",
+   "route": "guidance_multi",
+   "kind": "new",
+   "split": "train",
+   "source": "generated",
+   "parent": "cmp-03"
+  },
+  {
+   "id": "cmp-04-p1",
+   "question": "How do FDA and the EMA handle multiplicity adjustment when a clinical trial evaluates multiple hypotheses?",
+   "route": "guidance_multi",
+   "kind": "paraphrase",
+   "split": "train",
+   "source": "generated",
+   "parent": "cmp-04"
+  },
+  {
+   "id": "cmp-04-p2",
+   "question": "When a study tests several hypotheses, what are the differences between FDA and EMA approaches to multiplicity adjustment?",
+   "route": "guidance_multi",
+   "kind": "paraphrase",
+   "split": "train",
+   "source": "generated",
+   "parent": "cmp-04"
+  },
+  {
+   "id": "cmp-04-p3",
+   "question": "Can you compare FDA and EMA guidance on adjusting for multiplicity in trials that assess multiple endpoints/hypotheses?",
+   "route": "guidance_multi",
+   "kind": "paraphrase",
+   "split": "train",
+   "source": "generated",
+   "parent": "cmp-04"
+  },
+  {
+   "id": "cmp-04-p4",
+   "question": "What do FDA and the EMA recommend regarding multiplicity adjustments if a trial has several hypotheses to test?",
+   "route": "guidance_multi",
+   "kind": "paraphrase",
+   "split": "train",
+   "source": "generated",
+   "parent": "cmp-04"
+  },
+  {
+   "id": "cmp-04-n1",
+   "question": "How do FDA and EMA guidance differ on defining non-inferiority margins for active-controlled trials?",
+   "route": "guidance_multi",
+   "kind": "new",
+   "split": "train",
+   "source": "generated",
+   "parent": "cmp-04"
+  },
+  {
+   "id": "cmp-04-n2",
+   "question": "Compare FDA and EMA recommendations on handling subgroup analyses and when subgroup findings can support regulatory decisions.",
+   "route": "guidance_multi",
+   "kind": "new",
+   "split": "train",
+   "source": "generated",
+   "parent": "cmp-04"
+  },
+  {
+   "id": "cmp-04-n3",
+   "question": "How do FDA and EMA approach interim analyses and stopping rules in confirmatory trials, including requirements for type I error control and documentation?",
+   "route": "guidance_multi",
+   "kind": "new",
+   "split": "train",
+   "source": "generated",
+   "parent": "cmp-04"
+  },
+  {
+   "id": "cmp-05-p1",
+   "question": "How do the EU and US timelines differ for submitting reports of serious suspected adverse reactions?",
+   "route": "guidance_multi",
+   "kind": "paraphrase",
+   "split": "train",
+   "source": "generated",
+   "parent": "cmp-05"
+  },
+  {
+   "id": "cmp-05-p2",
+   "question": "Compare the reporting deadlines in the EU versus the US for serious suspected adverse reactions.",
+   "route": "guidance_multi",
+   "kind": "paraphrase",
+   "split": "train",
+   "source": "generated",
+   "parent": "cmp-05"
+  },
+  {
+   "id": "cmp-05-p3",
+   "question": "What are the submission timelines for serious suspected adverse reaction reports in the US compared with the EU?",
+   "route": "guidance_multi",
+   "kind": "paraphrase",
+   "split": "train",
+   "source": "generated",
+   "parent": "cmp-05"
+  },
+  {
+   "id": "cmp-05-p4",
+   "question": "Can you outline the timelines required by the EU and by the US for filing reports of serious suspected adverse reactions?",
+   "route": "guidance_multi",
+   "kind": "paraphrase",
+   "split": "train",
+   "source": "generated",
+   "parent": "cmp-05"
+  },
+  {
+   "id": "cmp-05-n1",
+   "question": "Compare EMA/EU expedited safety reporting requirements with FDA 15-day and 7-day accelerated reporting timelines for serious and unexpected adverse events.",
+   "route": "guidance_multi",
+   "kind": "new",
+   "split": "train",
+   "source": "generated",
+   "parent": "cmp-05"
+  },
+  {
+   "id": "cmp-05-n2",
+   "question": "How do the EU and US requirements differ for periodic safety update report (PSUR/PBRER) submission frequency and content expectations?",
+   "route": "guidance_multi",
+   "kind": "new",
+   "split": "train",
+   "source": "generated",
+   "parent": "cmp-05"
+  },
+  {
+   "id": "cmp-05-n3",
+   "question": "Contrast FDA and EMA guidance on pregnancy exposure reporting timelines and when a pregnancy-related case must be reported as an expedited safety report.",
+   "route": "guidance_multi",
+   "kind": "new",
+   "split": "train",
+   "source": "generated",
+   "parent": "cmp-05"
+  },
+  {
+   "id": "mh-01-p1",
+   "question": "If a generic shows highly variable Cmax, how much can the EU expand the bioequivalence acceptance limits, and at what within‑subject SD for the reference product does the FDA move from standard 2‑one‑sided‑tests to applying reference scaling?",
+   "route": "guidance_multi",
+   "kind": "paraphrase",
+   "split": "train",
+   "source": "generated",
+   "parent": "mh-01"
+  },
+  {
+   "id": "mh-01-p2",
+   "question": "For a generic with very variable Cmax, to what extent may the EU widen the acceptance limits, and what value of the reference within‑subject standard deviation triggers the FDA to switch from the usual two‑one‑sided‑tests to reference‑scaled limits?",
+   "route": "guidance_multi",
+   "kind": "paraphrase",
+   "split": "train",
+   "source": "generated",
+   "parent": "mh-01"
+  },
+  {
+   "id": "mh-01-p3",
+   "question": "How far can the EU widen acceptance limits when a generic's Cmax is highly variable, and at which within‑subject SD of the reference product does the FDA abandon the usual two one‑sided tests in favor of reference scaling?",
+   "route": "guidance_multi",
+   "kind": "paraphrase",
+   "split": "train",
+   "source": "generated",
+   "parent": "mh-01"
+  },
+  {
+   "id": "mh-01-p4",
+   "question": "A generic product has a highly variable Cmax — what widening of the acceptance limits is permissible in the EU, and at what reference within‑subject standard deviation does the FDA change from the standard two‑one‑sided‑tests approach to reference scaling?",
+   "route": "guidance_multi",
+   "kind": "paraphrase",
+   "split": "train",
+   "source": "generated",
+   "parent": "mh-01"
+  },
+  {
+   "id": "mh-01-n1",
+   "question": "How do EMA/European guidelines and FDA guidance differ on the criteria and methodology for applying reference scaling for highly variable AUC versus Cmax — what metrics and thresholds do each require?",
+   "route": "guidance_multi",
+   "kind": "new",
+   "split": "train",
+   "source": "generated",
+   "parent": "mh-01"
+  },
+  {
+   "id": "mh-01-n2",
+   "question": "Comparing FDA and EMA pharmacovigilance guidance: what are the respective reporting timelines and required content for a serious unexpected adverse reaction occurring in a marketed medicine?",
+   "route": "guidance_multi",
+   "kind": "new",
+   "split": "train",
+   "source": "generated",
+   "parent": "mh-01"
+  },
+  {
+   "id": "mh-01-n3",
+   "question": "When seeking pediatric extrapolation, how do ICH/EMA guidance and FDA guidance differ on the evidence needed to extrapolate efficacy from adults to children, and what age group stratifications or additional study requirements does each regulator expect?",
+   "route": "guidance_multi",
+   "kind": "new",
+   "split": "train",
+   "source": "generated",
+   "parent": "mh-01"
+  },
+  {
+   "id": "mh-02-p1",
+   "question": "A study participant dies from an unexpected reaction to the study drug — under the ICH harmonised definitions how soon must regulators be notified, and does the FDA permit a longer or shorter timeframe for that kind of IND safety report?",
+   "route": "guidance_multi",
+   "kind": "paraphrase",
+   "split": "train",
+   "source": "generated",
+   "parent": "mh-02"
+  },
+  {
+   "id": "mh-02-p2",
+   "question": "If a trial subject dies because of an unexpected reaction to the study drug, what reporting timeline do the ICH harmonised definitions require for notifying regulators, and does the FDA give more or less time for submitting that type of IND safety report?",
+   "route": "guidance_multi",
+   "kind": "paraphrase",
+   "split": "train",
+   "source": "generated",
+   "parent": "mh-02"
+  },
+  {
+   "id": "mh-02-p3",
+   "question": "Under ICH harmonised definitions, how quickly must regulators be informed when a participant dies from an unexpected reaction to the study drug, and compared with ICH does the FDA allow more or less time to file an IND safety report for that event?",
+   "route": "guidance_multi",
+   "kind": "paraphrase",
+   "split": "train",
+   "source": "generated",
+   "parent": "mh-02"
+  },
+  {
+   "id": "mh-02-p4",
+   "question": "A participant has died due to an unexpected reaction to the study drug — what is the required notification timeframe under the ICH harmonised definitions, and does the FDA impose a shorter or longer deadline for that IND safety report?",
+   "route": "guidance_multi",
+   "kind": "paraphrase",
+   "split": "train",
+   "source": "generated",
+   "parent": "mh-02"
+  },
+  {
+   "id": "mh-02-n1",
+   "question": "Under ICH and EU GCP/EMA guidance, what are the timelines for reporting a suspected unexpected serious adverse reaction (SUSAR) that causes hospitalization, and does the FDA’s IND safety report timeline differ for the same event?",
+   "route": "guidance_multi",
+   "kind": "new",
+   "split": "train",
+   "source": "generated",
+   "parent": "mh-02"
+  },
+  {
+   "id": "mh-02-n2",
+   "question": "How do ICH harmonised definitions and FDA guidance differ in the required content and submission timelines for expedited reporting of a life‑threatening suspected adverse reaction versus a non‑fatal unexpected serious adverse reaction in a clinical trial?",
+   "route": "guidance_multi",
+   "kind": "new",
+   "split": "train",
+   "source": "generated",
+   "parent": "mh-02"
+  },
+  {
+   "id": "mh-02-n3",
+   "question": "For a suspected unexpected serious adverse reaction occurring in a multi‑center international trial, how do the ICH expedited reporting requirements compare with EMA/European Union rules on reporting to national competent authorities and ethics committees, and are there additional or faster timeframes imposed by the FDA for IND safety reports?",
+   "route": "guidance_multi",
+   "kind": "new",
+   "split": "train",
+   "source": "generated",
+   "parent": "mh-02"
+  },
+  {
+   "id": "mh-03-p1",
+   "question": "How does the FDA's stance under 21 CFR Part 11 on computer-generated audit trails differ from the expectations set out in EU GMP Annex 11? (guidance_multi)",
+   "route": "guidance_multi",
+   "kind": "paraphrase",
+   "split": "train",
+   "source": "generated",
+   "parent": "mh-03"
+  },
+  {
+   "id": "mh-03-p2",
+   "question": "In comparing computer-generated audit trails, what are the key differences between FDA Part 11 and EU GMP Annex 11? (guidance_multi)",
+   "route": "guidance_multi",
+   "kind": "paraphrase",
+   "split": "train",
+   "source": "generated",
+   "parent": "mh-03"
+  },
+  {
+   "id": "mh-03-p3",
+   "question": "Can you explain how the FDA's position on audit trails in Part 11 contrasts with the requirements in EU GMP Annex 11 for computerised systems? (guidance_multi)",
+   "route": "guidance_multi",
+   "kind": "paraphrase",
+   "split": "train",
+   "source": "generated",
+   "parent": "mh-03"
+  },
+  {
+   "id": "mh-03-p4",
+   "question": "What distinctions exist between the FDA (Part 11) and the EU GMP Annex 11 regarding computer-generated audit trails? Please highlight the main differences. (guidance_multi)",
+   "route": "guidance_multi",
+   "kind": "paraphrase",
+   "split": "train",
+   "source": "generated",
+   "parent": "mh-03"
+  },
+  {
+   "id": "mh-03-n1",
+   "question": "How do FDA guidance documents and EMA/ICH E6(R2) differ in their expectations for electronic source data and investigator responsibilities in clinical trial records? (guidance_multi)",
+   "route": "guidance_multi",
+   "kind": "new",
+   "split": "train",
+   "source": "generated",
+   "parent": "mh-03"
+  },
+  {
+   "id": "mh-03-n2",
+   "question": "Compare the EMA's pharmacovigilance inspection expectations (GVP modules) with FDA post-marketing safety reporting guidances on the timelines and formats for expedited adverse event reports. What are the main differences? (guidance_multi)",
+   "route": "guidance_multi",
+   "kind": "new",
+   "split": "train",
+   "source": "generated",
+   "parent": "mh-03"
+  },
+  {
+   "id": "mh-03-n3",
+   "question": "What differences exist between ICH Q9 (Quality Risk Management) and FDA guidance on risk-based approaches to quality oversight for pharmaceutical manufacturing, particularly regarding documentation and risk acceptance criteria? (guidance_multi)",
+   "route": "guidance_multi",
+   "kind": "new",
+   "split": "train",
+   "source": "generated",
+   "parent": "mh-03"
+  },
+  {
+   "id": "mh-05-p1",
+   "question": "According to the EMA multiplicity points to consider and the FDA multiple endpoints guidance, when the primary endpoint is achieved, under what circumstances may secondary endpoints be used to support an additional claim?",
+   "route": "guidance_multi",
+   "kind": "paraphrase",
+   "split": "train",
+   "source": "generated",
+   "parent": "mh-05"
+  },
+  {
+   "id": "mh-05-p2",
+   "question": "If a trial meets its primary endpoint, what conditions do the EMA multiplicity points to consider and the FDA multiple endpoints guidance require for secondary endpoints to back an extra claim?",
+   "route": "guidance_multi",
+   "kind": "paraphrase",
+   "split": "train",
+   "source": "generated",
+   "parent": "mh-05"
+  },
+  {
+   "id": "mh-05-p3",
+   "question": "Under both the EMA multiplicity points to consider and the FDA multiple endpoints guidance, once the primary endpoint has been met, what criteria must secondary endpoints satisfy to support an additional claim?",
+   "route": "guidance_multi",
+   "kind": "paraphrase",
+   "split": "train",
+   "source": "generated",
+   "parent": "mh-05"
+  },
+  {
+   "id": "mh-05-p4",
+   "question": "Once the primary endpoint has been met, how do the EMA multiplicity points to consider and the FDA multiple endpoints guidance define when secondary endpoints can be relied on to substantiate an additional claim?",
+   "route": "guidance_multi",
+   "kind": "paraphrase",
+   "split": "train",
+   "source": "generated",
+   "parent": "mh-05"
+  },
+  {
+   "id": "mh-05-n1",
+   "question": "Comparing EMA's draft reflection paper on adaptive designs and the FDA's guidance on adaptive design clinical trials, what key pre‑specification and decision‑rule requirements differ for adaptive sample size re‑estimation?",
+   "route": "guidance_multi",
+   "kind": "new",
+   "split": "train",
+   "source": "generated",
+   "parent": "mh-05"
+  },
+  {
+   "id": "mh-05-n2",
+   "question": "How do EMA's guideline on pediatric extrapolation and the FDA's guidance for pediatric studies differ in their acceptance criteria and evidence thresholds for extrapolating adult efficacy to pediatric populations?",
+   "route": "guidance_multi",
+   "kind": "new",
+   "split": "train",
+   "source": "generated",
+   "parent": "mh-05"
+  },
+  {
+   "id": "mh-05-n3",
+   "question": "Between the ICH E9(R1) estimand addendum and the FDA's guidance on intercurrent events, how do the two documents recommend handling treatment discontinuation and use of rescue medication when defining an estimand for regulatory submission?",
+   "route": "guidance_multi",
+   "kind": "new",
+   "split": "train",
+   "source": "generated",
+   "parent": "mh-05"
+  },
+  {
+   "id": "mh-07-p1",
+   "question": "[guidance_multi] Why do adaptive trial designs need to deal with inflation of false‑positive conclusions, and if no closed‑form statistical formula exists, how can a sponsor show that the design controls type I error?",
+   "route": "guidance_multi",
+   "kind": "paraphrase",
+   "split": "train",
+   "source": "generated",
+   "parent": "mh-07"
+  },
+  {
+   "id": "mh-07-p2",
+   "question": "[guidance_multi] What is the rationale for addressing inflation of false‑positive (type I) conclusions in adaptive designs, and when an analytical expression isn't available, what approaches can a sponsor use to demonstrate control?",
+   "route": "guidance_multi",
+   "kind": "paraphrase",
+   "split": "train",
+   "source": "generated",
+   "parent": "mh-07"
+  },
+  {
+   "id": "mh-07-p3",
+   "question": "[guidance_multi] Why must an adaptive trial design take steps to prevent an increase in false‑positive findings, and in situations where there is no analytical formula to assess this, how can the sponsor provide evidence that type I error is controlled?",
+   "route": "guidance_multi",
+   "kind": "paraphrase",
+   "split": "train",
+   "source": "generated",
+   "parent": "mh-07"
+  },
+  {
+   "id": "mh-07-p4",
+   "question": "[guidance_multi] Could you explain why adaptive designs have to guard against inflation of false‑positive conclusions, and if a closed‑form method isn't possible, how should sponsors demonstrate adequate control of the false‑positive rate?",
+   "route": "guidance_multi",
+   "kind": "paraphrase",
+   "split": "train",
+   "source": "generated",
+   "parent": "mh-07"
+  },
+  {
+   "id": "mh-07-n1",
+   "question": "[guidance_multi] How do FDA and EMA differ in their guidance on the use of external control data for single‑arm oncology trials, and what evidence expectations overlap between the two agencies?",
+   "route": "guidance_multi",
+   "kind": "new",
+   "split": "train",
+   "source": "generated",
+   "parent": "mh-07"
+  },
+  {
+   "id": "mh-07-n2",
+   "question": "[guidance_multi] What do ICH E2A and EU pharmacovigilance guidance say about the required content and timelines for expedited safety reports (e.g., SUSARs/ICSRs), and where do their requirements diverge?",
+   "route": "guidance_multi",
+   "kind": "new",
+   "split": "train",
+   "source": "generated",
+   "parent": "mh-07"
+  },
+  {
+   "id": "mh-07-n3",
+   "question": "[guidance_multi] When conducting a pediatric extrapolation assessment, how do EMA guidelines compare with FDA guidance on the acceptability of extrapolating efficacy from adults to children, and what distinct clinical or model‑based evidence does each regulator typically require?",
+   "route": "guidance_multi",
+   "kind": "new",
+   "split": "train",
+   "source": "generated",
+   "parent": "mh-07"
+  },
+  {
+   "id": "mh-08-p1",
+   "question": "Under ICH E6(R3), what characteristics must a trial's source records possess, and in a GMP computerised system what details are required when data are changed or deleted?",
+   "route": "guidance_multi",
+   "kind": "paraphrase",
+   "split": "train",
+   "source": "generated",
+   "parent": "mh-08"
+  },
+  {
+   "id": "mh-08-p2",
+   "question": "According to ICH E6(R3), what qualities are expected of source records in a clinical trial, and separately, what must a GMP computerized system record when someone alters or removes data?",
+   "route": "guidance_multi",
+   "kind": "paraphrase",
+   "split": "train",
+   "source": "generated",
+   "parent": "mh-08"
+  },
+  {
+   "id": "mh-08-p3",
+   "question": "What should source records look like per ICH E6(R3), and what information is a GMP computerised system obliged to capture on data changes or deletions?",
+   "route": "guidance_multi",
+   "kind": "paraphrase",
+   "split": "train",
+   "source": "generated",
+   "parent": "mh-08"
+  },
+  {
+   "id": "mh-08-p4",
+   "question": "Can you summarize the attributes ICH E6(R3) requires for trial source records, and state what a GMP computerized system needs to log if data are changed or deleted?",
+   "route": "guidance_multi",
+   "kind": "paraphrase",
+   "split": "train",
+   "source": "generated",
+   "parent": "mh-08"
+  },
+  {
+   "id": "mh-08-n1",
+   "question": "guidance_multi: How do FDA guidance and EMA guidance differ in their expectations for using electronic informed consent (eConsent) in clinical trials, and what key controls do both agencies require to ensure subject comprehension and data integrity?",
+   "route": "guidance_multi",
+   "kind": "new",
+   "split": "train",
+   "source": "generated",
+   "parent": "mh-08"
+  },
+  {
+   "id": "mh-08-n2",
+   "question": "guidance_multi: Compare ICH E17 and ICH E6(R3) on the design and data considerations for multi-regional clinical trials—what distinct methodological or data-quality expectations does each guideline set?",
+   "route": "guidance_multi",
+   "kind": "new",
+   "split": "train",
+   "source": "generated",
+   "parent": "mh-08"
+  },
+  {
+   "id": "mh-08-n3",
+   "question": "guidance_multi: What are the differences between FDA and EU (EMA) regulatory guidance on electronic submission of adverse event reports (e.g., deadlines, required formats, and validation rules), and how should pharmacovigilance systems reconcile these for global reporting?",
+   "route": "guidance_multi",
+   "kind": "new",
+   "split": "train",
+   "source": "generated",
+   "parent": "mh-08"
+  },
+  {
+   "id": "mh-09-p1",
+   "question": "For narrow therapeutic index drugs, what tightened AUC acceptance range does the EMA use, and which study design does the FDA expect? (guidance_multi)",
+   "route": "guidance_multi",
+   "kind": "paraphrase",
+   "split": "train",
+   "source": "generated",
+   "parent": "mh-09"
+  },
+  {
+   "id": "mh-09-p2",
+   "question": "Regarding NTI drugs: what AUC bioequivalence limits has the EMA tightened to, and what type of study design does the FDA require? (guidance_multi)",
+   "route": "guidance_multi",
+   "kind": "paraphrase",
+   "split": "train",
+   "source": "generated",
+   "parent": "mh-09"
+  },
+  {
+   "id": "mh-09-p3",
+   "question": "What specific narrowed AUC acceptance range is applied by the EMA for narrow therapeutic index drugs, and what study design does the FDA expect investigators to conduct? (guidance_multi)",
+   "route": "guidance_multi",
+   "kind": "paraphrase",
+   "split": "train",
+   "source": "generated",
+   "parent": "mh-09"
+  },
+  {
+   "id": "mh-09-p4",
+   "question": "Can you tell me the EMA's tightened AUC acceptance range for narrow therapeutic index drugs, and separately, which study design the FDA expects for such drugs? (guidance_multi)",
+   "route": "guidance_multi",
+   "kind": "paraphrase",
+   "split": "train",
+   "source": "generated",
+   "parent": "mh-09"
+  },
+  {
+   "id": "mh-09-n1",
+   "question": "For highly variable drugs, how do the EMA's and FDA's bioequivalence approaches differ—for example, what reference-scaling or widening methods does each regulator accept and under what variability thresholds? (guidance_multi)",
+   "route": "guidance_multi",
+   "kind": "new",
+   "split": "train",
+   "source": "generated",
+   "parent": "mh-09"
+  },
+  {
+   "id": "mh-09-n2",
+   "question": "Comparing EMA and FDA guidance on therapeutic equivalence of biosimilars: what are the key differences in requirements for comparative clinical efficacy studies versus reliance on analytical and PK/PD data? (guidance_multi)",
+   "route": "guidance_multi",
+   "kind": "new",
+   "split": "train",
+   "source": "generated",
+   "parent": "mh-09"
+  },
+  {
+   "id": "mh-09-n3",
+   "question": "When considering pediatric dosing extrapolation, how do EMA, FDA and ICH guidances compare on when efficacy can be extrapolated from adults and what additional PK/safety data each expects? (guidance_multi)",
+   "route": "guidance_multi",
+   "kind": "new",
+   "split": "train",
+   "source": "generated",
+   "parent": "mh-09"
+  },
+  {
+   "id": "na-03-p1",
+   "question": "When is the deadline for submitting a paediatric investigation plan to the EMA?",
+   "route": "guidance_single",
+   "kind": "paraphrase",
+   "split": "train",
+   "source": "generated",
+   "parent": "na-03"
+  },
+  {
+   "id": "na-03-p2",
+   "question": "By what date must a PIP be filed with the EMA?",
+   "route": "guidance_single",
+   "kind": "paraphrase",
+   "split": "train",
+   "source": "generated",
+   "parent": "na-03"
+  },
+  {
+   "id": "na-03-p3",
+   "question": "When does the EMA require receipt of the paediatric investigation plan?",
+   "route": "guidance_single",
+   "kind": "paraphrase",
+   "split": "train",
+   "source": "generated",
+   "parent": "na-03"
+  },
+  {
+   "id": "na-03-p4",
+   "question": "What is the submission timing for a paediatric investigation plan to the EMA?",
+   "route": "guidance_single",
+   "kind": "paraphrase",
+   "split": "train",
+   "source": "generated",
+   "parent": "na-03"
+  },
+  {
+   "id": "na-03-n1",
+   "question": "According to FDA IND safety reporting guidance, within how many calendar days must a sponsor report a fatal or life‑threatening suspected unexpected serious adverse reaction (SUSAR)?",
+   "route": "guidance_single",
+   "kind": "new",
+   "split": "train",
+   "source": "generated",
+   "parent": "na-03"
+  },
+  {
+   "id": "na-03-n2",
+   "question": "Per ICH E2A guidance, what are the expedited reporting timeframes for serious unexpected suspected adverse reactions to regulatory authorities?",
+   "route": "guidance_single",
+   "kind": "new",
+   "split": "train",
+   "source": "generated",
+   "parent": "na-03"
+  },
+  {
+   "id": "na-03-n3",
+   "question": "Under the EU Clinical Trial Regulation (Regulation (EU) No 536/2014), by when must a sponsor submit expedited reports of SUSARs to the competent authority/EudraVigilance?",
+   "route": "guidance_single",
+   "kind": "new",
+   "split": "train",
+   "source": "generated",
+   "parent": "na-03"
+  },
+  {
+   "id": "na-04-p1",
+   "question": "What is the user fee amount for an application with priority review in fiscal year 2026?",
+   "route": "guidance_single",
+   "kind": "paraphrase",
+   "split": "train",
+   "source": "generated",
+   "parent": "na-04"
+  },
+  {
+   "id": "na-04-p2",
+   "question": "For fiscal year 2026, how much does an application with priority review have to pay in user fees?",
+   "route": "guidance_single",
+   "kind": "paraphrase",
+   "split": "train",
+   "source": "generated",
+   "parent": "na-04"
+  },
+  {
+   "id": "na-04-p3",
+   "question": "How much is the priority review user fee for an application in FY2026?",
+   "route": "guidance_single",
+   "kind": "paraphrase",
+   "split": "train",
+   "source": "generated",
+   "parent": "na-04"
+  },
+  {
+   "id": "na-04-p4",
+   "question": "In fiscal year 2026, what is the FDA user fee charged for an application granted priority review?",
+   "route": "guidance_single",
+   "kind": "paraphrase",
+   "split": "train",
+   "source": "generated",
+   "parent": "na-04"
+  },
+  {
+   "id": "na-04-n1",
+   "question": "According to FDA guidance, within how many days must a sponsor submit an IND safety report for a serious and unexpected suspected adverse reaction? (guidance_single)",
+   "route": "guidance_single",
+   "kind": "new",
+   "split": "train",
+   "source": "generated",
+   "parent": "na-04"
+  },
+  {
+   "id": "na-04-n2",
+   "question": "What does ICH E2E indicate is the primary purpose of a periodic benefit-risk evaluation report (PBRER)? (guidance_single)",
+   "route": "guidance_single",
+   "kind": "new",
+   "split": "train",
+   "source": "generated",
+   "parent": "na-04"
+  },
+  {
+   "id": "na-04-n3",
+   "question": "Per EMA guidance, what is the required retention period for the pharmacovigilance system master file (PSMF)? (guidance_single)",
+   "route": "guidance_single",
+   "kind": "new",
+   "split": "train",
+   "source": "generated",
+   "parent": "na-04"
+  },
+  {
+   "id": "na-05-p1",
+   "question": "What does Annex 2 of ICH E6(R3) state about decentralised clinical trial elements?",
+   "route": "guidance_single",
+   "kind": "paraphrase",
+   "split": "train",
+   "source": "generated",
+   "parent": "na-05"
+  },
+  {
+   "id": "na-05-p2",
+   "question": "In ICH E6(R3), Annex 2 — what guidance is given regarding decentralised clinical trial elements?",
+   "route": "guidance_single",
+   "kind": "paraphrase",
+   "split": "train",
+   "source": "generated",
+   "parent": "na-05"
+  },
+  {
+   "id": "na-05-p3",
+   "question": "Can you tell me what Annex 2 of ICH E6(R3) says on decentralised clinical trial elements?",
+   "route": "guidance_single",
+   "kind": "paraphrase",
+   "split": "train",
+   "source": "generated",
+   "parent": "na-05"
+  },
+  {
+   "id": "na-05-p4",
+   "question": "According to Annex 2 of ICH E6(R3), how should decentralised clinical trial elements be handled?",
+   "route": "guidance_single",
+   "kind": "paraphrase",
+   "split": "train",
+   "source": "generated",
+   "parent": "na-05"
+  },
+  {
+   "id": "na-05-n1",
+   "question": "What does the FDA guidance 'Safety Reporting Requirements for INDs and BA/BE Studies' say about sponsor timelines for expedited adverse event reporting?",
+   "route": "guidance_single",
+   "kind": "new",
+   "split": "train",
+   "source": "generated",
+   "parent": "na-05"
+  },
+  {
+   "id": "na-05-n2",
+   "question": "What does EMA guidance on 'Good Pharmacovigilance Practices (GVP) Module VI' state about requirements for post-authorisation safety studies (PASS)?",
+   "route": "guidance_single",
+   "kind": "new",
+   "split": "train",
+   "source": "generated",
+   "parent": "na-05"
+  },
+  {
+   "id": "na-05-n3",
+   "question": "What does Section 4 of ICH E2A say about the definition and criteria for a serious adverse event (SAE)?",
+   "route": "guidance_single",
+   "kind": "new",
+   "split": "train",
+   "source": "generated",
+   "parent": "na-05"
+  },
+  {
+   "id": "na-06-p1",
+   "question": "What validation requirements for machine learning models are specified in EU GMP Annex 11?",
+   "route": "guidance_single",
+   "kind": "paraphrase",
+   "split": "train",
+   "source": "generated",
+   "parent": "na-06"
+  },
+  {
+   "id": "na-06-p2",
+   "question": "According to EU GMP Annex 11, what must be done to validate machine learning models?",
+   "route": "guidance_single",
+   "kind": "paraphrase",
+   "split": "train",
+   "source": "generated",
+   "parent": "na-06"
+  },
+  {
+   "id": "na-06-p3",
+   "question": "Which specific validation criteria does Annex 11 of the EU GMP lay down for ML models?",
+   "route": "guidance_single",
+   "kind": "paraphrase",
+   "split": "train",
+   "source": "generated",
+   "parent": "na-06"
+  },
+  {
+   "id": "na-06-p4",
+   "question": "What does EU GMP Annex 11 state about the validation of machine learning models?",
+   "route": "guidance_single",
+   "kind": "paraphrase",
+   "split": "train",
+   "source": "generated",
+   "parent": "na-06"
+  },
+  {
+   "id": "na-06-n1",
+   "question": "According to ICH E6(R2), what are the sponsor's obligations for validating computerized systems used in clinical trials?",
+   "route": "guidance_single",
+   "kind": "new",
+   "split": "train",
+   "source": "generated",
+   "parent": "na-06"
+  },
+  {
+   "id": "na-06-n2",
+   "question": "Which required data elements does ICH E2B(R3) list for an individual case safety report (ICSR)?",
+   "route": "guidance_single",
+   "kind": "new",
+   "split": "train",
+   "source": "generated",
+   "parent": "na-06"
+  },
+  {
+   "id": "na-06-n3",
+   "question": "What expedited reporting timeframes for serious unexpected suspected adverse reactions does EMA GVP Module VI specify?",
+   "route": "guidance_single",
+   "kind": "new",
+   "split": "train",
+   "source": "generated",
+   "parent": "na-06"
+  },
+  {
+   "id": "na-07-p1",
+   "question": "According to ICH E6(R3), what is the maximum number of participants a single investigator site may enroll? (guidance_single)",
+   "route": "guidance_single",
+   "kind": "paraphrase",
+   "split": "train",
+   "source": "generated",
+   "parent": "na-07"
+  },
+  {
+   "id": "na-07-p2",
+   "question": "Under ICH E6(R3), what’s the upper limit on participants that one investigator site can recruit? (guidance_single)",
+   "route": "guidance_single",
+   "kind": "paraphrase",
+   "split": "train",
+   "source": "generated",
+   "parent": "na-07"
+  },
+  {
+   "id": "na-07-p3",
+   "question": "Per ICH E6(R3) guidance, how many participants at most may be enrolled at a single investigational site? (guidance_single)",
+   "route": "guidance_single",
+   "kind": "paraphrase",
+   "split": "train",
+   "source": "generated",
+   "parent": "na-07"
+  },
+  {
+   "id": "na-07-p4",
+   "question": "In ICH E6(R3), what maximum number of subjects is allowed to be enrolled by one investigator site? (guidance_single)",
+   "route": "guidance_single",
+   "kind": "paraphrase",
+   "split": "train",
+   "source": "generated",
+   "parent": "na-07"
+  },
+  {
+   "id": "na-07-n1",
+   "question": "Under ICH E2A, what is the required expedited reporting timeline for a SUSAR to regulatory authorities? (guidance_single)",
+   "route": "guidance_single",
+   "kind": "new",
+   "split": "train",
+   "source": "generated",
+   "parent": "na-07"
+  },
+  {
+   "id": "na-07-n2",
+   "question": "According to FDA guidance on safety reporting, which adverse events must sponsors report in an IND safety report and within what timeframe? (guidance_single)",
+   "route": "guidance_single",
+   "kind": "new",
+   "split": "train",
+   "source": "generated",
+   "parent": "na-07"
+  },
+  {
+   "id": "na-07-n3",
+   "question": "Per EMA GCP guidance, what documentation is required to demonstrate investigator qualification and training at a study site? (guidance_single)",
+   "route": "guidance_single",
+   "kind": "new",
+   "split": "train",
+   "source": "generated",
+   "parent": "na-07"
+  },
+  {
+   "id": "fa-02-p1",
+   "question": "Agent: What are the three most frequently reported reactions for pembrolizumab in the FAERS extract?",
+   "route": "agent",
+   "kind": "paraphrase",
+   "split": "train",
+   "source": "generated",
+   "parent": "fa-02"
+  },
+  {
+   "id": "fa-02-p2",
+   "question": "Agent — In the FAERS extract, which three reactions are reported most often for pembrolizumab?",
+   "route": "agent",
+   "kind": "paraphrase",
+   "split": "train",
+   "source": "generated",
+   "parent": "fa-02"
+  },
+  {
+   "id": "fa-02-p3",
+   "question": "Agent: For pembrolizumab, what are the top three reported adverse reactions in the FAERS dataset?",
+   "route": "agent",
+   "kind": "paraphrase",
+   "split": "train",
+   "source": "generated",
+   "parent": "fa-02"
+  },
+  {
+   "id": "fa-02-p4",
+   "question": "Agent: According to the FAERS extract, name the three reactions most frequently reported for pembrolizumab.",
+   "route": "agent",
+   "kind": "paraphrase",
+   "split": "train",
+   "source": "generated",
+   "parent": "fa-02"
+  },
+  {
+   "id": "fa-02-n1",
+   "question": "Agent: What are the three most frequently reported reactions for nivolumab in the FAERS extract?",
+   "route": "agent",
+   "kind": "new",
+   "split": "train",
+   "source": "generated",
+   "parent": "fa-02"
+  },
+  {
+   "id": "fa-02-n2",
+   "question": "Agent: For the agent amoxicillin-clavulanate, what are the three most frequently reported reactions in the FAERS extract?",
+   "route": "agent",
+   "kind": "new",
+   "split": "train",
+   "source": "generated",
+   "parent": "fa-02"
+  },
+  {
+   "id": "fa-02-n3",
+   "question": "Agent: In the FAERS extract, which three reactions are reported most often for ondansetron?",
+   "route": "agent",
+   "kind": "new",
+   "split": "train",
+   "source": "generated",
+   "parent": "fa-02"
+  },
+  {
+   "id": "fa-04-p1",
+   "question": "Calculate the reporting odds ratio for pneumonitis associated with pembrolizumab using FAERS data.",
+   "route": "agent",
+   "kind": "paraphrase",
+   "split": "train",
+   "source": "generated",
+   "parent": "fa-04"
+  },
+  {
+   "id": "fa-04-p2",
+   "question": "Using FAERS reports, compute the ROR for pembrolizumab-related pneumonitis.",
+   "route": "agent",
+   "kind": "paraphrase",
+   "split": "train",
+   "source": "generated",
+   "parent": "fa-04"
+  },
+  {
+   "id": "fa-04-p3",
+   "question": "What is the reporting odds ratio for pneumonitis with pembrolizumab in the FAERS database?",
+   "route": "agent",
+   "kind": "paraphrase",
+   "split": "train",
+   "source": "generated",
+   "parent": "fa-04"
+  },
+  {
+   "id": "fa-04-p4",
+   "question": "Please determine the FAERS reporting odds ratio (ROR) for pneumonitis for the drug pembrolizumab.",
+   "route": "agent",
+   "kind": "paraphrase",
+   "split": "train",
+   "source": "generated",
+   "parent": "fa-04"
+  },
+  {
+   "id": "fa-04-n1",
+   "question": "Compute the reporting odds ratio for myocarditis with nivolumab in the FAERS data.",
+   "route": "agent",
+   "kind": "new",
+   "split": "train",
+   "source": "generated",
+   "parent": "fa-04"
+  },
+  {
+   "id": "fa-04-n2",
+   "question": "Provide the CDISC Controlled Terminology code(s) for acute liver injury/hepatitis (preferred term) to use in regulatory submissions.",
+   "route": "agent",
+   "kind": "new",
+   "split": "train",
+   "source": "generated",
+   "parent": "fa-04"
+  },
+  {
+   "id": "fa-04-n3",
+   "question": "List recalls of valsartan (US) including dates and reasons for recall.",
+   "route": "agent",
+   "kind": "new",
+   "split": "train",
+   "source": "generated",
+   "parent": "fa-04"
+  },
+  {
+   "id": "cd-01-p1",
+   "question": "What is the NCI code of the CDISC SDTM codelist for the outcome of an adverse event with submission value OUT? (route: agent)",
+   "route": "agent",
+   "kind": "paraphrase",
+   "split": "train",
+   "source": "generated",
+   "parent": "cd-01"
+  },
+  {
+   "id": "cd-01-p2",
+   "question": "For the CDISC SDTM codelist that contains adverse event outcomes, what NCI code corresponds to the submission value OUT? (route: agent)",
+   "route": "agent",
+   "kind": "paraphrase",
+   "split": "train",
+   "source": "generated",
+   "parent": "cd-01"
+  },
+  {
+   "id": "cd-01-p3",
+   "question": "Which NCI code is assigned to the CDISC SDTM codelist entry for AE outcome = OUT? (route: agent)",
+   "route": "agent",
+   "kind": "paraphrase",
+   "split": "train",
+   "source": "generated",
+   "parent": "cd-01"
+  },
+  {
+   "id": "cd-01-p4",
+   "question": "Please provide the NCI code for the CDISC SDTM codelist term 'OUT' (outcome of an adverse event). (route: agent)",
+   "route": "agent",
+   "kind": "paraphrase",
+   "split": "train",
+   "source": "generated",
+   "parent": "cd-01"
+  },
+  {
+   "id": "cd-01-n1",
+   "question": "What is the NCI code of the CDISC SDTM codelist for adverse event seriousness with submission value 'FATAL'? (route: agent)",
+   "route": "agent",
+   "kind": "new",
+   "split": "train",
+   "source": "generated",
+   "parent": "cd-01"
+  },
+  {
+   "id": "cd-01-n2",
+   "question": "Using FAERS, what are the reporting odds ratio and number of reports for myocarditis associated with remdesivir in adults? (route: agent)",
+   "route": "agent",
+   "kind": "new",
+   "split": "train",
+   "source": "generated",
+   "parent": "cd-01"
+  },
+  {
+   "id": "cd-01-n3",
+   "question": "What is the CDISC SDTM codelist NCI code for the AE severity submission value 'SEV' (severity grade)? (route: agent)",
+   "route": "agent",
+   "kind": "new",
+   "split": "train",
+   "source": "generated",
+   "parent": "cd-01"
+  },
+  {
+   "id": "cd-02-p1",
+   "question": "What is the CDISC codelist identifier for 'Action Taken with Study Treatment', and what submission value does it use?",
+   "route": "agent",
+   "kind": "paraphrase",
+   "split": "train",
+   "source": "generated",
+   "parent": "cd-02"
+  },
+  {
+   "id": "cd-02-p2",
+   "question": "Can you provide the code for the CDISC 'Action Taken with Study Treatment' codelist and its corresponding submission value?",
+   "route": "agent",
+   "kind": "paraphrase",
+   "split": "train",
+   "source": "generated",
+   "parent": "cd-02"
+  },
+  {
+   "id": "cd-02-p3",
+   "question": "I need the CDISC codelist code for 'Action Taken with Study Treatment'—what is its code and the submission value?",
+   "route": "agent",
+   "kind": "paraphrase",
+   "split": "train",
+   "source": "generated",
+   "parent": "cd-02"
+  },
+  {
+   "id": "cd-02-p4",
+   "question": "Please tell me the CDISC codelist code for 'Action Taken with Study Treatment' and what the submission value is.",
+   "route": "agent",
+   "kind": "paraphrase",
+   "split": "train",
+   "source": "generated",
+   "parent": "cd-02"
+  },
+  {
+   "id": "cd-02-n1",
+   "question": "What is the CDISC codelist code and submission value for the 'Causality' (investigator-assessed relationship) codelist?",
+   "route": "agent",
+   "kind": "new",
+   "split": "train",
+   "source": "generated",
+   "parent": "cd-02"
+  },
+  {
+   "id": "cd-02-n2",
+   "question": "What are the FAERS adverse-event report counts for myocardial infarction associated with rosuvastatin for calendar year 2022?",
+   "route": "agent",
+   "kind": "new",
+   "split": "train",
+   "source": "generated",
+   "parent": "cd-02"
+  },
+  {
+   "id": "cd-02-n3",
+   "question": "What does the US prescribing information for clozapine state regarding mandatory agranulocytosis monitoring and the required monitoring frequency?",
+   "route": "agent",
+   "kind": "new",
+   "split": "train",
+   "source": "generated",
+   "parent": "cd-02"
+  },
+  {
+   "id": "cd-03-p1",
+   "question": "Which CDISC SDTM codelist (give its code) holds the values for a subject's sex?",
+   "route": "agent",
+   "kind": "paraphrase",
+   "split": "train",
+   "source": "generated",
+   "parent": "cd-03"
+  },
+  {
+   "id": "cd-03-p2",
+   "question": "What is the CDISC SDTM codelist — please provide its code — that contains the allowed values for a subject's sex?",
+   "route": "agent",
+   "kind": "paraphrase",
+   "split": "train",
+   "source": "generated",
+   "parent": "cd-03"
+  },
+  {
+   "id": "cd-03-p3",
+   "question": "Give the code for the CDISC SDTM codelist that defines the possible values for a subject's sex.",
+   "route": "agent",
+   "kind": "paraphrase",
+   "split": "train",
+   "source": "generated",
+   "parent": "cd-03"
+  },
+  {
+   "id": "cd-03-p4",
+   "question": "Which SDTM controlled terminology codelist (CDISC) and its code list identifier contains the values used for a subject's sex?",
+   "route": "agent",
+   "kind": "paraphrase",
+   "split": "train",
+   "source": "generated",
+   "parent": "cd-03"
+  },
+  {
+   "id": "cd-03-n1",
+   "question": "Which CDISC SDTM codelist (give its code) holds the values for a subject's race or ethnicity?",
+   "route": "agent",
+   "kind": "new",
+   "split": "train",
+   "source": "generated",
+   "parent": "cd-03"
+  },
+  {
+   "id": "cd-03-n2",
+   "question": "Which CDISC SDTM codelist (give its code) contains the allowed values for AE severity/grade (adverse event severity)?",
+   "route": "agent",
+   "kind": "new",
+   "split": "train",
+   "source": "generated",
+   "parent": "cd-03"
+  },
+  {
+   "id": "cd-03-n3",
+   "question": "Which CDISC SDTM codelist (give its code) lists the permissible values for concomitant medication route of administration?",
+   "route": "agent",
+   "kind": "new",
+   "split": "train",
+   "source": "generated",
+   "parent": "cd-03"
+  },
+  {
+   "id": "mx-01-p1",
+   "question": "How quickly must an unexpected fatal suspected adverse reaction be reported to FDA, and how many FAERS reports with apixaban as a suspect drug record a death?",
+   "route": "agent",
+   "kind": "paraphrase",
+   "split": "train",
+   "source": "generated",
+   "parent": "mx-01"
+  },
+  {
+   "id": "mx-01-p2",
+   "question": "What is the required FDA reporting timeframe for an unexpected fatal suspected adverse reaction, and how many FAERS records list apixaban as the suspect drug with death recorded?",
+   "route": "agent",
+   "kind": "paraphrase",
+   "split": "train",
+   "source": "generated",
+   "parent": "mx-01"
+  },
+  {
+   "id": "mx-01-p3",
+   "question": "Within what time period must an unexpected fatal suspected adverse reaction be submitted to FDA, and how many FAERS reports that name apixaban as a suspect drug report death?",
+   "route": "agent",
+   "kind": "paraphrase",
+   "split": "train",
+   "source": "generated",
+   "parent": "mx-01"
+  },
+  {
+   "id": "mx-01-p4",
+   "question": "How soon do I have to report an unexpected fatal suspected adverse reaction to the FDA, and how many FAERS reports involving apixaban as a suspect drug include a death?",
+   "route": "agent",
+   "kind": "paraphrase",
+   "split": "train",
+   "source": "generated",
+   "parent": "mx-01"
+  },
+  {
+   "id": "mx-01-n1",
+   "question": "What is the FDA reporting deadline for an unexpected life‑threatening suspected adverse reaction, and how many FAERS reports list rivaroxaban as a suspect drug with outcome coded as Life‑Threatening?",
+   "route": "agent",
+   "kind": "new",
+   "split": "train",
+   "source": "generated",
+   "parent": "mx-01"
+  },
+  {
+   "id": "mx-01-n2",
+   "question": "Which CDISC Controlled Terminology code corresponds to 'Death' as an adverse event outcome, and how many FAERS reports for remdesivir as a suspect drug include that outcome code?",
+   "route": "agent",
+   "kind": "new",
+   "split": "train",
+   "source": "generated",
+   "parent": "mx-01"
+  },
+  {
+   "id": "mx-01-n3",
+   "question": "What does the US label for trastuzumab state about fatal adverse reactions (if anything), and how many FAERS reports with trastuzumab recorded as a suspect drug report a death?",
+   "route": "agent",
+   "kind": "new",
+   "split": "train",
+   "source": "generated",
+   "parent": "mx-01"
+  },
+  {
+   "id": "mx-02-p1",
+   "question": "Which CDISC codelist contains the values for adverse-event severity, and according to ICH E2A how is the term 'severe' differentiated from 'serious'?",
+   "route": "agent",
+   "kind": "paraphrase",
+   "split": "train",
+   "source": "generated",
+   "parent": "mx-02"
+  },
+  {
+   "id": "mx-02-p2",
+   "question": "Where in CDISC Controlled Terminology can I find the AE severity value set, and what distinction does ICH E2A make between 'severe' and 'serious'?",
+   "route": "agent",
+   "kind": "paraphrase",
+   "split": "train",
+   "source": "generated",
+   "parent": "mx-02"
+  },
+  {
+   "id": "mx-02-p3",
+   "question": "Can you tell me which CDISC codelist holds adverse event severity values? Also, how does ICH E2A define or distinguish 'severe' versus 'serious'?",
+   "route": "agent",
+   "kind": "paraphrase",
+   "split": "train",
+   "source": "generated",
+   "parent": "mx-02"
+  },
+  {
+   "id": "mx-02-p4",
+   "question": "Which CDISC codelist includes severity levels for adverse events, and per ICH E2A what is the difference between labeling an event 'severe' and calling it 'serious'?",
+   "route": "agent",
+   "kind": "paraphrase",
+   "split": "train",
+   "source": "generated",
+   "parent": "mx-02"
+  },
+  {
+   "id": "mx-02-n1",
+   "question": "Which CDISC Controlled Terminology codelist lists route-of-administration values for study drug dosing (e.g., oral, intravenous, subcutaneous)?",
+   "route": "agent",
+   "kind": "new",
+   "split": "train",
+   "source": "generated",
+   "parent": "mx-02"
+  },
+  {
+   "id": "mx-02-n2",
+   "question": "Using FAERS data, what are the reporting counts and reporting odds ratios for angioedema associated with lisinopril compared with other ACE inhibitors?",
+   "route": "agent",
+   "kind": "new",
+   "split": "train",
+   "source": "generated",
+   "parent": "mx-02"
+  },
+  {
+   "id": "mx-02-n3",
+   "question": "What does the current US Prescribing Information state about the contraindications and boxed warnings for isotretinoin?",
+   "route": "agent",
+   "kind": "new",
+   "split": "train",
+   "source": "generated",
+   "parent": "mx-02"
+  },
+  {
+   "id": "lb-01-p1",
+   "question": "What does the boxed warning on the US label for semaglutide (Ozempic) say?",
+   "route": "agent",
+   "kind": "paraphrase",
+   "split": "train",
+   "source": "generated",
+   "parent": "lb-01"
+  },
+  {
+   "id": "lb-01-p2",
+   "question": "On the US label for semaglutide (Ozempic), what is the boxed warning—what risk does it describe?",
+   "route": "agent",
+   "kind": "paraphrase",
+   "split": "train",
+   "source": "generated",
+   "parent": "lb-01"
+  },
+  {
+   "id": "lb-01-p3",
+   "question": "Please tell me the boxed warning contained in the US prescribing information for semaglutide (Ozempic).",
+   "route": "agent",
+   "kind": "paraphrase",
+   "split": "train",
+   "source": "generated",
+   "parent": "lb-01"
+  },
+  {
+   "id": "lb-01-p4",
+   "question": "What warning is presented as the boxed warning on Ozempic (semaglutide) in the US label?",
+   "route": "agent",
+   "kind": "paraphrase",
+   "split": "train",
+   "source": "generated",
+   "parent": "lb-01"
+  },
+  {
+   "id": "lb-01-n1",
+   "question": "What does the boxed warning on the US label for isotretinoin (Accutane) warn about?",
+   "route": "agent",
+   "kind": "new",
+   "split": "train",
+   "source": "generated",
+   "parent": "lb-01"
+  },
+  {
+   "id": "lb-01-n2",
+   "question": "Have there been any US recalls for ranitidine (Zantac), and if so what were the recall reasons?",
+   "route": "agent",
+   "kind": "new",
+   "split": "train",
+   "source": "generated",
+   "parent": "lb-01"
+  },
+  {
+   "id": "lb-01-n3",
+   "question": "What are the FAERS adverse-event report counts for myocarditis associated with tozinameran (Comirnaty) in the US?",
+   "route": "agent",
+   "kind": "new",
+   "split": "train",
+   "source": "generated",
+   "parent": "lb-01"
+  },
+  {
+   "id": "lb-02-p1",
+   "question": "According to its FDA label, in which patients is Ozempic contraindicated?",
+   "route": "agent",
+   "kind": "paraphrase",
+   "split": "train",
+   "source": "generated",
+   "parent": "lb-02"
+  },
+  {
+   "id": "lb-02-p2",
+   "question": "Per the Ozempic FDA label, which patient populations have contraindications?",
+   "route": "agent",
+   "kind": "paraphrase",
+   "split": "train",
+   "source": "generated",
+   "parent": "lb-02"
+  },
+  {
+   "id": "lb-02-p3",
+   "question": "Which patients are listed as contraindicated for Ozempic in the FDA prescribing information?",
+   "route": "agent",
+   "kind": "paraphrase",
+   "split": "train",
+   "source": "generated",
+   "parent": "lb-02"
+  },
+  {
+   "id": "lb-02-p4",
+   "question": "What does the FDA label state about who must not receive Ozempic (i.e., in which patients is it contraindicated)?",
+   "route": "agent",
+   "kind": "paraphrase",
+   "split": "train",
+   "source": "generated",
+   "parent": "lb-02"
+  },
+  {
+   "id": "lb-02-n1",
+   "question": "According to its FDA label, in which patients is Pradaxa contraindicated?",
+   "route": "agent",
+   "kind": "new",
+   "split": "train",
+   "source": "generated",
+   "parent": "lb-02"
+  },
+  {
+   "id": "lb-02-n2",
+   "question": "Per the FDA prescribing information, which patients are contraindicated for isotretinoin (Accutane)?",
+   "route": "agent",
+   "kind": "new",
+   "split": "train",
+   "source": "generated",
+   "parent": "lb-02"
+  },
+  {
+   "id": "lb-02-n3",
+   "question": "What is the CDISC Controlled Terminology code for the MedDRA term \"anaphylactic reaction\" (for regulatory submission use)?",
+   "route": "agent",
+   "kind": "new",
+   "split": "train",
+   "source": "generated",
+   "parent": "lb-02"
+  },
+  {
+   "id": "lb-04-p1",
+   "question": "What's the boxed warning on the metformin label about?",
+   "route": "agent",
+   "kind": "paraphrase",
+   "split": "train",
+   "source": "generated",
+   "parent": "lb-04"
+  },
+  {
+   "id": "lb-04-p2",
+   "question": "Can you tell me what the metformin black-box warning covers?",
+   "route": "agent",
+   "kind": "paraphrase",
+   "split": "train",
+   "source": "generated",
+   "parent": "lb-04"
+  },
+  {
+   "id": "lb-04-p3",
+   "question": "What does the boxed (black box) warning say on the US metformin prescribing information?",
+   "route": "agent",
+   "kind": "paraphrase",
+   "split": "train",
+   "source": "generated",
+   "parent": "lb-04"
+  },
+  {
+   "id": "lb-04-p4",
+   "question": "What risk is highlighted in the boxed warning for metformin?",
+   "route": "agent",
+   "kind": "paraphrase",
+   "split": "train",
+   "source": "generated",
+   "parent": "lb-04"
+  },
+  {
+   "id": "lb-04-n1",
+   "question": "What does the boxed warning on isotretinoin's US label state?",
+   "route": "agent",
+   "kind": "new",
+   "split": "train",
+   "source": "generated",
+   "parent": "lb-04"
+  },
+  {
+   "id": "lb-04-n2",
+   "question": "What was the FDA recall notice for valsartan most recently issued for — what impurity or defect and on what date?",
+   "route": "agent",
+   "kind": "new",
+   "split": "train",
+   "source": "generated",
+   "parent": "lb-04"
+  },
+  {
+   "id": "lb-04-n3",
+   "question": "Using FAERS data, what is the reporting odds ratio for myocarditis following mRNA COVID-19 vaccination compared with influenza vaccination?",
+   "route": "agent",
+   "kind": "new",
+   "split": "train",
+   "source": "generated",
+   "parent": "lb-04"
+  },
+  {
+   "id": "rc-01-p1",
+   "question": "Which recalls of metformin were reported to FDA between 1 January and 30 June 2025? Give the recall numbers.",
+   "route": "agent",
+   "kind": "paraphrase",
+   "split": "train",
+   "source": "generated",
+   "parent": "rc-01"
+  },
+  {
+   "id": "rc-01-p2",
+   "question": "Please list metformin recalls reported to the FDA from 1 January through 30 June 2025, and provide their recall numbers.",
+   "route": "agent",
+   "kind": "paraphrase",
+   "split": "train",
+   "source": "generated",
+   "parent": "rc-01"
+  },
+  {
+   "id": "rc-01-p3",
+   "question": "Between 01/01/2025 and 06/30/2025, which metformin recalls were reported to FDA? Include the recall numbers.",
+   "route": "agent",
+   "kind": "paraphrase",
+   "split": "train",
+   "source": "generated",
+   "parent": "rc-01"
+  },
+  {
+   "id": "rc-01-p4",
+   "question": "Can you provide the FDA-reported recalls of metformin occurring between 1 January and 30 June 2025, with the recall numbers?",
+   "route": "agent",
+   "kind": "paraphrase",
+   "split": "train",
+   "source": "generated",
+   "parent": "rc-01"
+  },
+  {
+   "id": "rc-01-n1",
+   "question": "Which recalls of ranitidine were reported to FDA between 1 January and 30 June 2024? Give the recall numbers.",
+   "route": "agent",
+   "kind": "new",
+   "split": "train",
+   "source": "generated",
+   "parent": "rc-01"
+  },
+  {
+   "id": "rc-01-n2",
+   "question": "What does the current US label for remdesivir state regarding use in pregnancy and lactation? (Provide the label text or section references.)",
+   "route": "agent",
+   "kind": "new",
+   "split": "train",
+   "source": "generated",
+   "parent": "rc-01"
+  },
+  {
+   "id": "rc-01-n3",
+   "question": "How many FAERS adverse-event reports were submitted for isotretinoin in calendar year 2024, and what are the reporting odds ratios for major birth defect Preferred Terms compared to all other drugs?",
+   "route": "agent",
+   "kind": "new",
+   "split": "train",
+   "source": "generated",
+   "parent": "rc-01"
+  }
+ ]
+}
