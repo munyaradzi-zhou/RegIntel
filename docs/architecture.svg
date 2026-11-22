@@ -1,0 +1,121 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="560" viewBox="0 0 1600 560" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="15">
+  <!-- Source of assets/architecture.png (rendered with headless Chrome at 2x). -->
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#4a5468"/>
+    </marker>
+    <style>
+      .box { fill: #f4f6fa; stroke: #4a5468; stroke-width: 1.3; }
+      .trust { fill: #1f3a68; stroke: #1f3a68; }
+      .svc { fill: #ffffff; stroke: #4a5468; stroke-width: 1.3; }
+      .frame { fill: #fbfbfd; stroke: #9aa3b5; stroke-width: 1.2; stroke-dasharray: 0; }
+      .grp { fill: none; stroke: #9aa3b5; stroke-width: 1.2; stroke-dasharray: 5 4; }
+      .t { fill: #1a1a2e; text-anchor: middle; }
+      .s { fill: #5a6275; text-anchor: middle; font-size: 13px; }
+      .w { fill: #ffffff; text-anchor: middle; }
+      .ws { fill: #c9d6ee; text-anchor: middle; font-size: 13px; }
+      .lbl { fill: #5a6275; font-size: 13px; }
+      .e { fill: none; stroke: #4a5468; stroke-width: 1.4; marker-end: url(#a); }
+      .d { fill: none; stroke: #4a5468; stroke-width: 1.3; stroke-dasharray: 5 4; marker-end: url(#a); }
+    </style>
+  </defs>
+  <rect width="1600" height="560" fill="#ffffff"/>
+
+  <!-- top band: Azure AI used by retrieval and writing -->
+  <rect class="svc" x="650" y="30" width="190" height="64" rx="8"/>
+  <text class="t" x="745" y="57">Azure AI Search</text>
+  <text class="s" x="745" y="78">knowledge bases</text>
+  <rect class="svc" x="870" y="30" width="270" height="64" rx="8"/>
+  <text class="t" x="1005" y="57">Azure OpenAI</text>
+  <text class="s" x="1005" y="78">gpt-5-mini · text-embedding-3-large</text>
+
+  <!-- the app -->
+  <rect class="frame" x="200" y="140" width="1385" height="250" rx="12"/>
+  <text class="lbl" x="216" y="164">Azure Container Apps · managed identity · Key Vault · Application Insights</text>
+
+  <rect class="box" x="20" y="210" width="150" height="100" rx="8"/>
+  <text class="t" x="95" y="252">Streamlit UI</text>
+  <text class="t" x="95" y="276">MCP clients</text>
+
+  <rect class="box" x="220" y="228" width="130" height="64" rx="8"/>
+  <text class="t" x="285" y="255">FastAPI</text>
+  <text class="s" x="285" y="276">keys · limits · SSE</text>
+
+  <rect class="box" x="375" y="228" width="110" height="64" rx="8"/>
+  <text class="t" x="430" y="255">Input</text>
+  <text class="t" x="430" y="275">guards</text>
+
+  <rect class="box" x="510" y="228" width="130" height="64" rx="8"/>
+  <text class="t" x="575" y="255">Router</text>
+  <text class="s" x="575" y="276">LLM or trained</text>
+
+  <rect class="box" x="670" y="180" width="170" height="64" rx="8"/>
+  <text class="t" x="755" y="207">Retrieval pipeline</text>
+  <text class="s" x="755" y="228">single · multi-part</text>
+
+  <rect class="box" x="670" y="300" width="170" height="64" rx="8"/>
+  <text class="t" x="755" y="327">Research agent</text>
+  <text class="s" x="755" y="348">Agent Framework</text>
+
+  <rect class="box" x="870" y="228" width="130" height="64" rx="8"/>
+  <text class="t" x="935" y="255">Writer</text>
+  <text class="s" x="935" y="276">quotes per claim</text>
+
+  <rect class="box trust" x="1025" y="228" width="150" height="64" rx="8"/>
+  <text class="w" x="1100" y="255">Verifier</text>
+  <text class="ws" x="1100" y="276">quotes, numbers</text>
+
+  <rect class="box trust" x="1200" y="228" width="130" height="64" rx="8"/>
+  <text class="w" x="1265" y="255">Reviewer</text>
+  <text class="ws" x="1265" y="276">overreach</text>
+
+  <rect class="box trust" x="1355" y="228" width="210" height="64" rx="8"/>
+  <text class="w" x="1460" y="255">Audit record</text>
+  <text class="ws" x="1460" y="276">hash-chained · fail closed</text>
+
+  <!-- bottom band -->
+  <rect class="svc" x="330" y="440" width="220" height="64" rx="8"/>
+  <text class="t" x="440" y="467">Foundry project</text>
+  <text class="s" x="440" y="488">hosted agent · AI Evaluation</text>
+
+  <rect class="grp" x="590" y="420" width="430" height="108" rx="10"/>
+  <text class="lbl" x="604" y="440">Agent tools</text>
+  <rect class="svc" x="604" y="452" width="125" height="60" rx="8"/>
+  <text class="t" x="666" y="477">FAERS</text>
+  <text class="s" x="666" y="497">DuckDB</text>
+  <rect class="svc" x="741" y="452" width="125" height="60" rx="8"/>
+  <text class="t" x="803" y="477">CDISC</text>
+  <text class="s" x="803" y="497">terminology</text>
+  <rect class="svc" x="878" y="452" width="128" height="60" rx="8"/>
+  <text class="t" x="942" y="477">openFDA live</text>
+  <text class="s" x="942" y="497">labels · recalls</text>
+
+  <rect class="svc" x="1185" y="440" width="160" height="64" rx="8"/>
+  <text class="t" x="1265" y="467">AI Services</text>
+  <text class="s" x="1265" y="488">gpt-oss-120b</text>
+
+  <rect class="svc" x="1370" y="440" width="180" height="64" rx="8"/>
+  <text class="t" x="1460" y="467">Cosmos DB</text>
+  <text class="s" x="1460" y="488">sessions · audit trail</text>
+
+  <!-- request flow -->
+  <path class="e" d="M170,260 L218,260"/>
+  <path class="e" d="M350,260 L373,260"/>
+  <path class="e" d="M485,260 L508,260"/>
+  <path class="e" d="M640,250 C655,250 652,212 668,212"/>
+  <path class="e" d="M640,270 C655,270 652,332 668,332"/>
+  <path class="e" d="M840,212 C855,212 852,250 868,250"/>
+  <path class="e" d="M840,332 C855,332 852,270 868,270"/>
+  <path class="e" d="M1000,260 L1023,260"/>
+  <path class="e" d="M1175,260 L1198,260"/>
+  <path class="e" d="M1330,260 L1353,260"/>
+
+  <!-- dependencies -->
+  <path class="e" d="M745,180 L745,96"/>
+  <path class="e" d="M935,228 L935,96"/>
+  <path class="e" d="M755,364 L755,418"/>
+  <path class="d" d="M670,344 L440,344 L440,438"/>
+  <text class="lbl" x="452" y="404">optional hosting</text>
+  <path class="e" d="M1265,292 L1265,438"/>
+  <path class="e" d="M1460,292 L1460,438"/>
+</svg>
