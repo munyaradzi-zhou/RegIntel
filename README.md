@@ -134,6 +134,30 @@ The writer is chosen with `WRITER_ENDPOINT`, `WRITER_DEPLOYMENT` and `WRITER_API
 - The fallback threshold is set per predicted route, at 0.95 out-of-fold precision (about the LLM router's own accuracy), and was fixed before testing. A single global threshold sent 87% of questions to the LLM.
 - Routing is a small part of the cost: $0.20 per 1,000 questions, and 1.7 s of a 13 s answer. The LLM router stays the default; `ml` suits latency-bound traffic where a multi-part miss is acceptable. The trained router's held-out scores are part of the evaluation gate.
 
+**The research agent on Foundry Agent Service.** With `AGENT_HOSTING=foundry` the agent's definition (gpt-5-mini, the versioned instructions, the tool declarations, reasoning effort) is a versioned prompt agent in a Foundry project, published from code by `scripts/publish_foundry_agent.py`. Planning runs on Foundry; each tool call comes back to RegIntel, so the guards, evidence, writer, verifier and reviewer are unchanged. On the 16 tool questions:
+
+| | In process | Foundry-hosted |
+|---|---|---|
+| Grounded answers · all expected facts · expected tools called | 16/16 · 1.000 · 16/16 | 16/16 · 1.000 · 16/16 |
+| Tool calls per question | 1.19 | 1.19 |
+| Research time p50 / p95 | 4.8 s / 7.9 s | 10.2 s / 12.9 s |
+| Model cost per answer (research + writing) | $0.0020 | $0.0024 |
+
+Hosting changed nothing about the answers. It adds versioned agent definitions with a playground in the Foundry portal, and traces in the project through its connected Application Insights. It costs about 5 s of planning time per data question. In-process stays the default.
+
+**Azure AI Evaluation beside RegIntel's own checks** (`tests/evaluation/evaluate_azure_ai.py`, judge gpt-5-mini, 60 golden questions):
+
+| | Result |
+|---|---|
+| Answered: groundedness · relevance (pass = 3 or more of 5) | 49/49 · 49/49 (means 5.00 · 4.61) |
+| Drafts the verifier or reviewer cut (18 statements removed from 13 answers): SDK groundedness of the uncut draft | 5/5 for 12 of 13 |
+| Answerable questions RegIntel declined whose passages scored retrieval 5 | 3 of 3 (be-01, sr-04, st-07) |
+| Unanswerable questions correctly declined that pass relevance | 4/8 |
+
+- The SDK and RegIntel agree on every answer RegIntel shows. The SDK judges whether a statement is supported in meaning, so a misquote, a number missing from its quote or a "should" turned into "must" still scores 5. The verifier and reviewer are the stricter checks; the SDK is no substitute for them.
+- Where the SDK helps is the other direction: high retrieval scores on declined answers point to over-strict declines. All three were the reviewer's subject check declining a question its passages do answer.
+- Relevance penalises a correct abstention, so it must not be used to score declines.
+
 ## Run it locally
 
 Requirements: Python 3.11+, `az login` to a subscription with the Azure resources (or run `scripts/azure/deploy.sh` first).
@@ -200,7 +224,7 @@ claude mcp add regintel -- python -m regintel.mcp_server
 `make check` runs the same gates as CI:
 
 - **Ruff** lint and formatting, **mypy `--strict`** over the whole package
-- **243 unit tests** with an 85% coverage gate: verifier, reviewer, router, agent loop (a fake agent calling the real tools), guards, chunking and glyph repair, FAERS statistics, the openFDA client against recorded responses (429, 5xx, timeouts, cache, an unreachable API adds no evidence), sessions and follow-up rewriting, the audit trail (hash chain, tampering, a Cosmos fake with ETags under contention, fail-closed recording, replay), the validation pack's links, API auth and rate limits, SSE, UI escaping
+- **247 unit tests** with an 85% coverage gate: verifier, reviewer, router, agent loop (a fake agent calling the real tools), guards, chunking and glyph repair, FAERS statistics, the openFDA client against recorded responses (429, 5xx, timeouts, cache, an unreachable API adds no evidence), sessions and follow-up rewriting, the audit trail (hash chain, tampering, a Cosmos fake with ETags under contention, fail-closed recording, replay), the validation pack's links, API auth and rate limits, SSE, UI escaping
 - **Bandit**, **pip-audit** and **gitleaks** over the full history
 - Both **Docker** images built, and the API image started with no data or credentials (it must stay up and report why it is not ready), **Bicep** build, **shellcheck**
 
@@ -217,7 +241,7 @@ src/regintel/
   retrieval/      local BM25 / dense / hybrid baselines
   azure_search/   section index, knowledge sources and knowledge bases
   answering/      writer prompt, verifier, reviewer, answer schema
-  agent/          research agent and its tools
+  agent/          research agent, its tools, and Foundry Agent Service hosting
   faers/ terminology/   DuckDB safety-signal queries, CDISC lookup
   openfda/        live openFDA client (timeouts, retries, TTL cache) and label / recall lookups
   audit/          hash-chained audit records, Cosmos store, chain verification, replay

@@ -12,6 +12,7 @@ from typing import TYPE_CHECKING, Any
 
 import structlog
 
+from regintel.agent.foundry import HostedAgent
 from regintel.agent.research import RegIntelAgent, azure_agent_client
 from regintel.answering.models import answer_model_from_settings, azure_openai_client
 from regintel.answering.pipeline import Answerer
@@ -114,7 +115,18 @@ class AzureComponents:
             openfda=self.openfda,
             manifest=self.manifest,
             reviewer=self.reviewer,
+            hosted=self.hosted_agent(),
         )
+
+    def hosted_agent(self) -> HostedAgent | None:
+        if self.settings.agent_hosting != "foundry":
+            return None
+        from regintel.runtime import azure_credential
+
+        if not (self.settings.foundry_project_endpoint and self.settings.foundry_agent_version):
+            raise ValueError("AGENT_HOSTING=foundry needs FOUNDRY_PROJECT_ENDPOINT and FOUNDRY_AGENT_VERSION")
+        return HostedAgent(self.settings.foundry_project_endpoint, self.settings.foundry_agent_name,
+                           self.settings.foundry_agent_version, azure_credential())  # fmt: skip
 
     def router(self) -> Routes:
         """ROUTING picks the router; the trained one is loaded by version and its checksum logged."""

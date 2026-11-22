@@ -45,6 +45,12 @@ class Settings(BaseSettings):
     # call), or "ml_with_fallback" (trained router when confident, per route; the LLM otherwise).
     routing: Literal["llm", "ml", "ml_with_fallback"] = "llm"
     router_model_version: int = 1  # src/regintel/router_models/router-v<N>.json
+    # Research agent: planning loop in process, or as a prompt agent on Foundry Agent Service (the
+    # tools still run here). The version is published by scripts/publish_foundry_agent.py.
+    agent_hosting: Literal["in_process", "foundry"] = "in_process"
+    foundry_project_endpoint: str | None = None  # https://<account>.services.ai.azure.com/api/projects/<project>
+    foundry_agent_name: str = "regintel-research"
+    foundry_agent_version: str | None = None
     # Answer reviewer: a different model family from the writer, on an AI Services (Foundry) resource
     azure_judge_endpoint: str | None = None
     azure_judge_deployment: str = "gpt-oss-120b"

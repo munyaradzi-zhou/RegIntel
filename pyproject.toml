@@ -50,7 +50,7 @@ azure = [
     "azure-cosmos>=4.17.0",
     "azure-storage-blob>=12.31.0",
     "azure-monitor-opentelemetry>=1.8.0",
-    "agent-framework-azure-ai>=1.0.0rc6",  # Foundry Agent Service
+    "agent-framework-foundry>=1.16.0",  # Foundry Agent Service (hosted research agent)
     "azure-ai-evaluation>=1.18.0",
 ]
 # What the API container needs (a subset of `azure`, without the evaluation and Foundry SDKs)
@@ -107,7 +107,7 @@ strict = true
 warn_unused_configs = true
 
 [[tool.mypy.overrides]]
-module = ["rank_bm25.*", "fastembed.*", "ijson.*", "pandas.*", "altair.*"]
+module = ["rank_bm25.*", "fastembed.*", "ijson.*", "pandas.*", "altair.*", "agent_framework_foundry.*", "azure.ai.projects.*"]
 ignore_missing_imports = true
 
 [tool.pytest.ini_options]
