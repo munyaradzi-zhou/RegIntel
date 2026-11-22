@@ -30,6 +30,7 @@ if TYPE_CHECKING:
     from agent_framework import SupportsChatGetResponse
     from agent_framework.openai import OpenAIChatClient
 
+    from regintel.agent.foundry import HostedAgent
     from regintel.answering.models import AnswerModel
     from regintel.answering.review import AnswerReviewer
     from regintel.config import Settings
@@ -99,6 +100,7 @@ class RegIntelAgent:
         max_tool_calls: int = MAX_TOOL_CALLS,
         guard: bool = True,
         reviewer: AnswerReviewer | None = None,
+        hosted: HostedAgent | None = None,
     ) -> None:
         self.client = client
         self.writer = writer
@@ -111,6 +113,7 @@ class RegIntelAgent:
         self.max_tool_calls = max_tool_calls
         self.guard = guard
         self.reviewer = reviewer
+        self.hosted = hosted  # None: the planning loop runs in process; else on Foundry Agent Service
 
     def tools_for_question(self) -> ResearchTools:
         """Fresh tools (and a fresh evidence pool) per question, so evidence never leaks between questions."""
@@ -120,14 +123,18 @@ class RegIntelAgent:
         if self.guard and not (screen := screen_question(question)).allowed:
             return AgentAnswer(blocked(question, screen.reason))
         tools = self.tools_for_question()
-        agent = Agent(
-            self.client,
-            INSTRUCTIONS.format(max_calls=self.max_tool_calls),
-            name="regintel-research",
-            tools=tools.as_tools(),
-            # Planning tool calls needs little reasoning; parallel calls save model round trips.
-            default_options={"reasoning": {"effort": "low"}, "allow_multiple_tool_calls": True},
-        )
+        agent: Any
+        if self.hosted is not None:  # definition and planning on Foundry; tool calls come back here
+            agent = self.hosted.agent(tools.as_tools(), self.max_tool_calls)
+        else:
+            agent = Agent(
+                self.client,
+                INSTRUCTIONS.format(max_calls=self.max_tool_calls),
+                name="regintel-research",
+                tools=tools.as_tools(),
+                # Planning tool calls needs little reasoning; parallel calls save model round trips.
+                default_options={"reasoning": {"effort": "low"}, "allow_multiple_tool_calls": True},
+            )
         started = time.perf_counter()
         response = await agent.run(question)
         research_seconds = time.perf_counter() - started
