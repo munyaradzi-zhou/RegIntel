@@ -41,6 +41,10 @@ class Settings(BaseSettings):
     writer_endpoint: str | None = None  # default: azure_openai_endpoint
     writer_deployment: str | None = None  # default: azure_openai_chat_deployment
     writer_reasoning_effort: Literal["minimal", "low", "medium", "high", "none"] = "low"  # responses only
+    # Router: "llm" (one structured-output call per question), "ml" (the trained TF-IDF router, no
+    # call), or "ml_with_fallback" (trained router when confident, per route; the LLM otherwise).
+    routing: Literal["llm", "ml", "ml_with_fallback"] = "llm"
+    router_model_version: int = 1  # src/regintel/router_models/router-v<N>.json
     # Answer reviewer: a different model family from the writer, on an AI Services (Foundry) resource
     azure_judge_endpoint: str | None = None
     azure_judge_deployment: str = "gpt-oss-120b"

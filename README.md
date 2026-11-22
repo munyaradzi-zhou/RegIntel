@@ -122,6 +122,18 @@ What the evaluations changed along the way:
 
 The writer is chosen with `WRITER_ENDPOINT`, `WRITER_DEPLOYMENT` and `WRITER_API`; all four are pay-as-you-go deployments on Azure, so the comparison ran on the same subscription.
 
+**A trained router against the LLM router.** The router is one gpt-5-mini call per question. The alternative is TF-IDF features into logistic regression, trained on 53 real questions plus 371 generated variants, tracked and registered in MLflow, and served from a JSON file. All three were scored on 23 real questions held out from training and from the generator ([data card](docs/router-data-card.md)):
+
+| `ROUTING` | Held-out accuracy | Macro-F1 | LLM calls | Routing time per question | Cost per 1,000 questions |
+|---|---|---|---|---|---|
+| `llm` (default) | **0.957** | **0.938** | every question | 1.69 s | $0.20 |
+| `ml_with_fallback` | 0.913 | | 61% | ≈1.0 s | $0.12 |
+| `ml` | 0.826 | 0.722 | none | < 1 ms | $0 |
+
+- The trained router recognises data questions perfectly (5 of 5, confidence 0.94 to 0.99). It struggles with "one section or several": it sent 3 of 4 multi-part questions down the single path. Embeddings (`text-embedding-3-large`) did no better on the held-out questions (0.83 to 0.87), so the router stays offline and free.
+- The fallback threshold is set per predicted route, at 0.95 out-of-fold precision (about the LLM router's own accuracy), and was fixed before testing. A single global threshold sent 87% of questions to the LLM.
+- Routing is a small part of the cost: $0.20 per 1,000 questions, and 1.7 s of a 13 s answer. The LLM router stays the default; `ml` suits latency-bound traffic where a multi-part miss is acceptable. The trained router's held-out scores are part of the evaluation gate.
+
 ## Run it locally
 
 Requirements: Python 3.11+, `az login` to a subscription with the Azure resources (or run `scripts/azure/deploy.sh` first).
@@ -188,11 +200,11 @@ claude mcp add regintel -- python -m regintel.mcp_server
 `make check` runs the same gates as CI:
 
 - **Ruff** lint and formatting, **mypy `--strict`** over the whole package
-- **235 unit tests** with an 85% coverage gate: verifier, reviewer, router, agent loop (a fake agent calling the real tools), guards, chunking and glyph repair, FAERS statistics, the openFDA client against recorded responses (429, 5xx, timeouts, cache, an unreachable API adds no evidence), sessions and follow-up rewriting, the audit trail (hash chain, tampering, a Cosmos fake with ETags under contention, fail-closed recording, replay), the validation pack's links, API auth and rate limits, SSE, UI escaping
+- **243 unit tests** with an 85% coverage gate: verifier, reviewer, router, agent loop (a fake agent calling the real tools), guards, chunking and glyph repair, FAERS statistics, the openFDA client against recorded responses (429, 5xx, timeouts, cache, an unreachable API adds no evidence), sessions and follow-up rewriting, the audit trail (hash chain, tampering, a Cosmos fake with ETags under contention, fail-closed recording, replay), the validation pack's links, API auth and rate limits, SSE, UI escaping
 - **Bandit**, **pip-audit** and **gitleaks** over the full history
 - Both **Docker** images built, and the API image started with no data or credentials (it must stay up and report why it is not ready), **Bicep** build, **shellcheck**
 
-**Evaluation gate on every pull request** (`make eval-ci`, free, no model calls). It scores BM25 retrieval on the golden set over the committed chunk fixture, replays 114 recorded and deliberately mutated drafts through the verifier (each statement must be kept or dropped exactly as recorded), and checks that every prompt whose text changed has a new version. Results are compared with [`ci_baseline.json`](tests/evaluation/baselines/ci_baseline.json): a metric that drops more than 0.02 fails the build, and the report is posted on the pull request. `make eval-ci ARGS=--update-baseline` moves the bar deliberately, in the same pull request as the improvement.
+**Evaluation gate on every pull request** (`make eval-ci`, free, no model calls). It scores BM25 retrieval on the golden set over the committed chunk fixture, scores the trained router on its held-out questions, replays 114 recorded and deliberately mutated drafts through the verifier (each statement must be kept or dropped exactly as recorded), and checks that every prompt whose text changed has a new version. Results are compared with [`ci_baseline.json`](tests/evaluation/baselines/ci_baseline.json): a metric that drops more than 0.02 fails the build, and the report is posted on the pull request. `make eval-ci ARGS=--update-baseline` moves the bar deliberately, in the same pull request as the improvement.
 
 The other evaluations call real models, so they run on demand: `make eval-retrieval`, `eval-answers`, `eval-agent`, `eval-injection`, `eval-review`, `eval-followups`, `eval-web`, and `python -m tests.evaluation.evaluate_live --url <api>` against a deployment.
 
@@ -211,6 +223,7 @@ src/regintel/
   audit/          hash-chained audit records, Cosmos store, chain verification, replay
   guard/          question and passage screens
   router.py service.py conversation.py   routing, end-to-end service, follow-ups
+  ml_router.py router_models/   trained router (TF-IDF + logistic regression) and its versioned JSON models
   api/            FastAPI app, models, sessions in Cosmos DB
   frontend/       Streamlit UI
   mcp_server.py   MCP tools

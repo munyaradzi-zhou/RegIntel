@@ -49,3 +49,6 @@ tests/evaluation/results/
 
 # Private improvement plan (kept locally)
 IMPROVEMENTS.md
+
+# MLflow tracking store (local)
+mlruns/

@@ -27,7 +27,7 @@ if TYPE_CHECKING:
     from regintel.answering.pipeline import Answerer
     from regintel.answering.schema import AnswerResult, Usage
     from regintel.retrieval.base import Retriever
-    from regintel.router import Path, Router
+    from regintel.router import Path, Routes
 
 WEB_POINTERS = 3
 
@@ -64,7 +64,7 @@ def web_pointers(retriever: Retriever, question: str, limit: int = WEB_POINTERS)
 class RegIntel:
     def __init__(
         self,
-        router: Router,
+        router: Routes,
         single: Answerer,
         multi: Answerer,
         agent: RegIntelAgent,

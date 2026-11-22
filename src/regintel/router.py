@@ -12,7 +12,7 @@ measured against the golden and tool question sets (tests/evaluation/evaluate_ro
 
 from __future__ import annotations
 
-from typing import TYPE_CHECKING, Literal
+from typing import TYPE_CHECKING, Literal, Protocol
 
 from pydantic import BaseModel, Field
 
@@ -52,6 +52,12 @@ class RouteDecision(BaseModel):
         if self.needs_data_tools:
             return "agent"
         return "guidance_multi" if self.multi_part else "guidance_single"
+
+
+class Routes(Protocol):
+    """Anything that routes: the LLM router here, or the trained ones in regintel.ml_router."""
+
+    def route(self, question: str) -> tuple[RouteDecision, Usage]: ...
 
 
 class Router:
